@@ -1,62 +1,227 @@
-\chapter[Descrição do Processo]{Descrição do Problema/Processo ou O Processo de Fazer Alguma Coisa}
-\label{chap:descricaoproblema}
-%Note que, como nome do capítulo é muito longo, fornecemos um nome abreviado uso no cabeçalho
+\chapter[Revisão Bibliográfica]{Revisão Bibliográfica}
+\label{chap:revisao_bibliografica}
+\thispagestyle{empty}
 
-Se desejar, uma visão geral do capítulo pode ser colocada antes da primeira seção. Este é o capítulo de descrição do processo e formulação do problema. Tendo em vista que se trata de uma monografia de engenharia de controle e automação, em muitos casos será fundamental a apresentação dos sensores e atuadores do processo.
+Este capitulo é divido em três seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
+Na primeira seção são aprensados conceitos para uma modelagem matemática da dinâmica de um veiculo em baixas velocidades.
+São apresentado na segunda seção uma introdução à teoria de controle ótimo e a utilização de programação não linear na solução
+de problemas de controle ótimo. Por fim, na ultima seção é apresentado a teoria de estimação de parâmetros.
 
+\section{Modelo do veículo}
+\label{sec:modelo}
 
-\section{Processo de Fazer Alguma Coisa}
-\label{sec:hist}
+Um modelo matemático, ou apenas modelo, é um conjunto de equações que descreve de forma adequada o comportamento de um sistema que deseja-se estudar.
+Uma forma usual de classificação dos métodos de modelagem é separa-los nas categorias: modelagem caixa branca, modelagem caixa preta e modelagem
+caixa cinza.
+A modelagem caixa branca, também conhecida como modelagem conceitual, consiste na aplicação princípios fundamentais e por isso exige um conhecimento
+da natureza do sistema.
+A modelagem caixa preta, ou modelagem empírica, é baseada na aplicação de técnicas de identificação de sistemas que exigem pouco ou
+nenhum conhecimento do sistema.
+Já na modelagem caixa cinza sáo utilizadas técnicas que estão entre a modelagem caixa branca e a modelagem caixa preta\cite{book:Aguirre}.
 
-Cada seção inicia pela descrição do seu conteúdo e pode terminar com um parágrafo de conexão com a seção seguinte. 
+Nessa seção o método de modelagem aplicado é de modelagem caixa branca. A partir da aplicação da segunda lei de Newton no
+veiculo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém-se a equação que descreve a dinâmica longitudinal do mesmo
 
-Antes de formular o problema, \textbf{não se esqueça de fazer todas as definições necessárias}. Também devem-se detalhar os aspectos complementares da abordagem: se estamos estudando um aspeto particular do problema, se a resposta encontrada é universal ou dependente de simplificações e hipóteses prévias.
+\begin{equation}
+	\label{eq:SomaForcas}
+	m \cdot \dot v	= F_t - (F_a +	F_g + F_p)
+	\enspace,
+\end{equation}
 
+em que $m$ é a massa total, $v$ é a velocidade, $F_{t}$ é a propulsão feita pelo motor subtraída as perdas do sistema de transmissão, $F_{a}$ é o
+arrasto aerodinâmico, $F_g$ é a componente do peso que esta direção da velocidade e $F_{p}$ é a resistência ao rolamentos dos pneus no pista.
+Os modelos que descrevem a forças $F_{a}$, $F_g$, $F_{p}$ e $F_{t}$ estão apresentados nas subseções a seguir.
 
-\section{Instrumentação do Processo}
-\label{sec:instrumentação}
-
-Descreva a aparelhagem e o equipamento utilizados bem como a ligação entre os diversos componentes. Nesta seção e, ao longo de todo o texto, você deve dar detalhes suficientes para que qualquer pessoa consiga reproduzir seus experimentos.
-
-Contudo, \textbf{não disperse o leitor com detalhes irrelevantes} ou aspectos
-demasiado técnicos ou formais. Reserve tais detalhes para um
-apêndice.
-
-Como uma imagem vale mais que mil palavras, e como usar mil palavras prejudicaria a clareza do texto, ilustramos o processo com a Figura \ref{fig:processo}. Lembrar que toda figura deve ser comentada no texto, você nunca deve colocar figuras que fiquem ``soltas'' no texto.  
-
-\begin{figure}[thpb]
-  \centering
-  \resizebox{120mm}{!}{\includegraphics{DescricaoProcesso/Figuras/FiguraProcesso.pdf}}
-  \caption{Aqui escrevemos \textbf{toda} informação pertinente à figura. Ou seja, este texto deve ser uma descrição auto-contida da figura, não sendo necessário recorrer ao corpo de texto para saber detalhes sobre a mesma. \emph{Fonte:} Citar fonte se figura 	não for elaborada pelo autor e \textbf{pedir permissão para usar!}}
-  \label{fig:processo}
+\begin{figure}[H]
+	\centering
+	\caption{Diagrama de forças de um veículo em movimento}
+	\label{fig:diag_forcas_veiculo}
+	\begin{normalsize}
+		\import{DescricaoProcesso/Figuras/}{diagrama_forcas_veiculo.pdf_tex}
+	\end{normalsize}
+	\caption*{\footnotesize Fonte: Elaborado pelo autor.}
 \end{figure}
 
+\subsection{Arrasto Aerodinâmico}
+\label{subsec:arrasto_aerodinamico}
 
-\section{Situação Atual/Estado da Arte/Revisão da Literatura}
-\label{sec:revisão}
+O movimento de um objeto imerso em um fluido sofre uma resistência causada por esse fluido. No
+caso de veículos que se deslocando no ar, essa
+resistência é chamada de arrasto aerodinâmico.
+Pode-se aproximar o calculo dessa força $F_{a}$ com a equação
 
-Este é o espaço para uma revisão detalhada do enquadramento do problema. Isso inclui descrever a situação atual do processo, aquilo que foi feito até então dentro da empresa/laboratório, e aquilo que se pode chamar de ``Estado da Arte'', ou seja, uma apresentação do conhecimento preexistente
-sobre o tema do projeto.
+\begin{equation}
+	\label{eq:Fa}
+	F_a(v) = \frac{\rho \cdot a_f \cdot c_d \cdot v^2}{2}
+	\enspace,
+\end{equation}
 
-A elaboração desta seção tipicamente demanda uma boa revisão da literatura. Deve haver, quando aplicável uma análise das soluções potencialmente concorrentes, elencando vantagens e desvantagens.
+em que $v$ é a velocidade do veiculo em relação ao vento, $\rho$ a densidade do ar, $a_{f}$ a área frontal do
+veiculo e $c_{d}$ o coeficiente de arrasto aerodinâmico.
+O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veiculo, é determinado por meio de simulações em software CFD (fluido dinâmica
+computacional) e/ou experimentos em túnel de vento\cite{book:guzzella2012vehicle}. Alguns valores típicos de $C_{d}$ para diferentes tipos de
+veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
-\subsection{Como Elaborar uma Revisão da Literatura}
+\begin{table}[H]
+	\centering
+	\caption{Comparação do $c_{d}$ de diferentes tipos veículos}
+	\begin{tabular}{llll}
+		\toprule
+		Veiculo  & $c_{d}$   &  & \\
+		\hline
+		Carro    & 0,3 - 0,4 &  & \\
+		Ônibus   & 0,6 - 0,7 &  & \\
+		Caminhão & 0,6 - 1,0 &  & \\
+		Moto     & 0,5 - 1,0 &  & \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:GroundVehicleDynamics}.}
+	\label{tab:ComparacaoCD}
+\end{table}
 
-Ao selecionar referências, devem-se preferir referências de veículos confiáveis, que tenham por exemplo processo de revisão por pares. Portanto, dá-se preferência a artigos em periódicos e livros, em seguida teses e dissertações, artigos em anais de congresso e por fim relatórios. Evitar citar páginas da internet por oferecem menor garantia da informação nelas contida. 
+\subsection{Relevo da pista}
 
-Pesquise sua bibliografia em bases confiáveis como o \textsf{Web of Science}, \textsf{Scopus}, ou o \textsf{Google Scholar}. \textbf{Não use uma ferramenta de busca comum!} (elas não foram feitas pensando no \emph{ranking} de textos científicos) Use o número de citações de uma dada referência como um indicador de sua qualidade. Explore os artigos que citam a referência estudada bem como os artigos que ela cita.
+A componente do peso, $F_{g}$, afeta consideravelmente a dinâmica do veiculo e atua sempre que a pista não é plana. Seu modelo é a equação
 
-Prefira as referências mais recentes quando se tratar de um assunto na fronteira do conhecimento ou de tecnologia de ponta. Quando se tratar de um assunto já consolidado, prefira citar livros ou artigos com muitas citações. 
+\[
+	F_{g}(\theta) = m \cdot g \cdot \sin(\theta)
+	\enspace,
+\]
 
-Evite citar informações de segunda-mão e procure na medida do possível rastrear a fonte original. Contudo, em situações em que a fonte original é de acesso mais difícil, seja por ter tido publicação limitada como no caso de relatórios ou por não ser em língua inglesa ou portuguesa, é preferível a citação de segunda-mão em um veículo mais acessível.
+que, pra pequenas inclinações, pode ser aproximado pela equação
 
-Para gerenciar suas referências, use uma ferramenta de software como o \textsf{Mendeley}, que permite gerar arquivos .bib para uso em {\LaTeX} ou simplesmente gerar a lista de referências para uso direto em editores de texto. Em \LaTeX, mais especificamente Bib\TeX, a lista de referências é criada a partir de um arquivo .bib, que é uma espécie de banco de informações bibliográficas em que cada entrada é uma referência associada a uma chave para citação. A lista criada incluirá apenas as referências citadas ao longo do texto, mesmo que haja mais referências no arquivo .bib. As informações bibliográficas no formato Bib\TeX também podem ser obtidas para cada referência em ferramentas como o \textsf{Google Scholar} e então coladas no arquivo .bib.
+\begin{equation}
+	\label{eq:Fg}
+	F_{g}(\theta) \approx  m \cdot g \cdot \theta
+	\enspace,
+\end{equation}
 
-Na Seção \ref{sec:comocitar} discutiremos como e quando as citações devem ser usadas.
+em que $m$ é a massa total do veículo, $g$ é a aceleração da gravidade e $\theta$ é a inclinação da pista expressa em
+radianos\cite{book:guzzella2012vehicle}.
 
-\section{Resumo do Capítulo}
+\subsection{Resistência ao rolamento}
+\label{subsec:resistencia_rolamento}
 
-Tente não terminar de forma abrupta. Se for escrever algo aqui, não seja genérico!
+A norma ISO 4223-1:2017 define a resistência ao rolamento de um pneu, como a energia consumida pelo pneu por unidade de distancia
+percorrida. Esse consumo de energia se deve principalmente as propriedades viscoelásticas dos compostos de borracha presente no pneu.
+Durante a rolagem o pneu é deformado na zona de contato entre o pneu e o pavimento, nessa zona de contato a resultante da força de reação à força
+normal não
+está no mesmo eixo que a força normal, Figura \ref{fig:diagramaPeneu}, de forma a gerar um força, $F_{r}$, contraria a movimentação do pneu.
 
+\input{DescricaoProcesso/Figuras/grafico_teste.tex}
+
+A força de resistência ao rolamento, $F_{r}$, depende da construção do pneu e do tipo de pavimento. Essa força também depende da velocidade do
+veiculo e da pressão do ar no pneu,
+embora nesse trabalho não considera-se essa dependência. Para calcula-la usa-se a relação:
+
+\begin{equation}
+	\label{eq:Fr}
+	F_{r}  = c_{r} \cdot N
+	\enspace,
+\end{equation}
+
+em que $c_{r}$ é o coeficiente de resistência ao rolamento, $N$ é a força normal sobre o pneu e $F_{r}$ é a força
+gerada pela resistência ao rolamento.
+Estão apesentados na Tabela \ref{tab:ComparacaoCr}
+o valor do coeficiente $c_{r}$ para pneus de uso típico em carros de passeio, bicicletas e de dois pneus específicos para a competição SEM, Michelin
+45-406 e Michelin 45-75R16.
+
+% Escrever que nao vou conciderar pq nao da pra medir a variacao no cenario atual.
+% Colocar como perpestivas de trabalho futuro.
+
+\begin{table}[H]
+	\centering
+	\caption{Comparação do coeficiente $c_{r}$ de diferentes pneus}
+	\begin{tabular}{llll}
+		\toprule
+		Pneu               & $c_{r}$ &  & \\
+		\hline
+		Usado em carro     & 0,013   &  & \\
+		Usado em bicicleta & 0,006   &  & \\
+		Michelin 45-406    & 0,0024  &  & \\
+		Michelin 45-75R16  & 0,00081 &  & \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:PacCarII}.}
+	\label{tab:ComparacaoCr}
+\end{table}
+
+\subsection{Sistema de propulsão}
+\label{subsec:sistema_propulsao}
+
+De forma genérica, o sistema de propulsão de um veículo elétrico, representado no diagrama da Figura \ref{fig:diagrama_propulsao}, é composto por
+bateria, conversor de potencia, motor elétrico e transmissão.
+
+\begin{figure}[H]
+	\centering
+	\caption{Diagrama de blocos do sistema de propulsão de um veículo elétrico}
+	\label{fig:diagrama_propulsao}
+	\includegraphics{DescricaoProcesso/Figuras/g874.png}
+	\caption*{\footnotesize Fonte: Elaborado pelo autor.}
+\end{figure}
+
+\subsubsection{Bateria}
+
+Bateria eletroquímica, ou apenas bateria, é um dispositivo em que durante a descarga ocorre a conversão de energia potencial química em energia
+elétrica e na carga ocorre a conversão inversa. Ou seja, uma bateria armazena energia elétrica na forma de energia potencial química. Uma bateria é
+composta por varais células ligadas entre se. Uma célula de bateria é basicamente composta por dois eletrodos -- positivo e
+negativo -- imersos em um eletrólito\cite{book:Modern_Electric_Vehicles}.
+
+\subsubsection{Conversor de Potência}
+
+Conversor eletrônico de potência, ou conversor de potência, é o circuito cujo a finalidade é extrair energia elétrica de um sistema de energia e
+transformá-la em uma forma adequada e necessária para um motor\cite{book:Electric_Motor_Control}.
+
+\subsubsection{Motor Elétrico}
+
+O motor elétrico converte a potencia elétrica -- tensão e corrente -- em potencia mecânica -- torque e rotação -- para impulsionar o
+veículo\cite{book:Modern_Electric_Vehicles}. Nesse trabalho
+estudara-se o modelo de apenas os motores BLDC pois é o tipo de motor utilizado no protótipo DT1.
+
+\begin{equation}
+	\label{eq:MotorCC}
+	u - u_{ind}  = l_{m} \cdot \dot i + r_{m}
+	\enspace,
+\end{equation}
+
+\subsubsection{Transmição}
+
+A transmissão do veículo regula a transferência de potência do motor para as rodas. É basicamente composta por mecanismo de
+redução -- ex. caixa de velocidades -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
+
+\section{Controle Ótimo}
+
+"O objetivo da teoria de controle ótimo é determinar os sinais de controle que farão com que um processo satisfaça as restrições físicas e ao mesmo
+tempo minimize
+(ou maximize) alguns critérios de desempenho\cite{book:Kirk}."
+
+A seguinte equação é uma formulação genérica e comum para OCP
+
+\begin{mini!}
+{x(\cdot),u(\cdot)}{\int_{0}^{T} L(x(t),u(t)) \,\mathrm{d}t + E(x(T)) \label{eq:ObjOCP}}
+{\label{eq:formulacaoOCP}}{}
+\addConstraint{x(0)-x_{0}}{=0 \label{eq:C1_OCP}}{}
+\addConstraint{\dot x(t) - f(x(t),u(t))}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
+\addConstraint{h(x(t),u(t))}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP}}
+\addConstraint{r(x(T))}{\leq 0 \enspace, \label{eq:C4_OCP}}{}
+\end{mini!}
+
+em que a Equação \ref{eq:ObjOCP} é o funcional-objetivo, Equação \ref{eq:C1_OCP} é uma restrição de estados inciais fixos, Equação \ref{eq:C2_OCP} é
+a restrição
+que representa a dinâmica
+do sistema, Equação \ref{eq:C3_OCP} são restrições de caminho e Equação \ref{eq:C4_OCP} é uma restrição de espaço para os estados finais.
+
+O funcional-objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
+e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_Control}.
+
+\begin{figure}[H]
+	\centering
+	\caption{Visão geral do métodos numéricos para controle ótimo}
+	\label{fig:diagrama_metodos_numericos}
+	\includegraphics{DescricaoProcesso/Figuras/diagrama_metodos_numericos.png}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{article:Diehl}}
+\end{figure}
+
+\cite{phd:Matthias} \cite{phd:Rieck} \cite{manual:Falcon}
 
 \clearpage
