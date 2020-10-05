@@ -12,13 +12,16 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb}
 \usepackage{amsthm,amsfonts}
+\usepackage{bm}
 \usepackage[short]{optidef}
-\usepackage{color}
+%\usepackage[usenames,dvipsnames]{color,colortbl}
+\usepackage[table]{xcolor}
+\definecolor{lightgray}{gray}{0.9}
 \usepackage[hidelinks]{hyperref}
 
 \usepackage{abntex2abrev}
 \usepackage[num, overcite, abnt-emphasize=bf, abnt-etal-list=3]{abntex2cite} 
-\citebrackets()
+\citebrackets[]
 
 \usepackage{setspace}
 \usepackage{parskip}
@@ -26,7 +29,6 @@
 \usepackage[framed, numbered]{matlab-prettifier}
 
 \usepackage{import}
-\usepackage{tikz}
 \usepackage{booktabs}
 \usepackage{float}
 \usepackage[skip=10pt]{caption}
@@ -36,9 +38,16 @@
 
 \usepackage{svg}
 
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage[american]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepackage{tikz-qtree}
+
 \makeindex
 
-\setstretch{1.03} %%um pouco melhor que espaçamento simples
+\setstretch{1.15} %%um pouco melhor que espaçamento simples
 
 %---------------Início do documento-------------------------
 

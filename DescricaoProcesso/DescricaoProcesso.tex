@@ -2,10 +2,10 @@
 \label{chap:revisao_bibliografica}
 \thispagestyle{empty}
 
-Este capitulo é divido em três seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
+Este capitulo é divido em duas seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
 Na primeira seção são aprensados conceitos para uma modelagem matemática da dinâmica de um veiculo em baixas velocidades.
 São apresentado na segunda seção uma introdução à teoria de controle ótimo e a utilização de programação não linear na solução
-de problemas de controle ótimo. Por fim, na ultima seção é apresentado a teoria de estimação de parâmetros.
+de problemas de controle ótimo.
 
 \section{Modelo do veículo}
 \label{sec:modelo}
@@ -58,21 +58,24 @@ Pode-se aproximar o calculo dessa força $F_{a}$ com a equação
 
 em que $v$ é a velocidade do veiculo em relação ao vento, $\rho$ a densidade do ar, $a_{f}$ a área frontal do
 veiculo e $c_{d}$ o coeficiente de arrasto aerodinâmico.
-O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veiculo, é determinado por meio de simulações em software CFD (fluido dinâmica
-computacional) e/ou experimentos em túnel de vento\cite{book:guzzella2012vehicle}. Alguns valores típicos de $C_{d}$ para diferentes tipos de
+O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veiculo, é determinado por meio de simulações em \textit{software} de fluido
+dinâmica
+computacional (CFD, do inglês \textit{computational fluid dynamics}) e/ou experimentos em túnel de vento\cite{book:guzzella2012vehicle}. Alguns
+valores típicos de $C_{d}$ para diferentes tipos de
 veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
 \begin{table}[H]
 	\centering
 	\caption{Comparação do $c_{d}$ de diferentes tipos veículos}
-	\begin{tabular}{llll}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{ll}
 		\toprule
-		Veiculo  & $c_{d}$   &  & \\
+		\textbf{Veiculo} & \boldsymbol{$c_{d}$} \\
 		\hline
-		Carro    & 0,3 - 0,4 &  & \\
-		Ônibus   & 0,6 - 0,7 &  & \\
-		Caminhão & 0,6 - 1,0 &  & \\
-		Moto     & 0,5 - 1,0 &  & \\
+		Carro            & 0,3 - 0,4            \\
+		Ônibus           & 0,6 - 0,7            \\
+		Caminhão         & 0,6 - 1,0            \\
+		Moto             & 0,5 - 1,0            \\
 		\bottomrule
 	\end{tabular}
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:GroundVehicleDynamics}.}
@@ -123,8 +126,9 @@ embora nesse trabalho não considera-se essa dependência. Para calcula-la usa-s
 em que $c_{r}$ é o coeficiente de resistência ao rolamento, $N$ é a força normal sobre o pneu e $F_{r}$ é a força
 gerada pela resistência ao rolamento.
 Estão apesentados na Tabela \ref{tab:ComparacaoCr}
-o valor do coeficiente $c_{r}$ para pneus de uso típico em carros de passeio, bicicletas e de dois pneus específicos para a competição SEM, Michelin
-45-406 e Michelin 45-75R16.
+o valor do coeficiente $c_{r}$ para pneus de uso típico em carros de passeio, bicicletas e de dois pneus específicos para a competição SEM,
+Michelin\textsuperscript{\textregistered}
+45-406 \textit{Prototype} (Figura \ref{fig:pneu}) e Michelin\textsuperscript{\textregistered} Radial 45-75 R16.
 
 % Escrever que nao vou conciderar pq nao da pra medir a variacao no cenario atual.
 % Colocar como perpestivas de trabalho futuro.
@@ -132,19 +136,31 @@ o valor do coeficiente $c_{r}$ para pneus de uso típico em carros de passeio, b
 \begin{table}[H]
 	\centering
 	\caption{Comparação do coeficiente $c_{r}$ de diferentes pneus}
-	\begin{tabular}{llll}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{ll}
 		\toprule
-		Pneu               & $c_{r}$ &  & \\
+		\textbf{Pneu}                                                       &
+		\boldsymbol{$c_{r}$}                                                          \\
 		\hline
-		Usado em carro     & 0,013   &  & \\
-		Usado em bicicleta & 0,006   &  & \\
-		Michelin 45-406    & 0,0024  &  & \\
-		Michelin 45-75R16  & 0,00081 &  & \\
+		Usado em carro                                                      & 0,013
+		\\
+		Usado em bicicleta                                                  & 0,006
+		\\
+		Michelin\textsuperscript{\textregistered} 45-406 \textit{Prototype} & 0,0024  \\
+		Michelin\textsuperscript{\textregistered} Radial 45-75 R16          & 0,00081 \\
 		\bottomrule
 	\end{tabular}
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:PacCarII}.}
 	\label{tab:ComparacaoCr}
 \end{table}
+
+\begin{figure}[H]
+	\centering
+	\caption{Pneu Michelin\textsuperscript{\textregistered} 44-406 \textit{Prototype}}
+	\label{fig:pneu}
+	\includegraphics[scale=0.25]{DescricaoProcesso/Figuras/pneu_Michelin.png}
+	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG.}
+\end{figure}
 
 \subsection{Sistema de propulsão}
 \label{subsec:sistema_propulsao}
@@ -174,28 +190,167 @@ transformá-la em uma forma adequada e necessária para um motor\cite{book:Elect
 
 \subsubsection{Motor Elétrico}
 
-O motor elétrico converte a potencia elétrica -- tensão e corrente -- em potencia mecânica -- torque e rotação -- para impulsionar o
-veículo\cite{book:Modern_Electric_Vehicles}. Nesse trabalho
-estudara-se o modelo de apenas os motores BLDC pois é o tipo de motor utilizado no protótipo DT1.
+O motor elétrico converte a potencia elétrica -- tensão e corrente -- em potencia mecânica rotativa -- torque e rotação -- para impulsionar o
+veículo.\cite{book:Modern_Electric_Vehicles} Podem ser classificados em relação a sua alimentação: corrente continua
+(CA) ou corrente alternada (CC), conforme apresentado na Figura \ref{classif_motor}.
+No entanto o motor de corrente continua sem escovas, ou BLDC do inglês \textit{brushless direct current}, é difícil de ser classificado desse forma
+pois sua configuração é semelhante à de um motor CA, enquanto suas características elétricas são semelhantes às de um motor
+CC.\cite{book:Electric_Motor_Control} Nesse trabalho estudara-se o modelo dos motores BLDC pois é o tipo de motor utilizado no protótipo DT1.
 
-\begin{equation}
+\begin{figure}[H]
+	\centering
+	\caption{Classificação de motores elétricos}
+	\label{classif_motor}
+	\begin{tikzpicture}[grow'=right,
+			level distance=4cm,
+			level 1/.style={sibling distance=5cm},
+			level 2/.style={sibling distance=1.5cm},
+			edge from parent fork right]
+		\tikzstyle{every node}=[draw,minimum width=1in,text width=1in,align=center]
+
+		%\draw [help lines] (0,-5) grid (10,5);
+
+		\node (Root) {Motor Elétrico}
+		child {
+				node {Corrente Continua}
+				child { node {Excitação independente} }
+				child { node {Auto excitação} }
+			}
+		child {
+				node {Corrente Alternada}
+				child { node {Síncrono} }
+				child { node {Assíncrono (indução)} }
+			};
+		\node[draw] at (8, 0)	(a) {BLDC};
+		\draw[dashed] (6,2) -- (6,-2);
+		\draw[dashed] (6,0) -- (6.55,0);
+	\end{tikzpicture}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:Electric_Motor_Control}}
+\end{figure}
+
+O motor BLDC foi desenvolvido em 1962 e possui um sistema de comutação eletrônica ao ives de comutação mecânica como os motores CC. Para não utilizar
+as escovas da comutação mecânica, os enrolamentos da armadura são colocados no estator (parte estacionaria) e os ímãs são colocados no rotor (parte
+rotativa).
+A comutação eletrônica baseia-se em sensores para identificar a posição do rotor e acionar o enrolamento necessário para manter o movimento de
+rotação.\cite{book:Electric_Motor_Control} O conjunto de equações que descreve a corrente de armadura $i_a$ e o torque gerado $T$ para um motor BLDC
+de enrolamentos ligados em
+Y com neutro acessível e operando em meia onda (a tensão é aplicada entre o terminal de um enrolamento e o neutro), Figura \ref{diag:motoBLDC}, é
+
+\begin{subequations}
 	\label{eq:MotorCC}
-	u - u_{ind}  = l_{m} \cdot \dot i + r_{m}
-	\enspace,
-\end{equation}
+	\begin{align}
+		u - u_{ind}  = L_{a} \cdot \dot i_{a} + R_{a} \cdot i_{a}\enspace, \label{eq:MotorCC_1} \\
+		u_{ind} = K_{v} \cdot \omega_{m}\enspace, \label{eq:MotorCC_2}                          \\
+		T = K_{t} \cdot i_{a}\enspace, \label{eq:MotorCC_3}
+	\end{align}
+\end{subequations}
+
+em que $u$ é a tensão aplicada, $u_{ind}$ é a tensão induzida, $l_{m}$ e $r_{m}$ são, respectivamente a indutância e a resistência da armadura,
+$K_{v}$ é a constante de tensão induzida,
+$\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque.\cite{book:Permanent_Magnet_Motor}
+
+\begin{figure}[H]
+	\centering
+	\caption{Circuito equivalente de um motor BLDC}
+	\begin{center}
+		\begin{circuitikz}
+			%\draw [help lines] (-1,-2) grid (9,5);
+
+			% circuito
+			\draw (0,3) to[V, i<^=$i_a$, v_=$u$] (0,0);
+			\draw (0,3) to[R, l=$R_A$] (3,3);
+			\draw (3,3) to[L, l=$L_A$] (4,3);
+			\draw (4,3) -- (5,3);
+			\draw (5,3) to[V, v_=$u_{ind}$] (5,0);
+			\draw (0,0) -- (5,0);
+
+			% motor
+			\draw[fill=black] (4.85,0.85) rectangle (5.15,2.15);
+			\draw[fill=white] (5,1.5) ellipse (.45 and .45);
+
+			% eixo
+			\draw[fill=black] (5.45,1.45) rectangle (6.8,1.55);
+
+			% rotação e torque
+			\draw[line width=0.7pt,<-] (5.8,1) arc (-30:30:1);
+			\draw[line width=0.7pt,<-] (6.4,1) arc (-30:30:1);
+
+			% anotações
+			\draw (5.85,2.2) node {$\omega_m$};
+			\draw (6.4,2.25) node {$T$};
+			\draw (4.5, 2.25) node {$+$};
+			\draw (4.5, 0.75) node {$-$};
+		\end{circuitikz}
+	\end{center}
+	\label{diag:motoBLDC}
+	\caption*{\footnotesize Fonte: Elaborado pelo autor.}
+\end{figure}
+
+O prototipo DT1 é equipado com um motor Dunkermotoren BG75x75 40V (Figura \ref{fig:motor_bg75}). O motor que possui 3 enrolamentos, imã de neodímio
+com 8 polos e sensor hall integrado para medir a posição do rotor (24 pulsos por volta), suas características elétricas e mecânicas estão
+apresentadas na Tabela \ref{tab:dadosBg75}.
+
+\begin{figure}[H]
+	\centering
+	\caption{Motor Dunkermotoren BG75x75 40V}
+	\label{fig:motor_bg75}
+	\includegraphics[scale=0.25]{DescricaoProcesso/Figuras/bg75.png}
+	\caption*{\footnotesize Fonte: Adaptado de }
+\end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Dados do motor BG75x75 40V}
+	\label{tab:dadosBg75}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{lcc}
+		\toprule
+		Tensão nominal            & {[}V{]}        & 40     \\
+		Corrente nominal          & {[}A{]}        & 15,6   \\
+		Torque nominal            & {[}N.m{]}      & 150    \\
+		Velocidade nominal        & {[}rpm{]}      & 3370   \\
+		Troque de atrito          & {[}N.m{]}      & 0,13   \\
+		Torque de parada          & {[}N.m{]}      & 12     \\
+		Velocidade sem carga      & {[}rpm{]}      & 4100   \\
+		Potencia de saída nominal & {[}W{]}        & 530    \\
+		Potencia de saída máxima  & {[}W{]}        & 1150   \\
+		Constante de torque       & {[}N.m/A{]}    & 0,119  \\
+		Resistência               & {[}$\Omega${]} & 0,07   \\
+		Indutância                & {[}mH{]}       & 0,45   \\
+		Corrente de pico          & {[}A{]}        & 63     \\
+		Inercia do rotor          & {[}g.m²{]}     & 0,0625 \\
+		Massa                     & {[}kg{]}       & 2,8    \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Adaptado de }
+\end{table}
 
 \subsubsection{Transmição}
 
 A transmissão do veículo regula a transferência de potência do motor para as rodas. É basicamente composta por mecanismo de
-redução -- ex. caixa de velocidades -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
+redução -- ex. caixa de câmbio -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
+No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito (Figura ).
+
+Rodas de atrito são uma das maneiras mais simples para se transmitir potencia mecânica entre eixos. São composta por dois ou mais cilindros em contato direto.  
+Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. A eficiência na transmissão do torque 
+
+\begin{subequations}
+	\label{eq:Transmissao}
+	\begin{align}
+		\varphi = \frac{R_{motor}}{R_{roda}}\enspace, \label{eq:Transmissao_1} \\
+		\omega_{roda} = -\frac{\omega_{motor}}{\varphi}\enspace, \label{eq:Transmissao_2}  \\
+		T_{roda} =\varphi \cdot T_{motor} \cdot \eta \enspace, \label{eq:Transmissao_3}
+	\end{align}
+\end{subequations}
+
 
 \section{Controle Ótimo}
 
 "O objetivo da teoria de controle ótimo é determinar os sinais de controle que farão com que um processo satisfaça as restrições físicas e ao mesmo
 tempo minimize
-(ou maximize) alguns critérios de desempenho\cite{book:Kirk}."
+(ou maximize) alguns critérios de desempenho."\cite{book:Kirk}
 
-A seguinte equação é uma formulação genérica e comum para OCP
+O seguinte conjunto de equações é uma formulação genérica e comum para um problema de controle ótimo (OCP)
 
 \begin{mini!}
 {x(\cdot),u(\cdot)}{\int_{0}^{T} L(x(t),u(t)) \,\mathrm{d}t + E(x(T)) \label{eq:ObjOCP}}
@@ -209,10 +364,76 @@ A seguinte equação é uma formulação genérica e comum para OCP
 em que a Equação \ref{eq:ObjOCP} é o funcional-objetivo, Equação \ref{eq:C1_OCP} é uma restrição de estados inciais fixos, Equação \ref{eq:C2_OCP} é
 a restrição
 que representa a dinâmica
-do sistema, Equação \ref{eq:C3_OCP} são restrições de caminho e Equação \ref{eq:C4_OCP} é uma restrição de espaço para os estados finais.
+do sistema, Equação \ref{eq:C3_OCP} são restrições de caminho sobre os estados do sistema e sobre as variáveis de controle e Equação \ref{eq:C4_OCP}
+é uma restrição de espaço para os estados finais.
 
 O funcional-objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
 e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_Control}.
+
+\begin{figure}[H]
+	\centering
+	\caption{Exemplo do comportamento desejado das variáveis em um OPC}
+	\label{fig:simpleOPC}
+	\begin{tikzpicture}
+		%\draw [help lines] (-1,-2) grid (12,7);
+		\centering
+		\begin{axis}[
+				width=11cm, height=8cm,
+				xmin=0, xmax=15,
+				ymin=0, ymax=10,
+				xlabel=$t$,
+				xtick = {0,15}, xticklabels = {$0$,$T$},
+				yticklabels={}]
+			\addplot[smooth] plot coordinates {
+					(0, 4)
+					(2, 4.25)
+					(4, 5)
+					(6, 7)
+					(10, 7)
+					(11, 6)
+					(12, 5.5)
+					(15, 5.3)
+				}node[pos=.5, below] {estado $x(t)$};
+
+			\addplot[smooth] plot coordinates {
+					(0, 1)
+					(2, 1.1)
+					(5, 2)
+				};
+			\addplot[smooth] plot coordinates {
+					(5, 2.5)
+					(8, 2.8)
+					(10, 1.5)
+				}node[pos=.5, above] {vari\'{a}vel de controle $u(t)$};
+			\addplot[smooth] plot coordinates {
+					(10, 0)
+					(13, 0)
+				};
+			\addplot[smooth] plot coordinates {
+					(13, 1.5)
+					(14, 1.5)
+					(15, 0)
+				};
+
+			\addplot[dashed, black] coordinates {
+					(0,8) (15,8)
+				}node[pos=.5, above] {restri\c{c}\~{o}es de caminho $h(x(t),u(t)) \leq 0$};
+
+		\end{axis}
+		\filldraw[black] (0,2.57) circle (2pt) node[left] {
+				\begin{tabular}{r}
+					valor inicial \\$x_0$
+				\end{tabular}
+			};
+		\draw (9.2,3) -- (9.6,3) (9.2,4) -- (9.6,4);
+		\draw[dashed,line width=0.75mm] (9.4,3) -- (9.4,4) node[right, pos=.5] {
+			\begin{tabular}{l}
+				restri\c{c}\~{a}o de \\valor final\\	$r(x(T))\leq 0$
+			\end{tabular}
+		};
+	\end{tikzpicture}
+	\caption*{\footnotesize Fonte: Adaptado de }
+\end{figure}
 
 \begin{figure}[H]
 	\centering
@@ -221,7 +442,5 @@ e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_
 	\includegraphics{DescricaoProcesso/Figuras/diagrama_metodos_numericos.png}
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{article:Diehl}}
 \end{figure}
-
-\cite{phd:Matthias} \cite{phd:Rieck} \cite{manual:Falcon}
 
 \clearpage
