@@ -1,14 +1,28 @@
 \chapter{Introdução}
-\label{chap:intro} 
+\label{chap:intro}
 \thispagestyle{empty}
 
+Esté capitulo explica a motivação e objetivos deste projeto de otimização do desempenho em competições de um veículo elétrico protótipo de alta eficiência.
+Apresenta a equipe de competição estudantil Milhagem UFMG onde este PFC foi realizado. E, também, descreve a estrutura desta monografia.
+
+\section{Motivação e Justificativa}
+\label{sec:motivacao}
+
 A equipe Milhagem UFMG constrói protótipos de veículos para participar de competições
-de eficiência energética. Atualmente a equipe possui dois veículos, o M84 e o DT1 que
-são respectivamente movidos a gasolina e bateria elétrica. As competições em que a
-equipe tem participação são a Shell Eco-Marathon Brasil (nacional) e a Shell EcoMarathon Americas (internacional).
-Nessas competições os veículos devem consumir a
+de eficiência energética. Atualmente a equipe possui dois veículos: o M84 equipado com um motor a combustão interna a gasolina e o DT1,
+ apresentado na Figura \ref{fig:DT1}, que possui motor elétrico e bateria. As competições em que a
+equipe participa são a Shell Eco-Marathon Brasil (nacional) e a Shell EcoMarathon Americas (internacional).
+Nestas competições os veículos devem consumir a
 menor quantidade de energia para percorrer trajeto, ou seja, devem ter a maior eficiência
 energética.
+
+\begin{figure}[h]
+    \centering
+    \caption{Veículo elétrico protótipo DT1}
+    \label{fig:DT1}
+    \includegraphics[scale=0.11]{Introducao/Figuras/dt1.png}
+    \caption*{\footnotesize{Fonte: Equipe Milhagem UFMG}}
+\end{figure}
 
 Os principais fatores que influenciam no consumo de energia do veículo são a
 aerodinâmica, o peso total, a resistência ao rolamento, o relevo do trajeto e a estratégia
@@ -22,89 +36,76 @@ Durante a avaliação da eficiência energética de um protótipo ele deve segui
 restrições: posições inicial e final fixas, velocidade inicial nula, velocidade instantânea
 máxima e velocidade média mínima. Uma vez que essas restrições permitem inúmeras
 estratégias de pista tem-se a necessidade encontrar a estratégia que maximize a
-eficiência energética do veículo durante a avaliação de consumo. Além disso, os protótipos
-estão em constante evolução, de forma que essa evolução também modifica as
-possibilidades de estratégia de pista o que gera a necessidade de uma solução que
-também adaptativa.
+eficiência energética do veículo durante a avaliação de consumo.
 
-As teorias de controle ótimo e estimação de sistemas fornecem o embasamento para a
-criação de um software que calcula a estratégia de maior eficiência e adaptando-se a
-evolução do protótipo. Neste projeto, o software será constituído de dois estágios, no
-primeiro os parâmetros do modelo matemático do veículo serão estimados mediante
-dados de um ensaio no protótipo e no segundo estágio a estratégia ótima será calculada
-dado o modelo estimado no estágio anterior.
-
-\section{Motivação e Justificativa}
-\label{sec:motivacao}
-
-Argumente sobre a importância do projeto desenvolvido usando uma visão de alto nível, sem entrar em detalhes. Contextualize seu projeto dentro do
-local de execução ou da literatura e explique como ele é necessário ou inovador. É possível fazer uma breve revisão bibliográfica, confrontando seu
-trabalho com outras referências bibliográficas para mostrar a sua contribuição. No quesito contribuição, é muito importante deixar claro o tempo todo
-que partes do projetos foram executadas por outros e que partes foram executadas por você. Caso contrário, corre-se o risco de inadvertidademente
-tomar crédito pelo trabalho de outrem, o que pode ter implicações legais.
+% A teorias de controle ótimo fornece o embasamento para a
+% que a estratégia de maior eficiência seja calculada numericamente. Para isso antes é necessário
+%  a determinação do modelo matemático que represente o comportamento dinâmico do veiculo.
 
 \section{Objetivos do Projeto}
 \label{sec:objetivos}
 
-Tendo em vista o exposto acima, este projeto tem por objetivos:
+Tendo em vista o exposto acima, este projeto tem por objetivos direcionados ao protótipo DT1:
 
-\begin{enumerate}[a)]
-    \item Definir um modelo matemático para o protótipo DT1;
-    \item Formular um problema de controle ótimo (OCP) pra obter a estratégia ótima;
-    \item Implementação de um algoritmo para solução desse OCP;
-    \item Definir a estratégia ótima.
+\begin{enumerate}[(a)]
+    \item Definir o modelo matemático para a dinâmica do protótipo;
+    \item Formular o problema de controle ótimo (OCP) pra obter a estratégia ótima;
+    \item Implementar o algoritmo para solução desse OCP;
+    \item Definir a estratégia ótima para a pista da Shell EcoMarathon Américas de 2019.
 \end{enumerate}
 
 \section{Local de Realização}
 \label{sec:empresa}
 
-Esse projeto foi desenvolvido na equipe de Milhagem UFMG. Equipe sediada no Departamento de Engenharia Mecânica da UFMG, composta por alunos de graduação em engenharia.
+
+Esse projeto foi desenvolvido na equipe de de competição Milhagem UFMG, na qual o autor foi integrante de 2013 à 2015 e em 2018. A equipe é composta por alunos de graduação em engenharia de diversos períodos e sua sede é no Departamento de Engenharia Mecânica da UFM.
 Foi fundada, sobre orientação do
 professor Paulo Iscold, em 2005 no Centro de Estudos Aeronáuticos (CEA) do qual fez
 parte até 2006.
 De 2006 a 2011 o projeto da equipe ficou suspenso retornando as atividades, sobre orientação do professor Fabrício Pujatti, no Centro de Tecnologia
-de Mobilidade (CTM).
+de Mobilidade (CTM). A equipe ja desenvolveu 6 veículos, sendo DT1 o primeiro elétrico, e participou de de 10 competições com os seguintes resultados:
 
-Hipótrico da equipe de participação em competições:
+
 \begin{itemize}
     \item Maratona Universitária de Eficiência Energética
-        \begin{itemize}
-            \item  Categoria gasolina
-            \begin{itemize}
-                \item 2005: 2º Lugar, com a marca de $227,6$ [km/L]
-                \item 2006: 1º Lugar, com a marca de $598,9$ [km/L]
-                \item 2011: 5º Lugar, com a marca de $199,0$ [km/L]
-                \item 2013: 4º Lugar, com a marca de $234,9$ [km/L] 
-            \end{itemize}
-        \end{itemize}
+          \begin{itemize}
+              \item  Categoria gasolina
+                    \begin{itemize}
+                        \item 2005: 2º Lugar, com a marca de $227,6$ [km/L]
+                        \item 2006: 1º Lugar, com a marca de $598,9$ [km/L]
+                        \item 2011: 5º Lugar, com a marca de $199,0$ [km/L]
+                        \item 2013: 4º Lugar, com a marca de $234,9$ [km/L]
+                    \end{itemize}
+          \end{itemize}
     \item Shell Eco-marathon Brasil
-        \begin{itemize}
-            \item  Categoria gasolina
-            \begin{itemize}
-                \item 2016: 2º Lugar, com a marca de $196,0$ [km/L] 
-            \end{itemize}
-            \item  Categoria elétrico
-            \begin{itemize}
-                \item 2017: 3º Lugar, com a marca de $315,6$ [km/kWh]
-                \item 2018: 1º Lugar, com a marca de $266,4$ [km/kWh]
-            \end{itemize}
-        \end{itemize}
+          \begin{itemize}
+              \item  Categoria gasolina
+                    \begin{itemize}
+                        \item 2016: 2º Lugar, com a marca de $196,0$ [km/L]
+                    \end{itemize}
+              \item  Categoria elétrico
+                    \begin{itemize}
+                        \item 2017: 3º Lugar, com a marca de $315,6$ [km/kWh]
+                        \item 2018: 1º Lugar, com a marca de $266,4$ [km/kWh]
+                    \end{itemize}
+          \end{itemize}
     \item Shell Eco-marathon Americas
-        \begin{itemize}
-            \item  Categoria elétrico
-            \begin{itemize}
-                \item 2018: 6º Lugar, com a marca de $266,5$ [km/kWh]
-                \item 2019: 2º Lugar, com a marca de $226,9$ [km/kWh]
-            \end{itemize}
-        \end{itemize}
+          \begin{itemize}
+              \item  Categoria elétrico
+                    \begin{itemize}
+                        \item 2018: 6º Lugar, com a marca de $266,5$ [km/kWh]
+                        \item 2019: 2º Lugar, com a marca de $226,9$ [km/kWh]
+                    \end{itemize}
+          \end{itemize}
 \end{itemize}
 
 \section{Estrutura da Monografia}
 \label{sec:organizacao}
 
-O relatório está dividido em quatro capítulos. Este capítulo apresentou uma introdução ao projeto a ser descrito nesta monografia e a equipe onde o
-trabalho foi realizado. O Capítulo 2 descreve os princípios básicos de um sistema ... (sistema onde se insere o trabalho) e abrange todos os
-conceitos necessários para um melhor entendimento do projeto. O Capítulo 3 aborda a metodologia de desenvolvimento, seguida pela implementação dos
-.... No Capítulo 4 tem-se a conclusão da  monografia e algumas sugestões e dificuldades encontradas na realização do projeto.
+O relatório está dividido em cinco capítulos. Este capítulo apresentou uma introdução ao projeto a ser descrito nos capítulos seguintes. 
+O Capítulo \ref{chap:revisao} é uma revisão bibliográfica que dos princípios básicos de modelagem veicular e controle ótimo de forma que abrange todos os
+conceitos necessários para um melhor entendimento do projeto. O Capítulo \ref{chap:metodologia} aborda a metodologia de desenvolvimento do modelo matemático do DT1 e de implementação implementação do software
+para otimização da estrategia de pista. Os resultados obtidos no projeto são apresentados no Capítulo \ref{chap:resultados} e no 
+Capitulo \ref{chap:conclusao} tem-se a conclusão da monografia com algumas sugestões para trabalhos futuros e dificuldades encontradas durante a realização do projeto.
 
 \clearpage

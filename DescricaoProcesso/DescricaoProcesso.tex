@@ -1,5 +1,5 @@
 \chapter[Revisão Bibliográfica]{Revisão Bibliográfica}
-\label{chap:revisao_bibliografica}
+\label{chap:revisao}
 \thispagestyle{empty}
 
 Este capitulo é divido em duas seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
@@ -24,15 +24,15 @@ veiculo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém
 
 \begin{equation}
 	\label{eq:SomaForcas}
-	m \cdot \dot v	= F_t - (F_a +	F_g + F_p)
+	(m_v + m_p + m_r) \cdot \frac{d^2x}{dt^2} = F_t - (F_a + F_g + F_p)
 	\enspace,
 \end{equation}
 
-em que $m$ é a massa total, $v$ é a velocidade, $F_{t}$ é a propulsão feita pelo motor subtraída as perdas do sistema de transmissão, $F_{a}$ é o
+em que $m_v$ é a massa do veiculo, $m_v$ é a massa do piloto,  $m_r$ é massa equivalente ao memento de inercia das partes rotativas (rodas e eixo do motor),  $x$ é a posição, $F_{t}$ é a propulsão feita pelo motor, $F_{a}$ é o
 arrasto aerodinâmico, $F_g$ é a componente do peso que esta direção da velocidade e $F_{p}$ é a resistência ao rolamentos dos pneus no pista.
-Os modelos que descrevem a forças $F_{a}$, $F_g$, $F_{p}$ e $F_{t}$ estão apresentados nas subseções a seguir.
+Os modelos que descrevem a massa equivalente $m_r$ forças $F_{a}$, $F_g$, $F_{p}$ e $F_{t}$ estão apresentados nas subseções a seguir.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\caption{Diagrama de forças de um veículo em movimento}
 	\label{fig:diag_forcas_veiculo}
@@ -41,6 +41,25 @@ Os modelos que descrevem a forças $F_{a}$, $F_g$, $F_{p}$ e $F_{t}$ estão apre
 	\end{normalsize}
 	\caption*{\footnotesize Fonte: Elaborado pelo autor.}
 \end{figure}
+
+\subsection{Inércia rotacional}
+
+A inércia de todas as peças giratórias dentro do veículo causa forças fictícias. 
+Esta inércia pode ser representada nos modelos dinâmicos do motor e da transmissão, ou ser representada com uma uma massa equivalente $m_r$.
+Para essa representação é considerado que não ha deslizamento do pneu no asfalto e não a escorregamento na transmissão. O cálculo de $m_r$ é 
+
+\begin{subequations}
+	\label{eq:mr}
+	\begin{align}
+		m_r = m_{r,r} + m_{r,m} \enspace, \label{eq:mr1} \\
+		m_{r,r} = \sum_{n=1}^{Nr} J_r \cdot \frac{1}{r_r^2} \enspace, \label{eq:mr2} \\
+		m_{r,m} = J_m \cdot \frac{\varphi^2}{r_r^2} \enspace, \label{eq:mr3}
+	\end{align}
+\end{subequations}
+
+em que $m_{r,r}$ é a massa equivalente a inércia das rodas e $m_{r,m}$ é a massa equivalente a inércia do motor, $Nr$ é a quantidade de rodas, 
+$J_r$ e $r_r$ são o momento de inércia e o raio da roda, $J_m$ é o momento de inércia do motor e 
+$\varphi$ é a relação de transmissão.\cite{book:guzzella2012vehicle}
 
 \subsection{Arrasto Aerodinâmico}
 \label{subsec:arrasto_aerodinamico}
@@ -64,7 +83,7 @@ computacional (CFD, do inglês \textit{computational fluid dynamics}) e/ou exper
 valores típicos de $C_{d}$ para diferentes tipos de
 veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\caption{Comparação do $c_{d}$ de diferentes tipos veículos}
 	\rowcolors{1}{}{lightgray}
@@ -133,7 +152,15 @@ Michelin\textsuperscript{\textregistered}
 % Escrever que nao vou conciderar pq nao da pra medir a variacao no cenario atual.
 % Colocar como perpestivas de trabalho futuro.
 
-\begin{table}[H]
+\begin{figure}[h]
+	\centering
+	\caption{Pneu Michelin\textsuperscript{\textregistered} 44-406 \textit{Prototype}}
+	\label{fig:pneu}
+	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/pneu_Michelin.png}
+	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG.}
+\end{figure}
+
+\begin{table}[h]
 	\centering
 	\caption{Comparação do coeficiente $c_{r}$ de diferentes pneus}
 	\rowcolors{1}{}{lightgray}
@@ -154,21 +181,13 @@ Michelin\textsuperscript{\textregistered}
 	\label{tab:ComparacaoCr}
 \end{table}
 
-\begin{figure}[H]
-	\centering
-	\caption{Pneu Michelin\textsuperscript{\textregistered} 44-406 \textit{Prototype}}
-	\label{fig:pneu}
-	\includegraphics[scale=0.25]{DescricaoProcesso/Figuras/pneu_Michelin.png}
-	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG.}
-\end{figure}
-
 \subsection{Sistema de propulsão}
 \label{subsec:sistema_propulsao}
 
 De forma genérica, o sistema de propulsão de um veículo elétrico, representado no diagrama da Figura \ref{fig:diagrama_propulsao}, é composto por
 bateria, conversor de potencia, motor elétrico e transmissão.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\caption{Diagrama de blocos do sistema de propulsão de um veículo elétrico}
 	\label{fig:diagrama_propulsao}
@@ -176,19 +195,18 @@ bateria, conversor de potencia, motor elétrico e transmissão.
 	\caption*{\footnotesize Fonte: Elaborado pelo autor.}
 \end{figure}
 
-\subsubsection{Bateria}
+
 
 Bateria eletroquímica, ou apenas bateria, é um dispositivo em que durante a descarga ocorre a conversão de energia potencial química em energia
 elétrica e na carga ocorre a conversão inversa. Ou seja, uma bateria armazena energia elétrica na forma de energia potencial química. Uma bateria é
 composta por varais células ligadas entre se. Uma célula de bateria é basicamente composta por dois eletrodos -- positivo e
 negativo -- imersos em um eletrólito\cite{book:Modern_Electric_Vehicles}.
 
-\subsubsection{Conversor de Potência}
+
 
 Conversor eletrônico de potência, ou conversor de potência, é o circuito cujo a finalidade é extrair energia elétrica de um sistema de energia e
 transformá-la em uma forma adequada e necessária para um motor\cite{book:Electric_Motor_Control}.
 
-\subsubsection{Motor Elétrico}
 
 O motor elétrico converte a potencia elétrica -- tensão e corrente -- em potencia mecânica rotativa -- torque e rotação -- para impulsionar o
 veículo.\cite{book:Modern_Electric_Vehicles} Podem ser classificados em relação a sua alimentação: corrente continua
@@ -197,7 +215,7 @@ No entanto o motor de corrente continua sem escovas, ou BLDC do inglês \textit{
 pois sua configuração é semelhante à de um motor CA, enquanto suas características elétricas são semelhantes às de um motor
 CC.\cite{book:Electric_Motor_Control} Nesse trabalho estudara-se o modelo dos motores BLDC pois é o tipo de motor utilizado no protótipo DT1.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\caption{Classificação de motores elétricos}
 	\label{classif_motor}
@@ -234,22 +252,22 @@ rotativa).
 A comutação eletrônica baseia-se em sensores para identificar a posição do rotor e acionar o enrolamento necessário para manter o movimento de
 rotação.\cite{book:Electric_Motor_Control} O conjunto de equações que descreve a corrente de armadura $i_a$ e o torque gerado $T$ para um motor BLDC
 de enrolamentos ligados em
-Y com neutro acessível e operando em meia onda (a tensão é aplicada entre o terminal de um enrolamento e o neutro), Figura \ref{diag:motoBLDC}, é
+Y com neutro acessível e operando em meia onda (a tensão é aplicada entre o terminal de um enrolamento e o neutro) é
 
 \begin{subequations}
 	\label{eq:MotorCC}
 	\begin{align}
 		u - u_{ind}  = L_{a} \cdot \dot i_{a} + R_{a} \cdot i_{a}\enspace, \label{eq:MotorCC_1} \\
 		u_{ind} = K_{v} \cdot \omega_{m}\enspace, \label{eq:MotorCC_2}                          \\
-		T = K_{t} \cdot i_{a}\enspace, \label{eq:MotorCC_3}
+		T_m = K_{t} \cdot i_{a} \enspace, \label{eq:MotorCC_3}
 	\end{align}
 \end{subequations}
 
 em que $u$ é a tensão aplicada, $u_{ind}$ é a tensão induzida, $l_{m}$ e $r_{m}$ são, respectivamente a indutância e a resistência da armadura,
 $K_{v}$ é a constante de tensão induzida,
-$\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque.\cite{book:Permanent_Magnet_Motor}
+$\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque. A Figura \ref{diag:motoBLDC} apresenta o modelo o circuito de um enrolamento do motor BLDC.\cite{book:Permanent_Magnet_Motor}
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\caption{Circuito equivalente de um motor BLDC}
 	\begin{center}
@@ -290,15 +308,15 @@ O prototipo DT1 é equipado com um motor Dunkermotoren BG75x75 40V (Figura \ref{
 com 8 polos e sensor hall integrado para medir a posição do rotor (24 pulsos por volta), suas características elétricas e mecânicas estão
 apresentadas na Tabela \ref{tab:dadosBg75}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\caption{Motor Dunkermotoren BG75x75 40V}
 	\label{fig:motor_bg75}
-	\includegraphics[scale=0.25]{DescricaoProcesso/Figuras/bg75.png}
+	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/bg75.png}
 	\caption*{\footnotesize Fonte: Adaptado de }
 \end{figure}
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\caption{Dados do motor BG75x75 40V}
 	\label{tab:dadosBg75}
@@ -307,7 +325,7 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 		\toprule
 		Tensão nominal            & {[}V{]}        & 40     \\
 		Corrente nominal          & {[}A{]}        & 15,6   \\
-		Torque nominal            & {[}N.m{]}      & 150    \\
+		Torque nominal            & {[}N.m{]}      & 1,50    \\
 		Velocidade nominal        & {[}rpm{]}      & 3370   \\
 		Troque de atrito          & {[}N.m{]}      & 0,13   \\
 		Torque de parada          & {[}N.m{]}      & 12     \\
@@ -325,23 +343,52 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 	\caption*{\footnotesize Fonte: Adaptado de }
 \end{table}
 
-\subsubsection{Transmição}
-
 A transmissão do veículo regula a transferência de potência do motor para as rodas. É basicamente composta por mecanismo de
 redução -- ex. caixa de câmbio -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
-No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito (Figura ).
+No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito (Figura \ref{dig:Trasmissao}).
 
-Rodas de atrito são uma das maneiras mais simples para se transmitir potencia mecânica entre eixos. São composta por dois ou mais cilindros em contato direto.  
+Rodas de atrito são uma das maneiras mais simples para se transmitir potencia mecânica entre eixos e sua eficiência é tipicamente de $95$ a $98$ {\%}. São composta por dois ou mais cilindros em contato direto.  
 Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. A eficiência na transmissão do torque 
 
 \begin{subequations}
 	\label{eq:Transmissao}
 	\begin{align}
-		\varphi = \frac{R_{motor}}{R_{roda}}\enspace, \label{eq:Transmissao_1} \\
-		\omega_{roda} = -\frac{\omega_{motor}}{\varphi}\enspace, \label{eq:Transmissao_2}  \\
-		T_{roda} =\varphi \cdot T_{motor} \cdot \eta \enspace, \label{eq:Transmissao_3}
+		\varphi = \frac{r_{r}}{r_{m}}\enspace, \label{eq:Transmissao_1} \\
+		\omega_{r} = -\frac{\omega_{m}}{\varphi}\enspace, \label{eq:Transmissao_2}  \\
+		T_{r} =\varphi \cdot T_{m} \cdot \eta\enspace, \label{eq:Transmissao_3}
 	\end{align}
 \end{subequations}
+
+onde $\varphi$ é a relação de transmissão, $R_{r}$ e $\omega_{r}$ são o diâmetro e a velocidade angular da roda, 
+$R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor e $\eta$ é a eficiência da roda de atrito.\cite{book:Niemann1971,book:Norton2010}
+
+\begin{figure}[h]
+	\centering
+	\caption{Representação da transmissão do DT1}
+	\label{dig:Trasmissao}
+	\begin{tikzpicture}
+		%\draw [help lines] (-2,-2) grid (6,4);
+
+		\filldraw[black] (0,0) circle (1pt);
+		\draw (0,0) circle (0.75cm);
+		\draw [thick,<-] (-0.7, -0.7) arc (225:180:1cm) node[pos=0.5, left] {$T_m$, $\omega_m$};
+		\draw[<->] (0,0) -- (0,-0.75) node[pos=0.11, right] {$r_{m}$}; 
+
+		\filldraw[black] (-0.87,2.1) circle (1pt);
+		\draw [dashed] (-0.87,2.1) circle (0.75cm);
+
+		\filldraw[black] (2.56,1) circle (1pt);
+		\draw (2.56,1) circle (2cm);
+		\draw[thick,<-] (4.8, 0.5) arc (-13:13:2cm) node[pos=0.5, right] {$T_r$, $\omega_r$};
+		\draw[<->] (2.56,1) -- (2.56,3) node[pos=0.5, right] {$r_{r}$}; 
+
+		\draw[dashed] (0, 0) arc (225:180:3cm); 
+		\draw (4,-1.3) node[minimum width=3cm,text width=3cm,align=center]{roda tracionada};
+		\draw (-0.2,-1.35) node[minimum width=3cm,text width=3cm,align=center]{eixo do motor (acoplado)};
+		\draw (-1,3.2) node[minimum width=3cm,text width=3cm,align=center]{(desacoplado)};
+	\end{tikzpicture}
+	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
+\end{figure}
 
 
 \section{Controle Ótimo}
@@ -352,25 +399,27 @@ tempo minimize
 
 O seguinte conjunto de equações é uma formulação genérica e comum para um problema de controle ótimo (OCP)
 
+
 \begin{mini!}
-{x(\cdot),u(\cdot)}{\int_{0}^{T} L(x(t),u(t)) \,\mathrm{d}t + E(x(T)) \label{eq:ObjOCP}}
-{\label{eq:formulacaoOCP}}{}
-\addConstraint{x(0)-x_{0}}{=0 \label{eq:C1_OCP}}{}
-\addConstraint{\dot x(t) - f(x(t),u(t))}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
-\addConstraint{h(x(t),u(t))}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP}}
-\addConstraint{r(x(T))}{\leq 0 \enspace, \label{eq:C4_OCP}}{}
+	{x(\cdot),u(\cdot), p, T}{\int_{0}^{T} L(x(t),u(t),p) \,\mathrm{d}t \;+\; E(x(T),p) \label{eq:ObjOCP}}
+	{\label{eq:formulacaoOCP}}{}
+	\addConstraint{x(0)-x_{0}}{=0 \label{eq:C1_OCP}}{}
+	\addConstraint{\dot x(t) - f(x(t),u(t))}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
+	\addConstraint{h(x(t),u(t))}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP}}
+	\addConstraint{r(x(T))}{\leq 0 \label{eq:C4_OCP}}{}
+	\addConstraint{T \leq}{T_{max} \label{eq:C5_OCP}}{}
+	\addConstraint{p_{min}\leq p \leq}{p_{max} \, \label{eq:C6_OCP}}{}
 \end{mini!}
 
-em que a Equação \ref{eq:ObjOCP} é o funcional-objetivo, Equação \ref{eq:C1_OCP} é uma restrição de estados inciais fixos, Equação \ref{eq:C2_OCP} é
+em que a Equação (\ref{eq:ObjOCP}) é o função objetivo, Equação (\ref{eq:C1_OCP}) é uma restrição de estados inciais fixos, Equação (\ref{eq:C2_OCP}) é
 a restrição
 que representa a dinâmica
-do sistema, Equação \ref{eq:C3_OCP} são restrições de caminho sobre os estados do sistema e sobre as variáveis de controle e Equação \ref{eq:C4_OCP}
-é uma restrição de espaço para os estados finais.
-
-O funcional-objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
+do sistema, Equação (\ref{eq:C3_OCP}) são restrições de caminho sobre os estados do sistema e sobre as variáveis de controle, Equação (\ref{eq:C4_OCP})
+é uma restrição de espaço para os estados finais, Equação (\ref{eq:C5_OCP}) é a restrição para o tempo final e Equação (\ref{eq:C6_OCP}) são restrições de intervalo para parâmetros otimizáveis.
+O função objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
 e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_Control}.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\caption{Exemplo do comportamento desejado das variáveis em um OPC}
 	\label{fig:simpleOPC}
@@ -435,12 +484,126 @@ e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_
 	\caption*{\footnotesize Fonte: Adaptado de }
 \end{figure}
 
-\begin{figure}[H]
+
+De forma geral, há três abordagens básicas para solução	de um OPC, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
+conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
+
+\begin{enumerate}[(a)]
+	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequencia de controle ótimo. 
+	\item Métodos indiretos: utiliza a filosofia "primeiro otimizar e então discretizar", que é escrever as condições de otimalidade contínuas primeiro,
+		resultando em um problemas de valor de contorno (sistema de equações diferenciais acrecido de um conjunto adicional de restrições chamadas condições de contorno) e depois discretizá-lo para resolver numericamente.
+	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OPC e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
+	não linear resultante (NPL do inglês \textit{Nonlinear Programming Problem}) resultante.
+\end{enumerate}
+
+Para a solução de OPC em aplicações no mundo real, os métodos diretos são atualmente as técnicas mais difundidas e usadas com sucesso. \cite{article:Diehl,book:betts2010}
+
+Métodos diretos reformulam o OPC da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
+
+\begin{mini!}
+	{w}{a(w) \label{eq:NPL1}}
+	{\label{eq:NPL}}{}
+	\addConstraint{b(w)}{= 0 \label{eq:NPL2}}{}
+	\addConstraint{c(w)}{\geq 0, \label{eq:NPL3}}{}
+\end{mini!}
+
+com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
+Todos os métodos diretos começam por uma parametrização da trajetória de controle, mas diferem na forma como a trajetória dos estados é tratada. Podem ser classificados em duas abordagems, sequnciais e simultâneos. 
+
+Nas abordagens sequenciais, a trajetória de estado x (t) é uma função implícita dos controles $u(t)$ e do valor inicial $x0$, por exemplo, por uma simulação direta com a ajuda de um solucionador ODE em tiro único direto [45, 31]. Assim, simulação
+e as iterações de otimização procedem sequencialmente, uma após a outra, e a PNL possui apenas o controle discretizado como graus de liberdade de otimização.
+
+As abordagens simultâneas fazem uma parametrização da trajetória do estado como variáveis ​​de otimização dentro da PNL e adicionam restrições 
+de igualdade adequadas que representam o modelo ODE. 
+Assim, a simulação e a otimização ocorrem simultaneamente, e somente na solução da PNL os estados realmente representam uma solução EDO válida 
+correspondente à trajetória de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}.
+
+\begin{figure}[h]
 	\centering
 	\caption{Visão geral do métodos numéricos para controle ótimo}
 	\label{fig:diagrama_metodos_numericos}
-	\includegraphics{DescricaoProcesso/Figuras/diagrama_metodos_numericos.png}
+	\begin{tikzpicture}[
+			level distance=2cm,
+			level 1/.style={sibling distance=3.5cm},
+			level 2/.style={sibling distance=5.2cm},
+			level 3/.style={sibling distance=3.5cm},
+			edge from parent fork down
+			]
+		\tikzstyle{every node}=[draw,minimum width=2.7cm,text width=2.7cm,align=center]
+
+		%\draw [help lines] (0,-5) grid (10,5);
+
+		\node (Root) {Controle Ótimo}
+			child {	node {Programação Dinâmica} }
+			child {	node {Métodos Indiretos} }
+			child { node {Métodos Diretos}
+				child { node {Métodos Sequenciais} 
+					child {	node {\textit{Direct Single Shooting}} }
+				}
+				child { node {Métodos Simultâneos} 
+					child {	node {\textit{Direct Multiple Shooting}} }
+					child {	node {\textit{Direct Collocation}} }
+				}
+			};
+	\end{tikzpicture}
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{article:Diehl}}
 \end{figure}
+
+
+
+\subsection{FALCON.m}
+
+FALCON.m é um é uma biblioteca de \textit{software}, proprietária de uso gratuito, para MATLAB\textsuperscript{\textregistered}, 
+desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e 
+análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização \cite{manual:Falcon, phd:Rieck} 
+Ela segue o paradigma de programação orientada a objetos e um resumo de seus principais objetos é apresentado na Figura \ref{}:
+
+\begin{figure}[h]
+	\centering
+	\caption{Resumo com principais objetos da biblioteca FALCON.m}
+	\label{}
+	\begin{tikzpicture}[%
+		grow via three points={one child at (0.5,-0.7) and
+		two children at (0.5,-0.7) and (0.5,-1.4)},
+		edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+	
+		\tikzstyle{every node}=[draw,minimum width=4cm,text width=4cm,align=center, anchor=west]
+		\tikzstyle{selected}=[fill=gray!50]
+		\tikzstyle{optional}=[dashed,fill=gray!50]
+	
+		\node [selected] {Problem}
+		  child { node [selected] {Phases}
+			child { node [selected] {Model}}
+			child { node {StateGrid}}
+			child { node {ControlGrid}}
+			child { node {PathConstraints}}
+			child { node {LagrangeCosts}}
+			child { node {InitialTime}}
+			child { node {FinalTime}}
+		  }	
+		  child [missing] {}				
+		  child [missing] {}				
+		  child [missing] {}
+		  child [missing] {}				
+		  child [missing] {}				
+		  child [missing] {}	
+		  child [missing] {}	
+		  child { node {Parameters}}
+		  child { node {MayerCosts}}
+		  child { node {DiscretizationMethod}};
+	\end{tikzpicture}
+	\caption*{\footnotesize Fonte: Adaptado de}
+\end{figure}
+
+A biblioteca utiliza otimizadores para NLP externos, Como cada otimizador tem uma interface única, no momento é possivel utilizar interfaces para três otmizadores: IPOPT, SNOPT e WORHP. 
+O otimizador utilizado neste trabalho é o IPOPT, padrão da biblioteca FALCON.m.
+
+\subsection{IPOPT}
+
+O projeto COIN-OR, do inglês \textit{COmputational INfrastructure for Operations Research},
+ é uma iniciativa que visa promover \textit{software} de código aberto para a comunidade de pesquisa operacional \cite{article:CoinOr}. 
+ Dentre as bibliotecas disponibilizadas no projeto COIN-OR está a IPOPT, do inglês \textit{Interior Point OPTimizer}.
+ Escrita em C++ e Fortran para solução de problemas de otimização não linear utilizando o
+ método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt} e sua licença é a EPL. Mais detalhes sobre esta bibliotecas podem ser obtidos na pagina do seu repositório no GitHub\textsuperscript{\textregistered} (\url{https://github.com/coin-or/Ipopt}).
 
 \clearpage
