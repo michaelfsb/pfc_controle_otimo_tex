@@ -1,5 +1,48 @@
 \chapter{Resultados}
 \label{chap:resultados}
-Para a execução do projeto, algumas etapas de desenvolvimento tiveram de ser seguidas: familiarização com o sistema, estudo dos módulos envolvidos, leitura dos requisitos, elaboração de documento descrevendo todo o processo de implementação e relacionamento com os diversos módulos, implementação e testes.
+
+Os resultados obtidos com o desenvolvimento desse projeto são apresentados e discutidos nesse capitulo em três seções. 
+Na Seção \ref{sec:resultados_modelo} 
+A Seção \ref{sec:resultados_pista}
+E a Seção \ref{sec:resultados_otimo}
+
+\section{Modelo do veiculo DT1}
+\label{sec:resultados_modelo}
+
+O modelo obtido para o veiculo para o veiculo DT1 foi a Equação (\ref{eq:modelo_1}) e o conjunto de constates da Tabela \ref{tab:constantes}.
+Entretanto esse modelo não foi validado experimentalmente pois esse projeto foi realizado, em sua maior parte, durante o regime de ensino remoto
+emergência causado pela pandemia de Covid-19 em 2020. Na solução do OPC proposto a marca de consumo calculado para a estrategia ótima
+foi de $900,3$ [km/kWh] que é um valor muito distante das marcas realmente realizas pelo DT1 de $266,5$ [km/kWh] em 2018 e de $226,9$ [km/kWh] em 2019  no Kartódromo de Sonoma na Shell Eco-marathon Americas. 
+Apesar de que uma melhora na marca era esperada, esta grande diferença entre os valores das marcas deve ser analisada com ceticismo, ela indica que as constantes do modelo podem precisar ser ajustadas e/ou as simplificações revistas.
+
+
+\section{Modelo da pista}
+\label{sec:resultados_pista}
+
+A curva ajustada para representar a altitude relativa em função da distancia apresentou um erro maior nos pontos que a distancia percorrida esta entre 290 e 575 e metros e entre 1005 e 1265 metros. O máximo erro destes
+intervalos foi de 19\% e 34\% respetivamente. Ja no restante do intervalo o erro máximo ficou abaixo de 10\%. 
+O modelo de inclinação, obtido a partir da arco tangente da derivada desta curva, foi aprestando na Equação (\ref{eq:modeloTheta}). 
+A Figura \ref{graf:modelo_pista} apresenta uma comparação entre os dados de altitude e a curva ajusta.
+O comportamento periódico desejado na curva ajustada para descrever a repetição das voltas na tentativa é a apresentado na \ref{graf:pista_voltas}.
+
+
+\begin{figure}[H]
+    \centering
+    \caption{Curva ajustada para representar altitude da pista}
+    \input{Resultados/Figuras/pista_modelo.tex}
+    \label{graf:modelo_pista}
+    \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Representação da periodicidade da curva ajusta}
+    \input{Resultados/Figuras/pista_voltas.tex}
+    \label{graf:pista_voltas}
+    \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+\end{figure}
+
+\section{Estrategia de pista ótima}
+\label{sec:resultados_otimo}
 
 \clearpage

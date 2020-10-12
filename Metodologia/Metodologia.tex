@@ -3,7 +3,7 @@
 \thispagestyle{empty}
 
 É apresentado neste capitulo o desenvolvimento realizado neste projeto, os problemas encontrados e as soluções propostas.
-Na primeira seção tem-se a definição do modelo matemático do veiculo protótipo DT1. A segunda seção traz a formulação proposta para o problema de controle ótimo que encontrar
+Na primeira e segunda seção tem-se a definição do modelo matemático do veiculo protótipo DT1 e da pista. A terceira seção traz a formulação proposta para o problema de controle ótimo que encontrar
 a estrategia de pista ótima. Por fim, na ultima seção é apresentado os passos realizados no desenvolvimento do código que soluciona o OPC proposto. 
 
 \section{Modelo do veiculo DT1} 
@@ -16,10 +16,8 @@ Para isto as seguintes simplificações e considerações foram feita:
     \item \textbf{Vento:} a velocidade do vento foi desconsiderada na Equação (\ref{eq:Fa});
     \item \textbf{Pneus:} a variação do coeficiente de rolamento em funça da temperatura, da pressão e a velocidade não foi considerada na Equação (\ref{eq:Fr});
     \item \textbf{Rolamentos:} o atrito viscos dos rolamentos foi considerado nulo;
-    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potencia foram tratados como componentes ideias não apresentando 
-        perdas de energia ou modificações na dinâmica das grandezas elétricas;
-    \item \textbf{Indutância do motor:} como o dinâmica da velocidade é pelo menos dez vez mais lenta que a dinâmica da corrente elétrica no motor
-        a contribuição do do indutor foi removida da Equação (\ref{eq:propulsao_1}).  
+    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potencia foram tratados como componentes ideias não modificações na dinâmica das grandezas elétricas;
+    \item \textbf{Indutância do motor:} como o dinâmica da velocidade é pelo menos dez vez mais lenta que a dinâmica da corrente elétrica, a contribuição do do indutor foi removida da Equação (\ref{eq:propulsao_1}).  
 \end{itemize}
 
 A partir das Equações (\ref{eq:SomaForcas}) à (\ref{eq:Fr}) e (\ref{eq:propulsao}) e destas simplificações e considerações foi definido a 
@@ -28,8 +26,7 @@ seguinte equação para descrever o comportamento do veiculo
 \begin{subequations}
 	\label{eq:modelo_1}
     \begin{align}
-        (m_v + m_p + m_r) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\
-        m_r =  N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m}{r_m^2} \enspace, \\    
+        (m_v + m_p + N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m}{r_m^2}) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\   
         F_{t} =  \frac{K_t \cdot i_a \cdot \eta}{r_m} \enspace,\\
 		R_{a} \cdot i_{a} = u - \frac{K_{v} \cdot v}{r_m} \enspace, \\
         F_{a} = \frac{\rho \cdot a_f \cdot c_d \cdot v^2}{2} \enspace,\\
@@ -38,11 +35,21 @@ seguinte equação para descrever o comportamento do veiculo
 	\end{align}
 \end{subequations}
 
-em que as constantes estão apresentadas na Tabela \ref{tab:constantes} e as variáveis são $\dot v$ a aceleração 
+em que as variáveis são $\dot v$ a aceleração 
 do carro em [$m/s^2$], $v$ a velocidade do carro em [$m/s^2$], $x$ a distancia percorrida pelo carro na pista em [$m$], 
-$u$ a tensão aplicada no motor em [$V$], $r_m$ o raio do cilindro de transmissão no eixo do motor elétrico em [$m$] e $\theta$ é a inclinação da pista em [$rad$].
+$u$ a tensão aplicada no motor em [$V$], $r_m$ o raio do cilindro de transmissão no eixo do motor elétrico em [$m$] e $\theta$ é a inclinação da pista em [$rad$] 
+e as constantes estão apresentadas na Tabela \ref{tab:constantes}. Não foi realizado ensaio para determinar ou verificar essas constantes e este modelo
+pois o projeto foi realizado, em sua maior parte, durante o Ensino Remoto Emergêncial de 2020. As constantes foram definidas através da bibliografia apresentada
+e por dados fornecidos pela equipe Milhagem UFMG. 
 
-\begin{table}[h]
+% em que as variáveis são $u$ a tensão aplicada no motor em [$V$], 
+% $r_m$ o raio do cilindro de transmissão no eixo do motor em [$m$], 
+% $\theta$ é a inclinação da pista em [$rad$], $\dot v$, $v$ e $x$ são respectivamente a aceleração em [$m/s^2$], a velocidade em [$m/s$] e posição [$m$] do carro
+% e as constantes estão apresentadas na Tabela \ref{tab:constantes}. Não foi realizado ensaio para determinar ou verificar essas constantes ou este modelo
+% pois o projeto foi realizado, em sua maior parte, durante o Ensino Remoto Emergêncial. As constantes foram definidas através da bibliografia apresentada
+% e por dados fornecidos pela equipe Milhagem UFMG. 
+
+\begin{table}[H]
 	\centering
 	\caption{Constantes utilizadas no modelo do veiculo}
 	\rowcolors{1}{}{lightgray}
@@ -107,22 +114,34 @@ e então realizar a derivada para obter a seguinte equação inclinação:
 
 \section{Problema de controle ótimo (OPC)}
 
-
+Utilizando a formulação genérica de OPC da Equação (\ref{eq:formulacaoOCP}), o modelo do veiculo dado pela Equação (\ref{eq:modelo_1})
+e o manual de regras de competição da Shell EcoMarathon Américas de 2019 
+foi definida a seguinte formulação para o problema de controle ótimo de encontrar a estrategia de pista que minimiza o consumo de energia
 
 \begin{mini!}
-	{i(t), r_m, T}{\int_{0}^{T} i(t) \cdot [i(t) \cdot Ra + Kv \cdot (v(t)/r_m)] \,\mathrm{d}t \label{eq:ObjOCP}}
-	{\label{eq:formulacaoOCP}}{}
-    \addConstraint{x(0)}{=0 \label{eq:C1_OCP}}{}
-    \addConstraint{v(0)}{=0 \label{eq:C1_OCP}}{}
-    \addConstraint{\dot x(t) - v(t)}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
-    \addConstraint{\dot v(t) - \frac{F_t - (F_a + F_g + F_r)}{M}}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
-	\addConstraint{i(t)-\frac{42-Kv\cdot(v/r_m)}{R_a}}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP}}
-    \addConstraint{i(t)}{\leq 30, \quad}{t \in \left[0,T\right]  \label{eq:C4_OCP}}
-    \addConstraint{v(t)}{\leq 12.5, \quad}{t \in \left[0,T\right]  \label{eq:C4_OCP}}
-    \addConstraint{x(T)}{= 10080 \label{eq:C4_OCP}}{}
-	\addConstraint{T}{\leq 1400 \label{eq:C5_OCP}}{}
-	\addConstraint{0.020\leq r_m}{ \leq 0.050 \, \label{eq:C6_OCP}}{}
+	{i(t), r_m, T}{\int_{0}^{T} i(t) \cdot [i(t) \cdot Ra + Kv \cdot (v(t)/r_m)] \,\mathrm{d}t \label{eq:ObjOCP_final}}
+	{\label{eq:formulacaoOCP_final}}{}
+    \addConstraint{x(0)}{=0 \label{eq:C1_OCP_final}}{}
+    \addConstraint{v(0)}{=0 \label{eq:C2_OCP_final}}{}
+    \addConstraint{\dot x(t) - v(t)}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP_final}}
+    \addConstraint{\dot v(t) - \frac{F_t - (F_a + F_g + F_r)}{M}}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C4_OCP_final}}
+	\addConstraint{i(t)-\frac{42-Kv\cdot(v/r_m)}{R_a}}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C5_OCP_final}}
+    \addConstraint{0 \leq i(t)}{\leq 30, \quad}{t \in \left[0,T\right]  \label{eq:C6_OCP_final}}
+    \addConstraint{0 \leq v(t)}{\leq 12.5, \quad}{t \in \left[0,T\right]  \label{eq:C7_OCP_final}}
+    \addConstraint{x(T)}{= 10080 \label{eq:C8_OCP_final}}{}
+	\addConstraint{T}{\leq 1400 \label{eq:C9_OCP_final}}{}
+	\addConstraint{0.020\leq r_m}{ \leq 0.050, \label{eq:C10_OCP_final}}{}
 \end{mini!}
+
+em que a Equação (\ref{eq:ObjOCP_final}) define a energia elétrica consumida como custo a ser minimizado, 
+as Equações (\ref{eq:C1_OCP_final}) e (\ref{eq:C2_OCP_final}) são restrições para os estados inciais de distancia percorrida e velocidade nulos, 
+as Equações (\ref{eq:C3_OCP_final}) e (\ref{eq:C4_OCP_final}) são as restrições que garantem que os estados da reposta repeitem a dinâmica do modelo da Equação (\ref{eq:modelo_1}), 
+a Equação (\ref{eq:C5_OCP_final}) é uma restrição de caminho para corrente em razão da tensão máxima da bateria, 
+a Equação (\ref{eq:C6_OCP_final}) é uma restrição para o valor máximo de corrente em função do limite de corrente entregue pelo conversor de potencia do veiculo,
+a Equação (\ref{eq:C7_OCP_final}) é uma restrição para o valor máximo da velocidade do carro definida pela pela organização da competição,
+a Equação (\ref{eq:C8_OCP_final}) é um restrições de valor final fixo para a distancia percorrida equivalente a sete voltas na pista,
+a Equação (\ref{eq:C9_OCP_final}) é uma restrição para o valor máximo do tempo final em decorrência do limite de velocidade media minima determinado pela organização da competição,
+e a Equação (\ref{eq:C10_OCP_final}) é o intervalo possível para o raio do eixo do motor.
 
 
 \section{Código para solução do OPC}
@@ -136,7 +155,7 @@ foi obtida por meio de solicitação feita ao \textit{Institute of Flight System
 A implementação do código para solução do problema de controle ótimo proposto segui os seguintes passos:
 
 \begin{enumerate}
-    \item \textbf{Definir as variáveis de estado e de controle e os parâmetros:} no arquivo principal, do tipo \textit{script}, instanciar as  as variáveis de estado e de controle e os parâmetros otimizáveis;
+    \item \textbf{Definir as variáveis de estado e de controle e os parâmetros:} no arquivo principal, do tipo \textit{script}, instanciar as  as variáveis de estado e de controle e os parâmetros otimizáveis e seus limites máximos e mínimos;
     \item \textbf{Implementar os modelos dinâmicos:} em arquivos do tipo \textit{function}, implementar o modelo dinâmico do sistema; 
     \item \textbf{Definir os modelos dinâmicos dos subsistemas:} no arquivo principal, utilizar o e \textit{Model Builder} da \textit{FALCON.m} para vincular os arquivos do passo 2 no programa principal;
     \item \textbf{Derivar as funções necessária:} o \textit{Model Builder} irá criar, a partir da chamado do método \lstinline[style=Matlab-editor]{.Build()}, as derivadas analíticas de todos os subsistemas e combiná-los ao gradiente geral dos modelos usando a regra da cadeia;
@@ -145,10 +164,9 @@ A implementação do código para solução do problema de controle ótimo propo
     \item \textbf{Resolver o problema:} chamar o método \lstinline[style=Matlab-editor]{.Solve()}, no arquivo, principal para a resolução do problema.
 \end{enumerate}
 
-
 O código de solução desenvolvido a partir destes passos é composto por quatro aquivos, apresentados na Figura \ref{fig:matlab_files}, três \textit{functions} e um \textit{script}. Os aquivos \textit{function}, \lstinline[style=Matlab-editor]{i_max.m},
 \lstinline[style=Matlab-editor]{lagrange_cost.m} e \lstinline[style=Matlab-editor]{mdl_dt1_pista.m} são, respectivamente, 
-a restrição de corrente máxima da Equação(\ref{}), o custo de Lagrange da Equação (\ref{}) e o modelo da dinâmica do veiculo da Equação (\ref{}) acrescido do modelo de inclinação da pista.
+a restrição de caminho corrente da Equação(\ref{eq:C5_OCP_final}), o custo de Lagrange da Equação (\ref{eq:ObjOCP_final}) e o modelo da dinâmica do veiculo da Equação (\ref{eq:modelo_1}) acrescido do modelo de inclinação da pista da Equação (\ref{eq:modeloTheta}).
 
 \begin{figure}[h]
     \centering
@@ -186,24 +204,12 @@ rm = falcon.Parameter('raioM', 0.026, 0.020, 0.050, 1e2);
     \caption*{\footnotesize{Fonte: Elaborado pelo autor.}}
 \end{figure}
 
-Além disso, verificou-se que, apesar do indicado no manual da biblioteca FALCON.m\cite{manual:Falcon}, ela, na versão utilizada com IPOPT não executa em um MATLAB com a versão recente que a utilizada pois
-a MathWorks não garante su
+Além disso, foi verificado que, a biblioteca FALCON.m versão v1.26 não funcinou no MATLAB\textsuperscript{\textregistered} R2020a quando o otimizador IPOPT era utilizado.
+Isto ocorreu pois não há garantia de compatibilidade, no Windows, por parte do MATLAB\textsuperscript{\textregistered} em sua evolução, a arquivos MEX (interface com programas escritos em C, C++ ou Fortran) gerados em versões 
+anteriores e a biblioteca IPOPT é chamada por meio de um arquivo MEX não compatível apos a versão R2019b do MATLAB\textsuperscript{\textregistered}. Novas versões da FALCON.m
+devem possibilitar o uso e versões mais novas do MATLAB\textsuperscript{\textregistered} pois os arquivos MEX serão compilados novamente.
 
 
 
-
-% \subsection{\textit{FALCON.m}}
-
-% \textit{FALCON.m} é um biblioteca de \textit{MATLAB}\textsuperscript{\textregistered}, orientada a objetos, desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e análise de problemas de controle ótimo utilizando \cite{manual:Falcon}.
-
-
-
-% Na utilização do \textit{FALCON.m} para resolver um problema de controle ótimo são realizadas as seguintes etapas \cite{phd:Matthias}:
-
-
-% Detalhes sobre o uso do \textit{FALCON.m} pode ser encontrados em sua documentação \cite{manual:Falcon}, bem com uma explicação detalhada da sua implementação na tese de doutorado de \citeauthor{phd:Rieck}.
-
-
-% Esse é um teste de como escreve codigo  \lstinline[style=Matlab-editor]{Bake()}
 
 \clearpage
