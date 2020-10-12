@@ -2,33 +2,208 @@
 \label{chap:metodologia}
 \thispagestyle{empty}
 
-\section{Definição do problema}
+É apresentado neste capitulo o desenvolvimento realizado neste projeto, os problemas encontrados e as soluções propostas.
+Na primeira seção tem-se a definição do modelo matemático do veiculo protótipo DT1. A segunda seção traz a formulação proposta para o problema de controle ótimo que encontrar
+a estrategia de pista ótima. Por fim, na ultima seção é apresentado os passos realizados no desenvolvimento do código que soluciona o OPC proposto. 
 
-\section{Solução Numérica}
+\section{Modelo do veiculo DT1} 
 
-\subsection{\textit{FALCON.m}}
+O modelo da dinâmica do veiculo protótipo DT1 foi definido com base na revisão bibliográfica apresentada na Seção \ref{sec:modelo}. 
+Para isto as seguintes simplificações e considerações foram feita:
 
-\textit{FALCON.m} é um biblioteca de \textit{MATLAB}\textsuperscript{\textregistered}, orientada a objetos, desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e análise de problemas de controle ótimo utilizando \cite{manual:Falcon}.
+\begin{itemize}
+    \item \textbf{Dinâmica lateral:} não foi levando em conta a dinâmica lateral do veiculo considerando que ele se move apenas em linha reta; 
+    \item \textbf{Vento:} a velocidade do vento foi desconsiderada na Equação (\ref{eq:Fa});
+    \item \textbf{Pneus:} a variação do coeficiente de rolamento em funça da temperatura, da pressão e a velocidade não foi considerada na Equação (\ref{eq:Fr});
+    \item \textbf{Rolamentos:} o atrito viscos dos rolamentos foi considerado nulo;
+    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potencia foram tratados como componentes ideias não apresentando 
+        perdas de energia ou modificações na dinâmica das grandezas elétricas;
+    \item \textbf{Indutância do motor:} como o dinâmica da velocidade é pelo menos dez vez mais lenta que a dinâmica da corrente elétrica no motor
+        a contribuição do do indutor foi removida da Equação (\ref{eq:propulsao_1}).  
+\end{itemize}
+
+A partir das Equações (\ref{eq:SomaForcas}) à (\ref{eq:Fr}) e (\ref{eq:propulsao}) e destas simplificações e considerações foi definido a 
+seguinte equação para descrever o comportamento do veiculo
+
+\begin{subequations}
+	\label{eq:modelo_1}
+    \begin{align}
+        (m_v + m_p + m_r) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\
+        m_r =  N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m}{r_m^2} \enspace, \\    
+        F_{t} =  \frac{K_t \cdot i_a \cdot \eta}{r_m} \enspace,\\
+		R_{a} \cdot i_{a} = u - \frac{K_{v} \cdot v}{r_m} \enspace, \\
+        F_{a} = \frac{\rho \cdot a_f \cdot c_d \cdot v^2}{2} \enspace,\\
+        F_{g} = (m_v + m_p) \cdot g \cdot \sin(\theta(x)) \enspace,\\
+        F_{r}  = c_{r} \cdot (m_v + m_p) \cdot g \cdot \cos(\theta(x)) \enspace,
+	\end{align}
+\end{subequations}
+
+em que as constantes estão apresentadas na Tabela \ref{tab:constantes} e as variáveis são $\dot v$ a aceleração 
+do carro em [$m/s^2$], $v$ a velocidade do carro em [$m/s^2$], $x$ a distancia percorrida pelo carro na pista em [$m$], 
+$u$ a tensão aplicada no motor em [$V$], $r_m$ o raio do cilindro de transmissão no eixo do motor elétrico em [$m$] e $\theta$ é a inclinação da pista em [$rad$].
+
+\begin{table}[h]
+	\centering
+	\caption{Constantes utilizadas no modelo do veiculo}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{llll}
+		\toprule
+		\textbf{Constante} & \textbf{Simbolo} & \textbf{Unidade} & \textbf{Valor}\\
+		\hline
+		Massa veiculo                       & $m_v$  & [$kg$]              & 36      \\
+        Massa do piloto                     & $m_p$  & [$kg$]              & 50      \\
+        Resistência de armadura             & $R_a$  & [$\Omega$]        & 0,07    \\  
+        Const. de tensão induzida           & $K_v$  & [$V/(rad/s)$]       & 0,119   \\
+        Quantidade de rodas                 & $N_r$  & [ ]                & 3       \\
+        Momento de inercia da roda          & $J_r$  & [$kg.m^2$]        & 0,015   \\
+        Momento de inercia do motor         & $J_m$  & [$kg.m^2$]        & $0,0625 \times 10^{-3}$\\
+        Raio da roda                        & $r_r$  & [$m$]               & 0,254   \\
+        Const. de torque                    & $K_t$  & [$Nm/A$]            & 0,119   \\
+        Eficiencia da roda de atrito        & $\eta$ & [ ]                & 0,95    \\
+        Densidade do ar                     & $\rho$ & [$kg/m^3$]        & 1,22    \\
+        Areá fronta do veiculo              & $a_f$  & [$m^2$]           & 0,26    \\
+        Coef. de arrasto aerodinamico       & $c_d$  & [ ]                & 0,164   \\
+        Aceleração da gravidade             & $g$    & [$m/s^2$]         & 9,81    \\
+        Coef. de resistência ao rolamento   & $c_r$  & [ ]                & 0,0024  \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
+	\label{tab:constantes}
+\end{table}
+
+
+\section{Modelo da pista}
+
+Para obter os dados de altitude da pista da Shell Eco-marathon Americas de 2019 no Kartódromo de Sonoma foi feito uma requisição a equipe
+equipe \textit{Duke Electric Vehicles} da \textit{Duke University} que disponibilizou os dados coletados e tratos por ela. A Figura apresentada \ref{fig:altitude_pista} 
+o perfil de altitude da pista com estes dados.
+
+\begin{figure}[h]
+    \centering
+    \caption{Perfil de altitude da pista da Shell Eco-marathon Americas de 2019}
+    \input{Metodologia/Figuras/altitude_pista.tex}
+    \label{fig:altitude_pista}
+    \caption*{\footnotesize{Fonte: Dados da equipe de competição \textit{Duke Electric Vehicles}.}}
+\end{figure}
+
+Uma forma de representar esses dados no código para solução o OPC é por meio de uma \textit{lookup table} porem ao implementar os dados dessa foram
+a solução não convergiu. Uma possível explicação para essa não convergência é que os dados eram derivados duas vezes, uma para determinar a inclinação e outra pelo 
+realizada algorítimo de otimização e ao analisar esses dados derivados usando o comando \lstinline[style=Matlab-editor]{diff} do MATLAB\textsuperscript{\textregistered} foram observadas curvas
+com grande variação de inclinação e ruido. Alem disso seria preciso repetir sete vezes os dois vetores de dados para emular as repetidas voltas realiza pelo carro durante a tentativa.
+A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB\textsuperscript{\textregistered} 
+e então realizar a derivada para obter a seguinte equação inclinação:
+
+\begin{multline}
+    \label{eq:modeloTheta}
+        \theta(x) = arctg(0.012293 cos(0.004363 x - 0.228758) 
+        +0.003041 cos(0.000236 x + 0.399758) \\
+        +0.005818 cos(0.008726 x - 2.193381) 
+        +0.002926 cos(0.000246 x + 3.490690) \\
+        +0.003958 cos(0.017449 x - 3.058604) 
+        +0.005365 cos(0.026184 x + 0.579933) \\
+        +0.004361 cos(0.021814 x + 1.627015) 
+        +0.005539 cos(0.030552 x - 1.400496)).
+\end{multline}
+
+\section{Problema de controle ótimo (OPC)}
 
 
 
-Na utilização do \textit{FALCON.m} para resolver um problema de controle ótimo são realizadas as seguintes etapas \cite{phd:Matthias}:
+\begin{mini!}
+	{i(t), r_m, T}{\int_{0}^{T} i(t) \cdot [i(t) \cdot Ra + Kv \cdot (v(t)/r_m)] \,\mathrm{d}t \label{eq:ObjOCP}}
+	{\label{eq:formulacaoOCP}}{}
+    \addConstraint{x(0)}{=0 \label{eq:C1_OCP}}{}
+    \addConstraint{v(0)}{=0 \label{eq:C1_OCP}}{}
+    \addConstraint{\dot x(t) - v(t)}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
+    \addConstraint{\dot v(t) - \frac{F_t - (F_a + F_g + F_r)}{M}}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
+	\addConstraint{i(t)-\frac{42-Kv\cdot(v/r_m)}{R_a}}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP}}
+    \addConstraint{i(t)}{\leq 30, \quad}{t \in \left[0,T\right]  \label{eq:C4_OCP}}
+    \addConstraint{v(t)}{\leq 12.5, \quad}{t \in \left[0,T\right]  \label{eq:C4_OCP}}
+    \addConstraint{x(T)}{= 10080 \label{eq:C4_OCP}}{}
+	\addConstraint{T}{\leq 1400 \label{eq:C5_OCP}}{}
+	\addConstraint{0.020\leq r_m}{ \leq 0.050 \, \label{eq:C6_OCP}}{}
+\end{mini!}
+
+
+\section{Código para solução do OPC}
+\label{sec:metodologia_codigos}
+
+Nesta etapa do trabalho a versão do MATLAB\textsuperscript{\textregistered} utilizada foi a R2019b Update 7 e a versão do FALCON.m utilizada foi a v1.26.
+O compilador MinGW-w64 C/C++, pré-requisito da bibloteca FALCON, foi instalado gratuitamente na versão 19.2.0 pela loja de aplicativos do MATLAB\textsuperscript{\textregistered}. 
+A licença do MATLAB\textsuperscript{\textregistered} utilizada foi a licença acadêmica fornecida pela UFMG à seus alunos. Já a licença do FALCON.m, de uso individual e intransferível,
+foi obtida por meio de solicitação feita ao \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} pelo site \url{https://www.fsd.lrg.tum.de/software/falcon-m/license-and-download/}.
+
+A implementação do código para solução do problema de controle ótimo proposto segui os seguintes passos:
 
 \begin{enumerate}
-    \item \textbf{Implementar os modelos dinâmicos:} o modelo dinâmico do sistema deve ser implementado em funções do \textit{MATLAB}\textsuperscript{\textregistered}. 
-    \item \textbf{Construir os modelos dinâmicos gerais dos subsistemas:} utilizar o e \textit{Model Builder} do \textit{FALCON.m} para relacionar os modelos dinâmicos nas diferentes fases do OCP.
-    \item \textbf{Derivar automaticamente todas as funções necessária:} o \textit{Model Builder}irá criar, automaticamente, as derivadas analíticas de todos os subsistemas e combiná-los ao gradiente geral dos modelos usando a regra da cadeia.
-    \item \textbf{Gerar código automaticamente para os modelos e compilar:}
-    \item \textbf{Implementar funções de restrição adicionais:} repetir os passos de 1 à 4 para todas as restrições e funções de custo.
-    \item \textbf{Definir a estrutura do problema de controle ótimo:}
-    \item \textbf{Discretizar o problema de controle ótimo:}
-    \item \textbf{Resolver o problema discretizado:} o problema de otimização numérica resultante da discretização do problema de controle ótimo é resolvido usando um solucionador numérico apropriado (\textit{IPOPT}, \textit{SNOPT}, \textit{FMINCON} ou \textit{WORHP}).
-    \item \textbf{Analisar dos resultados:}
+    \item \textbf{Definir as variáveis de estado e de controle e os parâmetros:} no arquivo principal, do tipo \textit{script}, instanciar as  as variáveis de estado e de controle e os parâmetros otimizáveis;
+    \item \textbf{Implementar os modelos dinâmicos:} em arquivos do tipo \textit{function}, implementar o modelo dinâmico do sistema; 
+    \item \textbf{Definir os modelos dinâmicos dos subsistemas:} no arquivo principal, utilizar o e \textit{Model Builder} da \textit{FALCON.m} para vincular os arquivos do passo 2 no programa principal;
+    \item \textbf{Derivar as funções necessária:} o \textit{Model Builder} irá criar, a partir da chamado do método \lstinline[style=Matlab-editor]{.Build()}, as derivadas analíticas de todos os subsistemas e combiná-los ao gradiente geral dos modelos usando a regra da cadeia;
+    \item \textbf{Implementar funções de custo e de restrição de caminho:} repetir os passos de 1 à 4 para todas as restrições de caminho e funções de custo;
+    \item \textbf{Definir o problema de controle ótimo:}  no arquivo principal, gerados no passo 4 com o problema e definir as condições finais e iniciais para os estados do sistema;
+    \item \textbf{Resolver o problema:} chamar o método \lstinline[style=Matlab-editor]{.Solve()}, no arquivo, principal para a resolução do problema.
 \end{enumerate}
 
-Detalhes sobre o uso do \textit{FALCON.m} pode ser encontrados em sua documentação \cite{manual:Falcon}, bem com uma explicação detalhada da sua implementação na tese de doutorado de \citeauthor{phd:Rieck}.
+
+O código de solução desenvolvido a partir destes passos é composto por quatro aquivos, apresentados na Figura \ref{fig:matlab_files}, três \textit{functions} e um \textit{script}. Os aquivos \textit{function}, \lstinline[style=Matlab-editor]{i_max.m},
+\lstinline[style=Matlab-editor]{lagrange_cost.m} e \lstinline[style=Matlab-editor]{mdl_dt1_pista.m} são, respectivamente, 
+a restrição de corrente máxima da Equação(\ref{}), o custo de Lagrange da Equação (\ref{}) e o modelo da dinâmica do veiculo da Equação (\ref{}) acrescido do modelo de inclinação da pista.
+
+\begin{figure}[h]
+    \centering
+    \caption{Arquivos MATLAB\textsuperscript{\textregistered} do projeto}
+    \includegraphics[]{Metodologia/Figuras/matlab_files.png}
+    \label{fig:matlab_files}
+    \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+\end{figure}
 
 
-Esse é um teste de como escreve codigo  \lstinline[style=Matlab-editor]{Bake()}
+Durante a escrita do arquivo \lstinline[style=Matlab-editor]{main.m} uma dificuldade encontrada foi a determinação da variável \lstinline[style=Matlab-editor]{scale}, 
+ultima variável nos construtores \lstinline[style=Matlab-editor]{falcon.State()}, \lstinline[style=Matlab-editor]{falcon.Control()} e \lstinline[style=Matlab-editor]{falcon.Parameter()}.
+Inicialmente os valores definidos foram a ordem de grandeza da cada variáveis o que gerou matrizes mau condicionadas no NLP e consequente um alto tempo de solução o problema. 
+Os valores corretos, conforme sugerido no manual do FALCON.m\cite{manual:Falcon}, dever ser definidos de tal forma que a ordem de grandeza da variável seja um. Por exemplo: uma varivel que
+representa a correte elétrica de um circuito em [mA] deve ter o parâmero \lstinline[style=Matlab-editor]{scale} igual a $10^{-3}$. 
+A definição dos estados, variável de controle e parâmetros com o parâmetro \lstinline[style=Matlab-editor]{scale} adequado é apresentado no Código \ref{lst:scale}. 
+
+\begin{figure}[h]
+    \begin{lstlisting}[
+        caption={[Trecho do arquivo main.m]Trecho do arquivo \lstinline[style=Matlab-editor]{main.m} com definição dos estados, variável de controle e parâmetros do OPC proposto}, 
+        label={lst:scale},
+        style      = Matlab-editor,
+        basicstyle = \mlttfamily,
+        firstnumber=4]
+% vetor de estados
+x_vec = [ falcon.State('x',   0,  11000, 1e-4);...
+          falcon.State('v',   0,  12.5, 1e-1) ];
+% variavel de controle
+u_vec = falcon.Control('i', 0,  63, 1);
+% tempo final
+tf = falcon.Parameter('FinalTime', 1400, 0, 1400, 1e-3);
+% raio do cilindro no motor
+rm = falcon.Parameter('raioM', 0.026, 0.020, 0.050, 1e2);
+    \end{lstlisting}
+    \caption*{\footnotesize{Fonte: Elaborado pelo autor.}}
+\end{figure}
+
+Além disso, verificou-se que, apesar do indicado no manual da biblioteca FALCON.m\cite{manual:Falcon}, ela, na versão utilizada com IPOPT não executa em um MATLAB com a versão recente que a utilizada pois
+a MathWorks não garante su
+
+
+
+
+% \subsection{\textit{FALCON.m}}
+
+% \textit{FALCON.m} é um biblioteca de \textit{MATLAB}\textsuperscript{\textregistered}, orientada a objetos, desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e análise de problemas de controle ótimo utilizando \cite{manual:Falcon}.
+
+
+
+% Na utilização do \textit{FALCON.m} para resolver um problema de controle ótimo são realizadas as seguintes etapas \cite{phd:Matthias}:
+
+
+% Detalhes sobre o uso do \textit{FALCON.m} pode ser encontrados em sua documentação \cite{manual:Falcon}, bem com uma explicação detalhada da sua implementação na tese de doutorado de \citeauthor{phd:Rieck}.
+
+
+% Esse é um teste de como escreve codigo  \lstinline[style=Matlab-editor]{Bake()}
 
 \clearpage

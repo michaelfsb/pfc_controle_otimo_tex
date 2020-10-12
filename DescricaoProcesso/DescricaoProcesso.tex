@@ -4,7 +4,7 @@
 
 Este capitulo é divido em duas seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
 Na primeira seção são aprensados conceitos para uma modelagem matemática da dinâmica de um veiculo em baixas velocidades.
-São apresentado na segunda seção uma introdução à teoria de controle ótimo e a utilização de programação não linear na solução
+São apresentado na segunda seção uma introdução à teoria de controle ótimo e a utilização de \textit{software} na solução
 de problemas de controle ótimo.
 
 \section{Modelo do veículo}
@@ -24,13 +24,13 @@ veiculo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém
 
 \begin{equation}
 	\label{eq:SomaForcas}
-	(m_v + m_p + m_r) \cdot \frac{d^2x}{dt^2} = F_t - (F_a + F_g + F_p)
+	(m_v + m_p + m_r) \dot v = F_t - (F_a + F_g + F_r)
 	\enspace,
 \end{equation}
 
 em que $m_v$ é a massa do veiculo, $m_v$ é a massa do piloto,  $m_r$ é massa equivalente ao memento de inercia das partes rotativas (rodas e eixo do motor),  $x$ é a posição, $F_{t}$ é a propulsão feita pelo motor, $F_{a}$ é o
-arrasto aerodinâmico, $F_g$ é a componente do peso que esta direção da velocidade e $F_{p}$ é a resistência ao rolamentos dos pneus no pista.
-Os modelos que descrevem a massa equivalente $m_r$ forças $F_{a}$, $F_g$, $F_{p}$ e $F_{t}$ estão apresentados nas subseções a seguir.
+arrasto aerodinâmico, $F_g$ é a componente do peso que esta direção da velocidade e $F_{r}$ é a resistência ao rolamentos dos pneus no pista.
+Os modelos que descrevem a massa equivalente $m_r$ e forças $F_{a}$, $F_g$, $F_{r}$ e $F_{t}$ estão apresentados nas subseções a seguir.
 
 \begin{figure}[h]
 	\centering
@@ -61,7 +61,7 @@ em que $m_{r,r}$ é a massa equivalente a inércia das rodas e $m_{r,m}$ é a ma
 $J_r$ e $r_r$ são o momento de inércia e o raio da roda, $J_m$ é o momento de inércia do motor e 
 $\varphi$ é a relação de transmissão.\cite{book:guzzella2012vehicle}
 
-\subsection{Arrasto Aerodinâmico}
+\subsection{Arrasto aerodinâmico}
 \label{subsec:arrasto_aerodinamico}
 
 O movimento de um objeto imerso em um fluido sofre uma resistência causada por esse fluido. No
@@ -105,18 +105,19 @@ veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
 A componente do peso, $F_{g}$, afeta consideravelmente a dinâmica do veiculo e atua sempre que a pista não é plana. Seu modelo é a equação
 
-\[
-	F_{g}(\theta) = m \cdot g \cdot \sin(\theta)
+\begin{equation}
+	\label{eq:Fg}
+	F_{g}(\theta) = (m_v + m_p) \cdot g \cdot \sin(\theta)
 	\enspace,
-\]
+\end{equation}
 
 que, pra pequenas inclinações, pode ser aproximado pela equação
 
-\begin{equation}
-	\label{eq:Fg}
-	F_{g}(\theta) \approx  m \cdot g \cdot \theta
+\[
+	F_{g}(\theta) \approx  (m_v + m_p) \cdot g \cdot \theta
 	\enspace,
-\end{equation}
+\]
+
 
 em que $m$ é a massa total do veículo, $g$ é a aceleração da gravidade e $\theta$ é a inclinação da pista expressa em
 radianos\cite{book:guzzella2012vehicle}.
@@ -152,15 +153,7 @@ Michelin\textsuperscript{\textregistered}
 % Escrever que nao vou conciderar pq nao da pra medir a variacao no cenario atual.
 % Colocar como perpestivas de trabalho futuro.
 
-\begin{figure}[h]
-	\centering
-	\caption{Pneu Michelin\textsuperscript{\textregistered} 44-406 \textit{Prototype}}
-	\label{fig:pneu}
-	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/pneu_Michelin.png}
-	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG.}
-\end{figure}
-
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\caption{Comparação do coeficiente $c_{r}$ de diferentes pneus}
 	\rowcolors{1}{}{lightgray}
@@ -180,6 +173,14 @@ Michelin\textsuperscript{\textregistered}
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:PacCarII}.}
 	\label{tab:ComparacaoCr}
 \end{table}
+
+% \begin{figure}[h]
+% 	\centering
+% 	\caption{Pneu Michelin\textsuperscript{\textregistered} 44-406 \textit{Prototype}}
+% 	\label{fig:pneu}
+% 	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/pneu_Michelin.png}
+% 	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG.}
+% \end{figure}
 
 \subsection{Sistema de propulsão}
 \label{subsec:sistema_propulsao}
@@ -263,7 +264,7 @@ Y com neutro acessível e operando em meia onda (a tensão é aplicada entre o t
 	\end{align}
 \end{subequations}
 
-em que $u$ é a tensão aplicada, $u_{ind}$ é a tensão induzida, $l_{m}$ e $r_{m}$ são, respectivamente a indutância e a resistência da armadura,
+em que $u$ é a tensão aplicada, $u_{ind}$ é a tensão induzida, $L_{a}$ e $R_{a}$ são, respectivamente a indutância e a resistência da armadura,
 $K_{v}$ é a constante de tensão induzida,
 $\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque. A Figura \ref{diag:motoBLDC} apresenta o modelo o circuito de um enrolamento do motor BLDC.\cite{book:Permanent_Magnet_Motor}
 
@@ -316,7 +317,7 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 	\caption*{\footnotesize Fonte: Adaptado de }
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\caption{Dados do motor BG75x75 40V}
 	\label{tab:dadosBg75}
@@ -345,10 +346,10 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 
 A transmissão do veículo regula a transferência de potência do motor para as rodas. É basicamente composta por mecanismo de
 redução -- ex. caixa de câmbio -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
-No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito (Figura \ref{dig:Trasmissao}).
+No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito, apresentado na Figura \ref{dig:Trasmissao}.
 
 Rodas de atrito são uma das maneiras mais simples para se transmitir potencia mecânica entre eixos e sua eficiência é tipicamente de $95$ a $98$ {\%}. São composta por dois ou mais cilindros em contato direto.  
-Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. A eficiência na transmissão do torque 
+Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. Os torque e rotações são descritos pelas equações 
 
 \begin{subequations}
 	\label{eq:Transmissao}
@@ -390,6 +391,16 @@ $R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor
 	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
 \end{figure}
 
+A partir das Equações (\ref{eq:MotorCC}) e (\ref{eq:Transmissao}), desconsiderando as perdas por atrido visco nos rolamentos, as perdas causada pela resistência interna na bateira e
+a perda no conversor de potencia, o conjunto que descreve o a força do sistema de propulsão $F_t$ de um veiculo elétrico é
+
+\begin{subequations}
+	\label{eq:propulsao}
+	\begin{align}
+		\dot i_{a} = \frac{u - K_{v} \cdot \omega_{m} - R_{a} \cdot i_{a}}{L_{a}}\enspace, \label{eq:propulsao_1} \\
+		F_{t} =  \frac{K_t \cdot i_a \cdot \eta}{r_m}\enspace. \label{eq:propulsao_2}
+	\end{align}
+\end{subequations}
 
 \section{Controle Ótimo}
 
@@ -397,7 +408,9 @@ $R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor
 tempo minimize
 (ou maximize) alguns critérios de desempenho."\cite{book:Kirk}
 
-O seguinte conjunto de equações é uma formulação genérica e comum para um problema de controle ótimo (OCP)
+\subsection{Introdução teórica}
+
+O conjunto de Equações (\ref{eq:formulacaoOCP}) é uma formulação genérica e comum para um problema de controle ótimo (OCP)
 
 
 \begin{mini!}
@@ -407,8 +420,8 @@ O seguinte conjunto de equações é uma formulação genérica e comum para um 
 	\addConstraint{\dot x(t) - f(x(t),u(t))}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C2_OCP}}
 	\addConstraint{h(x(t),u(t))}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP}}
 	\addConstraint{r(x(T))}{\leq 0 \label{eq:C4_OCP}}{}
-	\addConstraint{T \leq}{T_{max} \label{eq:C5_OCP}}{}
-	\addConstraint{p_{min}\leq p \leq}{p_{max} \, \label{eq:C6_OCP}}{}
+	\addConstraint{T }{\leq T_{max} \label{eq:C5_OCP}}{}
+	\addConstraint{p_{min}\leq p}{ \leq p_{max} \, \label{eq:C6_OCP}}{}
 \end{mini!}
 
 em que a Equação (\ref{eq:ObjOCP}) é o função objetivo, Equação (\ref{eq:C1_OCP}) é uma restrição de estados inciais fixos, Equação (\ref{eq:C2_OCP}) é
@@ -418,6 +431,20 @@ do sistema, Equação (\ref{eq:C3_OCP}) são restrições de caminho sobre os es
 é uma restrição de espaço para os estados finais, Equação (\ref{eq:C5_OCP}) é a restrição para o tempo final e Equação (\ref{eq:C6_OCP}) são restrições de intervalo para parâmetros otimizáveis.
 O função objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
 e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_Control}.
+
+A soluçai de um problema de controle ótimo é uma sequencia de sinais de controle em malha aberta e um conjunto de paramentos, o comportamento esperado é
+exemplificado na Figura \ref{fig:simpleOPC}.
+
+De forma geral, há três abordagens básicas para solução computacional de um OPC, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
+conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
+
+\begin{enumerate}[(a)]
+	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequencia de controle ótimo. 
+	\item Métodos indiretos: utiliza a filosofia "primeiro otimizar e então discretizar", que é escrever as condições de otimalidade contínuas primeiro,
+		resultando em um problemas de valor de contorno (sistema de equações diferenciais acrecido de um conjunto adicional de restrições chamadas condições de contorno) e depois discretizá-lo para resolver numericamente.
+	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OPC e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
+	não linear resultante (NPL do inglês \textit{Nonlinear Programming Problem}) resultante.
+\end{enumerate}
 
 \begin{figure}[h]
 	\centering
@@ -484,39 +511,7 @@ e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_
 	\caption*{\footnotesize Fonte: Adaptado de }
 \end{figure}
 
-
-De forma geral, há três abordagens básicas para solução	de um OPC, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
-conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
-
-\begin{enumerate}[(a)]
-	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequencia de controle ótimo. 
-	\item Métodos indiretos: utiliza a filosofia "primeiro otimizar e então discretizar", que é escrever as condições de otimalidade contínuas primeiro,
-		resultando em um problemas de valor de contorno (sistema de equações diferenciais acrecido de um conjunto adicional de restrições chamadas condições de contorno) e depois discretizá-lo para resolver numericamente.
-	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OPC e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
-	não linear resultante (NPL do inglês \textit{Nonlinear Programming Problem}) resultante.
-\end{enumerate}
-
 Para a solução de OPC em aplicações no mundo real, os métodos diretos são atualmente as técnicas mais difundidas e usadas com sucesso. \cite{article:Diehl,book:betts2010}
-
-Métodos diretos reformulam o OPC da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
-
-\begin{mini!}
-	{w}{a(w) \label{eq:NPL1}}
-	{\label{eq:NPL}}{}
-	\addConstraint{b(w)}{= 0 \label{eq:NPL2}}{}
-	\addConstraint{c(w)}{\geq 0, \label{eq:NPL3}}{}
-\end{mini!}
-
-com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
-Todos os métodos diretos começam por uma parametrização da trajetória de controle, mas diferem na forma como a trajetória dos estados é tratada. Podem ser classificados em duas abordagems, sequnciais e simultâneos. 
-
-Nas abordagens sequenciais, a trajetória de estado x (t) é uma função implícita dos controles $u(t)$ e do valor inicial $x0$, por exemplo, por uma simulação direta com a ajuda de um solucionador ODE em tiro único direto [45, 31]. Assim, simulação
-e as iterações de otimização procedem sequencialmente, uma após a outra, e a PNL possui apenas o controle discretizado como graus de liberdade de otimização.
-
-As abordagens simultâneas fazem uma parametrização da trajetória do estado como variáveis ​​de otimização dentro da PNL e adicionam restrições 
-de igualdade adequadas que representam o modelo ODE. 
-Assim, a simulação e a otimização ocorrem simultaneamente, e somente na solução da PNL os estados realmente representam uma solução EDO válida 
-correspondente à trajetória de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}.
 
 \begin{figure}[h]
 	\centering
@@ -549,19 +544,43 @@ correspondente à trajetória de controle. As duas variações mais comuns da ab
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{article:Diehl}}
 \end{figure}
 
+Métodos diretos reformulam o OPC da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
 
+\begin{mini!}
+	{w}{a(w) \label{eq:NPL1}}
+	{\label{eq:NPL}}{}
+	\addConstraint{b(w)}{= 0 \label{eq:NPL2}}{}
+	\addConstraint{c(w)}{\geq 0, \label{eq:NPL3}}{}
+\end{mini!}
 
-\subsection{FALCON.m}
+com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
+Todos os métodos diretos começam por uma parametrização da variável de controle, mas diferem na forma como os estados são tratados. Podem ser classificados em duas abordagems, sequnciais e simultâneos. 
+
+Nas abordagens sequenciais, os estado $x(t)$ são uma função implícita dos controles $u(t)$ e do valor inicial $x_0$. Dessa forma, a simulação
+e as iterações de otimização procedem sequencialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequencial é o \textit{Direct Single Shooting}.
+
+As abordagens simultâneas fazem uma parametrização dos estado como variáveis de otimização dentro do NLP e adicionam restrições de igualdade que representam a dinâmica do sistema. 
+Com isso, a simulação e a otimização ocorrem simultaneamente, e somente na solução do NLP os estados representam uma solução da equação da dinâmica do sistema válida e
+correspondente à variável de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}.
+
+\subsection{O \textit{software} FALCON.m}
 
 FALCON.m é um é uma biblioteca de \textit{software}, proprietária de uso gratuito, para MATLAB\textsuperscript{\textregistered}, 
 desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e 
-análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização \cite{manual:Falcon, phd:Rieck} 
-Ela segue o paradigma de programação orientada a objetos e um resumo de seus principais objetos é apresentado na Figura \ref{}:
+análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização.\cite{manual:Falcon, phd:Rieck} 
 
+Ela segue o paradigma de programação orientada a objetos, um resumo de suass principais classes de objetos é apresentado na Figura \ref{fig:objetosFalcon}. 
+A classe \lstinline[style=Matlab-editor]{Problem} é a principal, nela são configurados as fases (\lstinline[style=Matlab-editor]{Phases}) do OPC, os parâmetros otimizáveis, o custo de Mayer e
+o método de discretização a ser utilizado . Os métodos de discretização disponíveis na biblioteca são: 
+trapezoidal (padrão) ou \textit{backward Euler}.  Na classe \lstinline[style=Matlab-editor]{Phases}, são adicionados o modelo da dinâmica do sistema, os estados, as variáveis 
+de controle, as restrições de caminho, o custo de Lagrange e os instantes de tempos inicial e final.\cite{phd:Matthias}
+
+A biblioteca utiliza otimizadores para NLP externos, Como cada otimizador tem uma interface única, no momento, é possivel utilizar interfaces para três otmizadores: IPOPT, SNOPT e WORHP. 
+O otimizador utilizado neste trabalho é o IPOPT, configuração pré-definida da biblioteca FALCON.m. Mais informações sobre a utilização do FALCON.m pode ser constuldas em seu manual \citeauthor{manual:Falcon}.
 \begin{figure}[h]
 	\centering
 	\caption{Resumo com principais objetos da biblioteca FALCON.m}
-	\label{}
+	\label{fig:objetosFalcon}
 	\begin{tikzpicture}[%
 		grow via three points={one child at (0.5,-0.7) and
 		two children at (0.5,-0.7) and (0.5,-1.4)},
@@ -592,18 +611,15 @@ Ela segue o paradigma de programação orientada a objetos e um resumo de seus p
 		  child { node {MayerCosts}}
 		  child { node {DiscretizationMethod}};
 	\end{tikzpicture}
-	\caption*{\footnotesize Fonte: Adaptado de}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{phd:Matthias}}
 \end{figure}
 
-A biblioteca utiliza otimizadores para NLP externos, Como cada otimizador tem uma interface única, no momento é possivel utilizar interfaces para três otmizadores: IPOPT, SNOPT e WORHP. 
-O otimizador utilizado neste trabalho é o IPOPT, padrão da biblioteca FALCON.m.
-
-\subsection{IPOPT}
+\subsubsection{IPOPT}
 
 O projeto COIN-OR, do inglês \textit{COmputational INfrastructure for Operations Research},
  é uma iniciativa que visa promover \textit{software} de código aberto para a comunidade de pesquisa operacional \cite{article:CoinOr}. 
  Dentre as bibliotecas disponibilizadas no projeto COIN-OR está a IPOPT, do inglês \textit{Interior Point OPTimizer}.
- Escrita em C++ e Fortran para solução de problemas de otimização não linear utilizando o
- método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt} e sua licença é a EPL. Mais detalhes sobre esta bibliotecas podem ser obtidos na pagina do seu repositório no GitHub\textsuperscript{\textregistered} (\url{https://github.com/coin-or/Ipopt}).
+ Escrita em C++ e Fortran para solução de problemas de otimização não linear (NLP) utilizando o
+ método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao codigo. Mais detalhes sobre esta biblioteca podem ser obtidos na pagina do seu repositório no GitHub\textsuperscript{\textregistered} \url{https://github.com/coin-or/Ipopt}.
 
 \clearpage
