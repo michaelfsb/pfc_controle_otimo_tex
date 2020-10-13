@@ -314,7 +314,7 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 	\caption{Motor Dunkermotoren BG75x75 40V}
 	\label{fig:motor_bg75}
 	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/bg75.png}
-	\caption*{\footnotesize Fonte: Adaptado de }
+	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG}
 \end{figure}
 
 \begin{table}[H]
@@ -341,7 +341,7 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 		Massa                     & {[}kg{]}       & 2,8    \\
 		\bottomrule
 	\end{tabular}
-	\caption*{\footnotesize Fonte: Adaptado de }
+	\caption*{\footnotesize Fonte: Adaptado de \cite{manual:BG75}}
 \end{table}
 
 A transmissão do veículo regula a transferência de potência do motor para as rodas. É basicamente composta por mecanismo de
@@ -435,7 +435,7 @@ e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_
 A soluçai de um problema de controle ótimo é uma sequência de sinais de controle em malha aberta e um conjunto de paramentos, o comportamento esperado é
 exemplificado na Figura \ref{fig:simpleOCP}.
 
-De forma geral, há três abordagens básicas para solução computacional de um OCP, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
+Segundo \citeauthor{article:Diehl}, de forma geral, há três abordagens básicas para solução computacional de um OCP, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
 conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
 
 \begin{enumerate}[(a)]
@@ -554,14 +554,14 @@ Métodos diretos reformulam o OCP da Equação (\ref{eq:formulacaoOCP}) em um pr
 \end{mini!}
 
 com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
-Todos os métodos diretos começam por uma parametrização da variável de controle, mas diferem na forma como os estados são tratados. Podem ser classificados em duas abordagems, sequnciais e simultâneos. 
+Todos os métodos diretos começam por uma parametrização da variável de controle, mas diferem na forma como os estados são tratados. Podem ser classificados em duas abordagems, sequnciais e simultâneos.\cite{article:Diehl} 
 
 Nas abordagens sequênciais, os estado $x(t)$ são uma função implícita dos controles $u(t)$ e do valor inicial $x_0$. Dessa forma, a simulação
-e as iterações de otimização procedem sequêncialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequêncial é o \textit{Direct Single Shooting}.
+e as iterações de otimização procedem sequêncialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequêncial é o \textit{Direct Single Shooting}.\cite{article:Diehl}
 
 As abordagens simultâneas fazem uma parametrização dos estado como variáveis de otimização dentro do NLP e adicionam restrições de igualdade que representam a dinâmica do sistema. 
 Com isso, a simulação e a otimização ocorrem simultaneamente, e somente na solução do NLP os estados representam uma solução da equação da dinâmica do sistema válida e
-correspondente à variável de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}.
+correspondente à variável de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}.\cite{article:Diehl}
 
 \subsection{O \textit{software} FALCON.m}
 
