@@ -2,26 +2,26 @@
 \label{chap:metodologia}
 \thispagestyle{empty}
 
-É apresentado neste capitulo o desenvolvimento realizado neste projeto, os problemas encontrados e as soluções propostas.
-Na primeira e segunda seção tem-se a definição do modelo matemático do veiculo protótipo DT1 e da pista. A terceira seção traz a formulação proposta para o problema de controle ótimo que encontrar
-a estrategia de pista ótima. Por fim, na ultima seção é apresentado os passos realizados no desenvolvimento do código que soluciona o OPC proposto. 
+É apresentado neste capítulo o desenvolvimento realizado neste projeto, os problemas encontrados e as soluções propostas.
+Na primeira e segunda seção tem-se a definição do modelo matemático do veículo protótipo DT1 e da pista. A terceira seção traz a formulação proposta para o problema de controle ótimo que encontrar
+a estratégia de pista ótima. Por fim, na última  seção é apresentado os passos realizados no desenvolvimento do código que soluciona o OCP proposto. 
 
-\section{Modelo do veiculo DT1} 
+\section{Modelo do veículo DT1} 
 
-O modelo da dinâmica do veiculo protótipo DT1 foi definido com base na revisão bibliográfica apresentada na Seção \ref{sec:modelo}. 
+O modelo da dinâmica do veículo protótipo DT1 foi definido com base na revisão bibliográfica apresentada na Seção \ref{sec:modelo}. 
 Para isto as seguintes simplificações e considerações foram feita:
 
 \begin{itemize}
-    \item \textbf{Dinâmica lateral:} não foi levando em conta a dinâmica lateral do veiculo considerando que ele se move apenas em linha reta; 
+    \item \textbf{Dinâmica lateral:} não foi levando em conta a dinâmica lateral do veículo considerando que ele se move apenas em linha reta; 
     \item \textbf{Vento:} a velocidade do vento foi desconsiderada na Equação (\ref{eq:Fa});
-    \item \textbf{Pneus:} a variação do coeficiente de rolamento em funça da temperatura, da pressão e a velocidade não foi considerada na Equação (\ref{eq:Fr});
+    \item \textbf{Pneus:} a variação do coeficiente de rolamento em função da temperatura, da pressão e a velocidade não foi considerada na Equação (\ref{eq:Fr});
     \item \textbf{Rolamentos:} o atrito viscos dos rolamentos foi considerado nulo;
-    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potencia foram tratados como componentes ideias não modificações na dinâmica das grandezas elétricas;
-    \item \textbf{Indutância do motor:} como o dinâmica da velocidade é pelo menos dez vez mais lenta que a dinâmica da corrente elétrica, a contribuição do do indutor foi removida da Equação (\ref{eq:propulsao_1}).  
+    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potência foram tratados como componentes ideias não modificações na dinâmica das grandezas elétricas;
+    \item \textbf{Indutância do motor:} como a dinâmica da velocidade é pelo menos dez vez mais lenta que a dinâmica da corrente elétrica, a contribuição do  indutor foi removida da Equação (\ref{eq:propulsao_1}).  
 \end{itemize}
 
 A partir das Equações (\ref{eq:SomaForcas}) à (\ref{eq:Fr}) e (\ref{eq:propulsao}) e destas simplificações e considerações foi definido a 
-seguinte equação para descrever o comportamento do veiculo
+seguinte equação para descrever o comportamento do veículo
 
 \begin{subequations}
 	\label{eq:modelo_1}
@@ -36,10 +36,10 @@ seguinte equação para descrever o comportamento do veiculo
 \end{subequations}
 
 em que as variáveis são $\dot v$ a aceleração 
-do carro em [$m/s^2$], $v$ a velocidade do carro em [$m/s^2$], $x$ a distancia percorrida pelo carro na pista em [$m$], 
+do carro em [$m/s^2$], $v$ a velocidade do carro em [$m/s^2$], $x$ a distância  percorrida pelo carro na pista em [$m$], 
 $u$ a tensão aplicada no motor em [$V$], $r_m$ o raio do cilindro de transmissão no eixo do motor elétrico em [$m$] e $\theta$ é a inclinação da pista em [$rad$] 
 e as constantes estão apresentadas na Tabela \ref{tab:constantes}. Não foi realizado ensaio para determinar ou verificar essas constantes e este modelo
-pois o projeto foi realizado, em sua maior parte, durante o Ensino Remoto Emergêncial de 2020. As constantes foram definidas através da bibliografia apresentada
+pois o projeto foi realizado, em sua maior parte, durante o Ensino Remoto Emergencial de 2020. As constantes foram definidas através da bibliografia apresentada
 e por dados fornecidos pela equipe Milhagem UFMG. 
 
 % em que as variáveis são $u$ a tensão aplicada no motor em [$V$], 
@@ -51,13 +51,13 @@ e por dados fornecidos pela equipe Milhagem UFMG.
 
 \begin{table}[H]
 	\centering
-	\caption{Constantes utilizadas no modelo do veiculo}
+	\caption{Constantes utilizadas no modelo do veículo}
 	\rowcolors{1}{}{lightgray}
 	\begin{tabular}{llll}
 		\toprule
 		\textbf{Constante} & \textbf{Simbolo} & \textbf{Unidade} & \textbf{Valor}\\
 		\hline
-		Massa veiculo                       & $m_v$  & [$kg$]              & 36      \\
+		Massa veículo                       & $m_v$  & [$kg$]              & 36      \\
         Massa do piloto                     & $m_p$  & [$kg$]              & 50      \\
         Resistência de armadura             & $R_a$  & [$\Omega$]        & 0,07    \\  
         Const. de tensão induzida           & $K_v$  & [$V/(rad/s)$]       & 0,119   \\
@@ -68,8 +68,8 @@ e por dados fornecidos pela equipe Milhagem UFMG.
         Const. de torque                    & $K_t$  & [$Nm/A$]            & 0,119   \\
         Eficiencia da roda de atrito        & $\eta$ & [ ]                & 0,95    \\
         Densidade do ar                     & $\rho$ & [$kg/m^3$]        & 1,22    \\
-        Areá fronta do veiculo              & $a_f$  & [$m^2$]           & 0,26    \\
-        Coef. de arrasto aerodinamico       & $c_d$  & [ ]                & 0,164   \\
+        Areá fronta do veículo              & $a_f$  & [$m^2$]           & 0,26    \\
+        Coef. de arrasto aerodinâmico       & $c_d$  & [ ]                & 0,164   \\
         Aceleração da gravidade             & $g$    & [$m/s^2$]         & 9,81    \\
         Coef. de resistência ao rolamento   & $c_r$  & [ ]                & 0,0024  \\
 		\bottomrule
@@ -82,7 +82,7 @@ e por dados fornecidos pela equipe Milhagem UFMG.
 \section{Modelo da pista}
 
 Para obter os dados de altitude da pista da Shell Eco-marathon Americas de 2019 no Kartódromo de Sonoma foi feito uma requisição a equipe
-equipe \textit{Duke Electric Vehicles} da \textit{Duke University} que disponibilizou os dados coletados e tratos por ela. A Figura apresentada \ref{fig:altitude_pista} 
+\textit{Duke Electric Vehicles} da \textit{Duke University} que disponibilizou os dados coletados e tratos por ela. A Figura apresentada \ref{fig:altitude_pista} 
 o perfil de altitude da pista com estes dados.
 
 \begin{figure}[h]
@@ -93,11 +93,11 @@ o perfil de altitude da pista com estes dados.
     \caption*{\footnotesize{Fonte: Dados da equipe de competição \textit{Duke Electric Vehicles}.}}
 \end{figure}
 
-Uma forma de representar esses dados no código para solução o OPC é por meio de uma \textit{lookup table} porem ao implementar os dados dessa foram
+Uma forma de representar esses dados no código para solução o OCP é por meio de uma \textit{lookup table} porem ao implementar os dados dessa foram
 a solução não convergiu. Uma possível explicação para essa não convergência é que os dados eram derivados duas vezes, uma para determinar a inclinação e outra pelo 
 realizada algorítimo de otimização e ao analisar esses dados derivados usando o comando \lstinline[style=Matlab-editor]{diff} do MATLAB\textsuperscript{\textregistered} foram observadas curvas
 com grande variação de inclinação e ruido. Alem disso seria preciso repetir sete vezes os dois vetores de dados para emular as repetidas voltas realiza pelo carro durante a tentativa.
-A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB\textsuperscript{\textregistered} 
+A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB\textsuperscript{\textregistered} 
 e então realizar a derivada para obter a seguinte equação inclinação:
 
 \begin{multline}
@@ -112,11 +112,12 @@ e então realizar a derivada para obter a seguinte equação inclinação:
         +0.005539 cos(0.030552 x - 1.400496)).
 \end{multline}
 
-\section{Problema de controle ótimo (OPC)}
+\section{Problema de controle ótimo (OCP)}
+\label{sec:OCPporposto}
 
-Utilizando a formulação genérica de OPC da Equação (\ref{eq:formulacaoOCP}), o modelo do veiculo dado pela Equação (\ref{eq:modelo_1})
+Utilizando a formulação genérica de OCP da Equação (\ref{eq:formulacaoOCP}), o modelo do veículo dado pela Equação (\ref{eq:modelo_1})
 e o manual de regras de competição da Shell EcoMarathon Américas de 2019 
-foi definida a seguinte formulação para o problema de controle ótimo de encontrar a estrategia de pista que minimiza o consumo de energia
+foi definida a seguinte formulação para o problema de controle ótimo de encontrar a estratégia de pista que minimiza o consumo de energia
 
 \begin{mini!}
 	{i(t), r_m, T}{\int_{0}^{T} i(t) \cdot [i(t) \cdot Ra + Kv \cdot (v(t)/r_m)] \,\mathrm{d}t \label{eq:ObjOCP_final}}
@@ -134,21 +135,21 @@ foi definida a seguinte formulação para o problema de controle ótimo de encon
 \end{mini!}
 
 em que a Equação (\ref{eq:ObjOCP_final}) define a energia elétrica consumida como custo a ser minimizado, 
-as Equações (\ref{eq:C1_OCP_final}) e (\ref{eq:C2_OCP_final}) são restrições para os estados inciais de distancia percorrida e velocidade nulos, 
+as Equações (\ref{eq:C1_OCP_final}) e (\ref{eq:C2_OCP_final}) são restrições para os estados iniciaisde distância  percorrida e velocidade nulos, 
 as Equações (\ref{eq:C3_OCP_final}) e (\ref{eq:C4_OCP_final}) são as restrições que garantem que os estados da reposta repeitem a dinâmica do modelo da Equação (\ref{eq:modelo_1}), 
 a Equação (\ref{eq:C5_OCP_final}) é uma restrição de caminho para corrente em razão da tensão máxima da bateria, 
-a Equação (\ref{eq:C6_OCP_final}) é uma restrição para o valor máximo de corrente em função do limite de corrente entregue pelo conversor de potencia do veiculo,
-a Equação (\ref{eq:C7_OCP_final}) é uma restrição para o valor máximo da velocidade do carro definida pela pela organização da competição,
-a Equação (\ref{eq:C8_OCP_final}) é um restrições de valor final fixo para a distancia percorrida equivalente a sete voltas na pista,
-a Equação (\ref{eq:C9_OCP_final}) é uma restrição para o valor máximo do tempo final em decorrência do limite de velocidade media minima determinado pela organização da competição,
+a Equação (\ref{eq:C6_OCP_final}) é uma restrição para o valor máximo de corrente em função do limite de corrente entregue pelo conversor de potência do veículo,
+a Equação (\ref{eq:C7_OCP_final}) é uma restrição para o valor máximo da velocidade do carro definida pela organização da competição,
+a Equação (\ref{eq:C8_OCP_final}) é um restrições de valor final fixo para a distância  percorrida equivalente a sete voltas na pista,
+a Equação (\ref{eq:C9_OCP_final}) é uma restrição para o valor máximo do tempo final em decorrência do limite de velocidade media mínima determinado pela organização da competição,
 e a Equação (\ref{eq:C10_OCP_final}) é o intervalo possível para o raio do eixo do motor.
 
 
-\section{Código para solução do OPC}
+\section{Código para solução do OCP}
 \label{sec:metodologia_codigos}
 
 Nesta etapa do trabalho a versão do MATLAB\textsuperscript{\textregistered} utilizada foi a R2019b Update 7 e a versão do FALCON.m utilizada foi a v1.26.
-O compilador MinGW-w64 C/C++, pré-requisito da bibloteca FALCON, foi instalado gratuitamente na versão 19.2.0 pela loja de aplicativos do MATLAB\textsuperscript{\textregistered}. 
+O compilador MinGW-w64 C/C++, pré-requisito da biblioteca FALCON, foi instalado gratuitamente na versão 19.2.0 pela loja de aplicativos do MATLAB\textsuperscript{\textregistered}. 
 A licença do MATLAB\textsuperscript{\textregistered} utilizada foi a licença acadêmica fornecida pela UFMG à seus alunos. Já a licença do FALCON.m, de uso individual e intransferível,
 foi obtida por meio de solicitação feita ao \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} pelo site \url{https://www.fsd.lrg.tum.de/software/falcon-m/license-and-download/}.
 
@@ -166,7 +167,7 @@ A implementação do código para solução do problema de controle ótimo propo
 
 O código de solução desenvolvido a partir destes passos é composto por quatro aquivos, apresentados na Figura \ref{fig:matlab_files}, três \textit{functions} e um \textit{script}. Os aquivos \textit{function}, \lstinline[style=Matlab-editor]{i_max.m},
 \lstinline[style=Matlab-editor]{lagrange_cost.m} e \lstinline[style=Matlab-editor]{mdl_dt1_pista.m} são, respectivamente, 
-a restrição de caminho corrente da Equação(\ref{eq:C5_OCP_final}), o custo de Lagrange da Equação (\ref{eq:ObjOCP_final}) e o modelo da dinâmica do veiculo da Equação (\ref{eq:modelo_1}) acrescido do modelo de inclinação da pista da Equação (\ref{eq:modeloTheta}).
+a restrição de caminho corrente da Equação(\ref{eq:C5_OCP_final}), o custo de Lagrange da Equação (\ref{eq:ObjOCP_final}) e o modelo da dinâmica do veículo da Equação (\ref{eq:modelo_1}) acrescido do modelo de inclinação da pista da Equação (\ref{eq:modeloTheta}).
 
 \begin{figure}[h]
     \centering
@@ -178,15 +179,15 @@ a restrição de caminho corrente da Equação(\ref{eq:C5_OCP_final}), o custo d
 
 
 Durante a escrita do arquivo \lstinline[style=Matlab-editor]{main.m} uma dificuldade encontrada foi a determinação da variável \lstinline[style=Matlab-editor]{scale}, 
-ultima variável nos construtores \lstinline[style=Matlab-editor]{falcon.State()}, \lstinline[style=Matlab-editor]{falcon.Control()} e \lstinline[style=Matlab-editor]{falcon.Parameter()}.
-Inicialmente os valores definidos foram a ordem de grandeza da cada variáveis o que gerou matrizes mau condicionadas no NLP e consequente um alto tempo de solução o problema. 
-Os valores corretos, conforme sugerido no manual do FALCON.m\cite{manual:Falcon}, dever ser definidos de tal forma que a ordem de grandeza da variável seja um. Por exemplo: uma varivel que
+última  variável nos construtores \lstinline[style=Matlab-editor]{falcon.State()}, \lstinline[style=Matlab-editor]{falcon.Control()} e \lstinline[style=Matlab-editor]{falcon.Parameter()}.
+Inicialmente os valores definidos foram a ordem de grandeza da cada variável o que gerou matrizes mau condicionadas no NLP e consequente um alto tempo de solução o problema. 
+Os valores corretos, conforme sugerido no manual do FALCON.m\cite{manual:Falcon}, dever ser definidos de tal forma que a ordem de grandeza da variável seja um. Por exemplo: uma variávelque
 representa a correte elétrica de um circuito em [mA] deve ter o parâmero \lstinline[style=Matlab-editor]{scale} igual a $10^{-3}$. 
 A definição dos estados, variável de controle e parâmetros com o parâmetro \lstinline[style=Matlab-editor]{scale} adequado é apresentado no Código \ref{lst:scale}. 
 
 \begin{figure}[h]
     \begin{lstlisting}[
-        caption={[Trecho do arquivo main.m]Trecho do arquivo \lstinline[style=Matlab-editor]{main.m} com definição dos estados, variável de controle e parâmetros do OPC proposto}, 
+        caption={[Trecho do arquivo main.m]Trecho do arquivo \lstinline[style=Matlab-editor]{main.m} com definição dos estados, variável de controle e parâmetros do OCP proposto}, 
         label={lst:scale},
         style      = Matlab-editor,
         basicstyle = \mlttfamily,
@@ -204,7 +205,7 @@ rm = falcon.Parameter('raioM', 0.026, 0.020, 0.050, 1e2);
     \caption*{\footnotesize{Fonte: Elaborado pelo autor.}}
 \end{figure}
 
-Além disso, foi verificado que, a biblioteca FALCON.m versão v1.26 não funcinou no MATLAB\textsuperscript{\textregistered} R2020a quando o otimizador IPOPT era utilizado.
+Além disso, foi verificado que, a biblioteca FALCON.m versão v1.26 não funcionou no MATLAB\textsuperscript{\textregistered} R2020a quando o optimizador  IPOPT era utilizado.
 Isto ocorreu pois não há garantia de compatibilidade, no Windows, por parte do MATLAB\textsuperscript{\textregistered} em sua evolução, a arquivos MEX (interface com programas escritos em C, C++ ou Fortran) gerados em versões 
 anteriores e a biblioteca IPOPT é chamada por meio de um arquivo MEX não compatível apos a versão R2019b do MATLAB\textsuperscript{\textregistered}. Novas versões da FALCON.m
 devem possibilitar o uso e versões mais novas do MATLAB\textsuperscript{\textregistered} pois os arquivos MEX serão compilados novamente.

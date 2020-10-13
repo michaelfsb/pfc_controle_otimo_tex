@@ -9,7 +9,7 @@ G  = 9.81;      % Aceleração da gravidade [m/s2]
 mi = 0.0024;    % Coef. de resistência ao rolamento dos pneus []
 Jr = 0.015;     % Momento de inercia da roda[kg.m2]
 Jm = 0.0625e-3; % Momento do inercia do motor [kg.m2]
-mv = 18;        % Massa do veiculo [kg]
+mv = 18;        % Massa do veículo [kg]
 mp = 50;        % Massa do piloto [kg]
 ef = 0.95;      % Eficiência da roda de atrito (transmissão) []
 
@@ -23,8 +23,7 @@ theta = atan(0.012293*cos(0.004363*x-0.228758)+...
     0.004361*cos(0.021814*x+1.627015)+...
     0.005539*cos(0.030552*x-1.400496));
 
-eta = rr/rm;                        % relação de transmissão
-mr = 3*(Jr/rr^2) + Jm*(eta^2/rr^2); % massa eq. rotacional 
+mr = 3*(Jr/rr^2) + Jm/rr^2);       % massa eq. rotacional 
 M = mv + mp + mr;
 
 Ft = ((Kt*i)*ef)/rm;               % força de tração

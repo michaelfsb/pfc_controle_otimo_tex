@@ -1,48 +1,120 @@
 \chapter{Resultados}
 \label{chap:resultados}
 
-Os resultados obtidos com o desenvolvimento desse projeto são apresentados e discutidos nesse capitulo em três seções. 
-Na Seção \ref{sec:resultados_modelo} 
-A Seção \ref{sec:resultados_pista}
-E a Seção \ref{sec:resultados_otimo}
+Os resultados obtidos com o desenvolvimento desse projeto são apresentados e discutidos nesse capítulo de forma divida em três seções.  
+A primeira e a segunda sobre os modelos do DT1 e da pista do Kartódromo de Sonoma. E a última  sobre os resultados da solução do OCP proposto.
 
-\section{Modelo do veiculo DT1}
+\section{Modelo do veículo DT1}
 \label{sec:resultados_modelo}
 
-O modelo obtido para o veiculo para o veiculo DT1 foi a Equação (\ref{eq:modelo_1}) e o conjunto de constates da Tabela \ref{tab:constantes}.
+O modelo obtido para o veículo para o veículo DT1 foi a Equação (\ref{eq:modelo_1}) e o conjunto de constates da Tabela \ref{tab:constantes}.
 Entretanto esse modelo não foi validado experimentalmente pois esse projeto foi realizado, em sua maior parte, durante o regime de ensino remoto
-emergência causado pela pandemia de Covid-19 em 2020. Na solução do OPC proposto a marca de consumo calculado para a estrategia ótima
-foi de $900,3$ [km/kWh] que é um valor muito distante das marcas realmente realizas pelo DT1 de $266,5$ [km/kWh] em 2018 e de $226,9$ [km/kWh] em 2019  no Kartódromo de Sonoma na Shell Eco-marathon Americas. 
+emergência causado pela pandemia de Covid-19 em 2020. Na solução do OCP proposto a marca de consumo calculado para a estratégia ótima
+foi de $905,7$ [km/kWh] que é um valor muito distante das marcas realmente realizas pelo DT1 de $266,5$ [km/kWh] em 2018 e de $226,9$ [km/kWh] em 2019  no Kartódromo de Sonoma na Shell Eco-marathon Americas. 
 Apesar de que uma melhora na marca era esperada, esta grande diferença entre os valores das marcas deve ser analisada com ceticismo, ela indica que as constantes do modelo podem precisar ser ajustadas e/ou as simplificações revistas.
 
 
 \section{Modelo da pista}
 \label{sec:resultados_pista}
 
-A curva ajustada para representar a altitude relativa em função da distancia apresentou um erro maior nos pontos que a distancia percorrida esta entre 290 e 575 e metros e entre 1005 e 1265 metros. O máximo erro destes
+A curva ajustada para representar a altitude relativa em função da distância  apresentou um erro maior nos pontos que a distância  percorrida esta entre 290 e 575 e metros e entre 1005 e 1265 metros. O máximo erro destes
 intervalos foi de 19\% e 34\% respetivamente. Ja no restante do intervalo o erro máximo ficou abaixo de 10\%. 
-O modelo de inclinação, obtido a partir da arco tangente da derivada desta curva, foi aprestando na Equação (\ref{eq:modeloTheta}). 
+O modelo de inclinação, obtido a partir do arco  tangente da derivada desta curva, foi aprestando na Equação (\ref{eq:modeloTheta}). 
 A Figura \ref{graf:modelo_pista} apresenta uma comparação entre os dados de altitude e a curva ajusta.
-O comportamento periódico desejado na curva ajustada para descrever a repetição das voltas na tentativa é a apresentado na \ref{graf:pista_voltas}.
+e o comportamento periódico desejado na curva ajustada para descrever a repetição das voltas na tentativa.
 
-
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \caption{Curva ajustada para representar altitude da pista}
-    \input{Resultados/Figuras/pista_modelo.tex}
+    \input{Resultados/Figuras/pista.tex}
     \label{graf:modelo_pista}
     \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
 \end{figure}
 
+
+% \begin{figure}[H]
+%     \centering
+%     \caption{Curva ajustada para representar altitude da pista}
+%     \input{Resultados/Figuras/pista_modelo.tex}
+%     \label{graf:modelo_pista}
+%     \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \caption{Representação da periodicidade da curva ajusta}
+%     \input{Resultados/Figuras/pista_voltas.tex}
+%     \label{graf:pista_voltas}
+%     \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+% \end{figure}
+
+\section{estratégia de pista ótima}
+\label{sec:resultados_otimo}
+ 
+O código desenvolvido, conforme descrito na Seção \ref{sec:OCPporposto}, para solução o problema de controle ótimo proposto na Equação 
+(\ref{eq:ObjOCP_final}) gerou um problema de programação não linear com 3005 variáveis de otimização.
+Foram gastos para a execução de todo o programa $\sim 14.4$ segundos onde $\sim 7,2$ segundos deste foram utilizados na otimização do NLP em $636$ iterações da biblioteca IPOP e reposta não violou nenhuma das restrições. 
+A sequência de controle ótima de $i$ e os estados gerados por ela $x$ e $v$ estão apresentados nos gráficos da Figura \ref{graf:resultadoOCP}. 
+Os parâmetros otimizados tempo final $T$ e raio do eixo do motor $r_m$ são exibidos na Tabela \ref{tab:resultadoOCP} junto das métricas marca, velocidade media e velocidade final. 
+
+\begin{table}[h]
+	\centering
+	\caption{Parâmetros otimizados e métricas da estratégia ótima}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{lll}
+		\toprule
+		\textbf{Constante} & \textbf{Unidade} & \textbf{Valor}\\
+		\hline
+		Marca                               & [$km/kWh$]   & 905.68  \\
+        Raio do eixo do motor               & [$mm$]       & 27.56   \\
+        Tempo total de prova                & [$s$]        & 1400.0  \\  
+        Velocidade média                    & [$km/h$]     & 25.92   \\
+        Velocidade final                    & [$km/h$ ]    & 17.09   \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
+	\label{tab:resultadoOCP}
+\end{table}
+
 \begin{figure}[H]
     \centering
-    \caption{Representação da periodicidade da curva ajusta}
-    \input{Resultados/Figuras/pista_voltas.tex}
-    \label{graf:pista_voltas}
+    \caption{sequência de controle ótima $i$ e estados $v$ e $x$ correspondentes}
+    \input{Resultados/Figuras/resultadoOPC.tex}
+    \label{graf:resultadoOCP}
     \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
 \end{figure}
 
-\section{Estrategia de pista ótima}
-\label{sec:resultados_otimo}
+A estratégia de pista ótima encontrada se assemelha muito a estratégia estratégia \textit{start-stop}, na qual o motor é desligado quando a velocidade é máxima
+km/h e religado apenas quando é minima. Entretanto, no caso ótimo estes valores diferem na primeira, na última e nas demais voltas. Para a primeira volta a máxima e a mínima são
+$26,8$ e $17,3$ [km/h]. Na última  os valores máximo e a mínimo são $33,2$ e $11,9$ [km/h]. Enquanto nas demais voltas os valores máximo e mínimo são $35,0$ e $17,3$ [km/h]
+
+Nos gráficos da Figura \ref{graf:resultadotensao} estão retratos a tensão que deve ser aplicada no motor para produzir a corrente elétrica da sequência de controle ótima e a inclinação da pista em cada instante de tempo.
+A partir desta pode-se observar que o motor é ligado somente no maior pico positivo de inclinação, ou seja, o motor só é ligado na maior subida pista.
+
+Como apresentado nos gráficos da Figura \ref{graf:resultadoForcas} a maior força resistiva que atuou no veículo foi a componente do peso paralela a pista $F_g$, variando entre $-18,45$ [N] a $25,84$ [N]. Apesar de $F_g$ ser conservativa
+e realizar um trabalho nulo em um circuito fechado, ela influencia fortemente, dado sua magnitude comparada as outras forças resistivas, as acelerações do protótipo e consequentemente a região de trabalho do motor.
+Já o arrasto aerodinâmico $F_a$ atingiu um máximo de $2,46$ [N] e a resistência ao rolamento $F_r$ teve o valor constante de $2,02$ [N].  
+
+\begin{figure}[h]
+    \centering
+    \caption{Tensão necessária para a sequência de controle ótima e inclinação da pista}
+    \input{Resultados/Figuras/resultado_tensao.tex}
+    \label{graf:resultadotensao}
+    \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \caption{Força tração das forças resistivas na estratégia de pista ótima}
+    \input{Resultados/Figuras/resultado_forcas.tex}
+    \label{graf:resultadoForcas}
+    \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
+\end{figure}
+
+
+
+
+
+
 
 \clearpage

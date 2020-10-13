@@ -1,14 +1,34 @@
 \chapter{Conclusões}
 \label{chap:conclusao}
 
-Novamente, este será um dos trechos que o leitor experiente lerá antes de decidir se vale a pena ler o texto integral. Seja convincente.
+O capítulo de conclusão deste projeto de fim de curso está divido em duas seções.
+Na Seção \ref{sec:5_1} são feitas as considerações finais sobre os resultados alcançados e uma avaliação do cumprimento dos objetivos definidos inicialmente no capítulo \ref{chap:intro}.
+As propostas de continuidade para o projeto estão na seção \ref{sec:5_2}.
 
 \section{Considerações Finais}
+\label{sec:5_1}
 
-Reitere o que de mais importante foi feito, qual era o objetivo inicial e qual o resultado obtido. Se houve requisitos ou especificações de projeto, discuta se foram atingidos. Se os resultados não foram conclusivos ou contrariam o que se esperava, seja honesto e diga-o explicitamente. Busque explicar os insucessos com argumentos sólidos e plausíveis. 
+Os objetivos (a) e (d) de definir o modelo matemático para a dinâmica do protótipo DT1 e de definir a estratégia ótima para a pista da Shell EcoMarathon Américas de 2019 
+foram atingidos de forma parcial uma vez que, como discutido na Seção \ref{sec:resultados_modelo}, não foi realizado uma validação experimental do modelo em razão da 
+realização remota deste projeto. Desta forma não é possível afirmar que o modelo determinado representa fidedignamente o comportamento do veículo
+e por consequência que a estratégia de pista encontra é ótima para o caso real.
+
+Formular o problema de controle ótimo pra obter a estratégia ótima e implementar o algoritmo para solução desse OCP,
+que são objetos (b) e (c), foram cumpridos integralmente pois a formulação contempla todas as restrições para o comportamento do veículo durante uma tentativa e o solução cumpriu todas estas
+restrições com um tempo de computação pequeno. Além disso a formulação do OCP e o código serão de fácil modificação nas propostas de continuidade do trabalho
+a fim de concluir os objetivos (a) e (d).
 
 \section{Propostas de Continuidade}
+\label{sec:5_2}
 
-Se houve questões ainda não respondidas ou resultados insatisfatórios, aponte direções de continuação.
+A principal proposta para continuidade deste projeto e evolução e validação experimental do modelo matemático do protótipo DT1.
+Realizar a validação experimental é de fundamental importância para que os resultados obtidos com a solução do OCP possam ser utilizados pela equipe Milhagem UFMG.
+Essa evolução deve considerar pontos como a resistência ao rolamento do pneu em curvas, o atrito viscoso dos rolamento e perdas na bateria e no conversor de potência.
+
+Outro ponto de continuidade é a modificação do código escrito pra que a dinâmica e perdas do indutor da armadura motor sejam consideradas a fim de confirmar
+se são desconsideráveis.  
+Modificar, também, a restrição de caminho da corrente de forma que ela possa atingir valores maiores que o limite de $30$ [A] durante a partida para que 
+seja avaliada na otimização a possibilidade de usar a corrente de pico do motor, que é de $63$ [A], para que o protótipo tenha
+uma maior aceleração no momento da partida. 
 
 \clearpage

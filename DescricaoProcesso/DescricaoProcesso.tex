@@ -2,8 +2,8 @@
 \label{chap:revisao}
 \thispagestyle{empty}
 
-Este capitulo é divido em duas seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
-Na primeira seção são aprensados conceitos para uma modelagem matemática da dinâmica de um veiculo em baixas velocidades.
+Este capítulo é divido em duas seções que visam apresentar os conceitos necessários para a compreensão deste PFC.
+Na primeira seção são apresentados conceitos para uma modelagem matemática da dinâmica de um veículo em baixas velocidades.
 São apresentado na segunda seção uma introdução à teoria de controle ótimo e a utilização de \textit{software} na solução
 de problemas de controle ótimo.
 
@@ -11,16 +11,16 @@ de problemas de controle ótimo.
 \label{sec:modelo}
 
 Um modelo matemático, ou apenas modelo, é um conjunto de equações que descreve de forma adequada o comportamento de um sistema que deseja-se estudar.
-Uma forma usual de classificação dos métodos de modelagem é separa-los nas categorias: modelagem caixa branca, modelagem caixa preta e modelagem
+Uma forma usual de classificação dos métodos de modelagem é separá-los nas categorias: modelagem caixa branca, modelagem caixa preta e modelagem
 caixa cinza.
 A modelagem caixa branca, também conhecida como modelagem conceitual, consiste na aplicação princípios fundamentais e por isso exige um conhecimento
 da natureza do sistema.
 A modelagem caixa preta, ou modelagem empírica, é baseada na aplicação de técnicas de identificação de sistemas que exigem pouco ou
 nenhum conhecimento do sistema.
-Já na modelagem caixa cinza sáo utilizadas técnicas que estão entre a modelagem caixa branca e a modelagem caixa preta\cite{book:Aguirre}.
+Já na modelagem caixa cinza são utilizadas técnicas que estão entre a modelagem caixa branca e a modelagem caixa preta\cite{book:Aguirre}.
 
 Nessa seção o método de modelagem aplicado é de modelagem caixa branca. A partir da aplicação da segunda lei de Newton no
-veiculo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém-se a equação que descreve a dinâmica longitudinal do mesmo
+veículo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém-se a equação que descreve a dinâmica longitudinal do mesmo
 
 \begin{equation}
 	\label{eq:SomaForcas}
@@ -28,8 +28,8 @@ veiculo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém
 	\enspace,
 \end{equation}
 
-em que $m_v$ é a massa do veiculo, $m_v$ é a massa do piloto,  $m_r$ é massa equivalente ao memento de inercia das partes rotativas (rodas e eixo do motor),  $x$ é a posição, $F_{t}$ é a propulsão feita pelo motor, $F_{a}$ é o
-arrasto aerodinâmico, $F_g$ é a componente do peso que esta direção da velocidade e $F_{r}$ é a resistência ao rolamentos dos pneus no pista.
+em que $m_v$ é a massa do veículo, $m_v$ é a massa do piloto,  $m_r$ é massa equivalente ao memento de inercia das partes rotativas (rodas e eixo do motor),  $x$ é a posição, $F_{t}$ é a propulsão feita pelo motor, $F_{a}$ é o
+arrasto aerodinâmico, $F_g$ é a componente do peso que está direção da velocidade e $F_{r}$ é a resistência ao rolamento dos pneus no pista.
 Os modelos que descrevem a massa equivalente $m_r$ e forças $F_{a}$, $F_g$, $F_{r}$ e $F_{t}$ estão apresentados nas subseções a seguir.
 
 \begin{figure}[h]
@@ -45,8 +45,8 @@ Os modelos que descrevem a massa equivalente $m_r$ e forças $F_{a}$, $F_g$, $F_
 \subsection{Inércia rotacional}
 
 A inércia de todas as peças giratórias dentro do veículo causa forças fictícias. 
-Esta inércia pode ser representada nos modelos dinâmicos do motor e da transmissão, ou ser representada com uma uma massa equivalente $m_r$.
-Para essa representação é considerado que não ha deslizamento do pneu no asfalto e não a escorregamento na transmissão. O cálculo de $m_r$ é 
+está inércia pode ser representada nos modelos dinâmicos do motor e da transmissão, ou ser representada com uma massa equivalente $m_r$.
+Para essa representação é considerado que não há deslizamento do pneu no asfalto e não a escorregamento na transmissão. O cálculo de $m_r$ é 
 
 \begin{subequations}
 	\label{eq:mr}
@@ -67,7 +67,7 @@ $\varphi$ é a relação de transmissão.\cite{book:guzzella2012vehicle}
 O movimento de um objeto imerso em um fluido sofre uma resistência causada por esse fluido. No
 caso de veículos que se deslocando no ar, essa
 resistência é chamada de arrasto aerodinâmico.
-Pode-se aproximar o calculo dessa força $F_{a}$ com a equação
+Pode-se aproximar o cálculo dessa força $F_{a}$ com a equação
 
 \begin{equation}
 	\label{eq:Fa}
@@ -75,9 +75,9 @@ Pode-se aproximar o calculo dessa força $F_{a}$ com a equação
 	\enspace,
 \end{equation}
 
-em que $v$ é a velocidade do veiculo em relação ao vento, $\rho$ a densidade do ar, $a_{f}$ a área frontal do
-veiculo e $c_{d}$ o coeficiente de arrasto aerodinâmico.
-O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veiculo, é determinado por meio de simulações em \textit{software} de fluido
+em que $v$ é a velocidade do veículo em relação ao vento, $\rho$ a densidade do ar, $a_{f}$ a área frontal do
+veículo e $c_{d}$ o coeficiente de arrasto aerodinâmico.
+O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veículo, é determinado por meio de simulações em \textit{software} de fluido
 dinâmica
 computacional (CFD, do inglês \textit{computational fluid dynamics}) e/ou experimentos em túnel de vento\cite{book:guzzella2012vehicle}. Alguns
 valores típicos de $C_{d}$ para diferentes tipos de
@@ -89,7 +89,7 @@ veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 	\rowcolors{1}{}{lightgray}
 	\begin{tabular}{ll}
 		\toprule
-		\textbf{Veiculo} & \boldsymbol{$c_{d}$} \\
+		\textbf{veículo} & \boldsymbol{$c_{d}$} \\
 		\hline
 		Carro            & 0,3 - 0,4            \\
 		Ônibus           & 0,6 - 0,7            \\
@@ -103,7 +103,7 @@ veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
 \subsection{Relevo da pista}
 
-A componente do peso, $F_{g}$, afeta consideravelmente a dinâmica do veiculo e atua sempre que a pista não é plana. Seu modelo é a equação
+A componente do peso, $F_{g}$, afeta consideravelmente a dinâmica do veículo e atua sempre que a pista não é plana. Seu modelo é a equação
 
 \begin{equation}
 	\label{eq:Fg}
@@ -125,17 +125,17 @@ radianos\cite{book:guzzella2012vehicle}.
 \subsection{Resistência ao rolamento}
 \label{subsec:resistencia_rolamento}
 
-A norma ISO 4223-1:2017 define a resistência ao rolamento de um pneu, como a energia consumida pelo pneu por unidade de distancia
+A norma ISO 4223-1:2017 define a resistência ao rolamento de um pneu, como a energia consumida pelo pneu por unidade de distância 
 percorrida. Esse consumo de energia se deve principalmente as propriedades viscoelásticas dos compostos de borracha presente no pneu.
 Durante a rolagem o pneu é deformado na zona de contato entre o pneu e o pavimento, nessa zona de contato a resultante da força de reação à força
 normal não
-está no mesmo eixo que a força normal, Figura \ref{fig:diagramaPeneu}, de forma a gerar um força, $F_{r}$, contraria a movimentação do pneu.
+está no mesmo eixo que a força normal, Figura \ref{fig:diagramaPeneu}, de forma a gerar uma força, $F_{r}$, contraria a movimentação do pneu.
 
 \input{DescricaoProcesso/Figuras/grafico_teste.tex}
 
 A força de resistência ao rolamento, $F_{r}$, depende da construção do pneu e do tipo de pavimento. Essa força também depende da velocidade do
-veiculo e da pressão do ar no pneu,
-embora nesse trabalho não considera-se essa dependência. Para calcula-la usa-se a relação:
+veículo e da pressão do ar no pneu,
+embora nesse trabalho não considera-se essa dependência. Para calculá-la usa-se a relação:
 
 \begin{equation}
 	\label{eq:Fr}
@@ -186,7 +186,7 @@ Michelin\textsuperscript{\textregistered}
 \label{subsec:sistema_propulsao}
 
 De forma genérica, o sistema de propulsão de um veículo elétrico, representado no diagrama da Figura \ref{fig:diagrama_propulsao}, é composto por
-bateria, conversor de potencia, motor elétrico e transmissão.
+bateria, conversor de potência, motor elétrico e transmissão.
 
 \begin{figure}[h]
 	\centering
@@ -198,9 +198,9 @@ bateria, conversor de potencia, motor elétrico e transmissão.
 
 
 
-Bateria eletroquímica, ou apenas bateria, é um dispositivo em que durante a descarga ocorre a conversão de energia potencial química em energia
-elétrica e na carga ocorre a conversão inversa. Ou seja, uma bateria armazena energia elétrica na forma de energia potencial química. Uma bateria é
-composta por varais células ligadas entre se. Uma célula de bateria é basicamente composta por dois eletrodos -- positivo e
+Bateria eletroquímica, ou apenas bateria, é um dispositivo em que durante a descarga ocorre a conversão de energia potêncial química em energia
+elétrica e na carga ocorre a conversão inversa. Ou seja, uma bateria armazena energia elétrica na forma de energia potêncial química. Uma bateria é
+composta por varais células ligadas entre se. Uma célula de bateria é basicamente composta por dois elétrodos-- positivo e
 negativo -- imersos em um eletrólito\cite{book:Modern_Electric_Vehicles}.
 
 
@@ -209,7 +209,7 @@ Conversor eletrônico de potência, ou conversor de potência, é o circuito cuj
 transformá-la em uma forma adequada e necessária para um motor\cite{book:Electric_Motor_Control}.
 
 
-O motor elétrico converte a potencia elétrica -- tensão e corrente -- em potencia mecânica rotativa -- torque e rotação -- para impulsionar o
+O motor elétrico converte a potência elétrica -- tensão e corrente -- em potência mecânica rotativa -- torque e rotação -- para impulsionar o
 veículo.\cite{book:Modern_Electric_Vehicles} Podem ser classificados em relação a sua alimentação: corrente continua
 (CA) ou corrente alternada (CC), conforme apresentado na Figura \ref{classif_motor}.
 No entanto o motor de corrente continua sem escovas, ou BLDC do inglês \textit{brushless direct current}, é difícil de ser classificado desse forma
@@ -247,7 +247,7 @@ CC.\cite{book:Electric_Motor_Control} Nesse trabalho estudara-se o modelo dos mo
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:Electric_Motor_Control}}
 \end{figure}
 
-O motor BLDC foi desenvolvido em 1962 e possui um sistema de comutação eletrônica ao ives de comutação mecânica como os motores CC. Para não utilizar
+O motor BLDC foi desenvolvido em 1962 e possui um sistema de comutação eletrônica ao inves de comutação mecânica como os motores CC. Para não utilizar
 as escovas da comutação mecânica, os enrolamentos da armadura são colocados no estator (parte estacionaria) e os ímãs são colocados no rotor (parte
 rotativa).
 A comutação eletrônica baseia-se em sensores para identificar a posição do rotor e acionar o enrolamento necessário para manter o movimento de
@@ -305,7 +305,7 @@ $\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque. A Figur
 	\caption*{\footnotesize Fonte: Elaborado pelo autor.}
 \end{figure}
 
-O prototipo DT1 é equipado com um motor Dunkermotoren BG75x75 40V (Figura \ref{fig:motor_bg75}). O motor que possui 3 enrolamentos, imã de neodímio
+O protótipo DT1 é equipado com um motor Dunkermotoren BG75x75 40V (Figura \ref{fig:motor_bg75}). O motor que possui 3 enrolamentos, imã de neodímio
 com 8 polos e sensor hall integrado para medir a posição do rotor (24 pulsos por volta), suas características elétricas e mecânicas estão
 apresentadas na Tabela \ref{tab:dadosBg75}.
 
@@ -331,8 +331,8 @@ apresentadas na Tabela \ref{tab:dadosBg75}.
 		Troque de atrito          & {[}N.m{]}      & 0,13   \\
 		Torque de parada          & {[}N.m{]}      & 12     \\
 		Velocidade sem carga      & {[}rpm{]}      & 4100   \\
-		Potencia de saída nominal & {[}W{]}        & 530    \\
-		Potencia de saída máxima  & {[}W{]}        & 1150   \\
+		potência de saída nominal & {[}W{]}        & 530    \\
+		potência de saída máxima  & {[}W{]}        & 1150   \\
 		Constante de torque       & {[}N.m/A{]}    & 0,119  \\
 		Resistência               & {[}$\Omega${]} & 0,07   \\
 		Indutância                & {[}mH{]}       & 0,45   \\
@@ -348,7 +348,7 @@ A transmissão do veículo regula a transferência de potência do motor para as
 redução -- ex. caixa de câmbio -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
 No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito, apresentado na Figura \ref{dig:Trasmissao}.
 
-Rodas de atrito são uma das maneiras mais simples para se transmitir potencia mecânica entre eixos e sua eficiência é tipicamente de $95$ a $98$ {\%}. São composta por dois ou mais cilindros em contato direto.  
+Rodas de atrito são uma das maneiras mais simples para se transmitir potência mecânica entre eixos e sua eficiência é tipicamente de $95$ a $98$ {\%}. São compostas por dois ou mais cilindros em contato direto.  
 Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. Os torque e rotações são descritos pelas equações 
 
 \begin{subequations}
@@ -391,8 +391,8 @@ $R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor
 	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
 \end{figure}
 
-A partir das Equações (\ref{eq:MotorCC}) e (\ref{eq:Transmissao}), desconsiderando as perdas por atrido visco nos rolamentos, as perdas causada pela resistência interna na bateira e
-a perda no conversor de potencia, o conjunto que descreve o a força do sistema de propulsão $F_t$ de um veiculo elétrico é
+A partir das Equações (\ref{eq:MotorCC}) e (\ref{eq:Transmissao}), desconsiderando as perdas por atrito visco nos rolamentos, as perdas causada pela resistência interna na bateira e
+a perda no conversor de potência, o conjunto que descreve o a força do sistema de propulsão $F_t$ de um veiculo elétrico é
 
 \begin{subequations}
 	\label{eq:propulsao}
@@ -424,7 +424,7 @@ O conjunto de Equações (\ref{eq:formulacaoOCP}) é uma formulação genérica 
 	\addConstraint{p_{min}\leq p}{ \leq p_{max} \, \label{eq:C6_OCP}}{}
 \end{mini!}
 
-em que a Equação (\ref{eq:ObjOCP}) é o função objetivo, Equação (\ref{eq:C1_OCP}) é uma restrição de estados inciais fixos, Equação (\ref{eq:C2_OCP}) é
+em que a Equação (\ref{eq:ObjOCP}) é o função objetivo, Equação (\ref{eq:C1_OCP}) é uma restrição de estados iniciaisfixos, Equação (\ref{eq:C2_OCP}) é
 a restrição
 que representa a dinâmica
 do sistema, Equação (\ref{eq:C3_OCP}) são restrições de caminho sobre os estados do sistema e sobre as variáveis de controle, Equação (\ref{eq:C4_OCP})
@@ -432,24 +432,24 @@ do sistema, Equação (\ref{eq:C3_OCP}) são restrições de caminho sobre os es
 O função objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
 e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_Control}.
 
-A soluçai de um problema de controle ótimo é uma sequencia de sinais de controle em malha aberta e um conjunto de paramentos, o comportamento esperado é
-exemplificado na Figura \ref{fig:simpleOPC}.
+A soluçai de um problema de controle ótimo é uma sequência de sinais de controle em malha aberta e um conjunto de paramentos, o comportamento esperado é
+exemplificado na Figura \ref{fig:simpleOCP}.
 
-De forma geral, há três abordagens básicas para solução computacional de um OPC, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
+De forma geral, há três abordagens básicas para solução computacional de um OCP, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
 conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
 
 \begin{enumerate}[(a)]
-	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequencia de controle ótimo. 
+	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequência de controle ótimo. 
 	\item Métodos indiretos: utiliza a filosofia "primeiro otimizar e então discretizar", que é escrever as condições de otimalidade contínuas primeiro,
 		resultando em um problemas de valor de contorno (sistema de equações diferenciais acrecido de um conjunto adicional de restrições chamadas condições de contorno) e depois discretizá-lo para resolver numericamente.
-	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OPC e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
+	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OCP e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
 	não linear resultante (NPL do inglês \textit{Nonlinear Programming Problem}) resultante.
 \end{enumerate}
 
 \begin{figure}[h]
 	\centering
-	\caption{Exemplo do comportamento desejado das variáveis em um OPC}
-	\label{fig:simpleOPC}
+	\caption{Exemplo do comportamento desejado das variáveis em um OCP}
+	\label{fig:simpleOCP}
 	\begin{tikzpicture}
 		%\draw [help lines] (-1,-2) grid (12,7);
 		\centering
@@ -508,14 +508,14 @@ conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
 			\end{tabular}
 		};
 	\end{tikzpicture}
-	\caption*{\footnotesize Fonte: Adaptado de }
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:Numerical_Optimal_Control}.}
 \end{figure}
 
-Para a solução de OPC em aplicações no mundo real, os métodos diretos são atualmente as técnicas mais difundidas e usadas com sucesso. \cite{article:Diehl,book:betts2010}
+Para a solução de OCP em aplicações no mundo real, os métodos diretos são atualmente as técnicas mais difundidas e usadas com sucesso. \cite{article:Diehl,book:betts2010}
 
 \begin{figure}[h]
 	\centering
-	\caption{Visão geral do métodos numéricos para controle ótimo}
+	\caption{Visão geral dos métodos numéricos para controle ótimo}
 	\label{fig:diagrama_metodos_numericos}
 	\begin{tikzpicture}[
 			level distance=2cm,
@@ -532,7 +532,7 @@ Para a solução de OPC em aplicações no mundo real, os métodos diretos são 
 			child {	node {Programação Dinâmica} }
 			child {	node {Métodos Indiretos} }
 			child { node {Métodos Diretos}
-				child { node {Métodos Sequenciais} 
+				child { node {Métodos sequênciais} 
 					child {	node {\textit{Direct Single Shooting}} }
 				}
 				child { node {Métodos Simultâneos} 
@@ -544,7 +544,7 @@ Para a solução de OPC em aplicações no mundo real, os métodos diretos são 
 	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{article:Diehl}}
 \end{figure}
 
-Métodos diretos reformulam o OPC da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
+Métodos diretos reformulam o OCP da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
 
 \begin{mini!}
 	{w}{a(w) \label{eq:NPL1}}
@@ -556,8 +556,8 @@ Métodos diretos reformulam o OPC da Equação (\ref{eq:formulacaoOCP}) em um pr
 com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
 Todos os métodos diretos começam por uma parametrização da variável de controle, mas diferem na forma como os estados são tratados. Podem ser classificados em duas abordagems, sequnciais e simultâneos. 
 
-Nas abordagens sequenciais, os estado $x(t)$ são uma função implícita dos controles $u(t)$ e do valor inicial $x_0$. Dessa forma, a simulação
-e as iterações de otimização procedem sequencialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequencial é o \textit{Direct Single Shooting}.
+Nas abordagens sequênciais, os estado $x(t)$ são uma função implícita dos controles $u(t)$ e do valor inicial $x_0$. Dessa forma, a simulação
+e as iterações de otimização procedem sequêncialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequêncial é o \textit{Direct Single Shooting}.
 
 As abordagens simultâneas fazem uma parametrização dos estado como variáveis de otimização dentro do NLP e adicionam restrições de igualdade que representam a dinâmica do sistema. 
 Com isso, a simulação e a otimização ocorrem simultaneamente, e somente na solução do NLP os estados representam uma solução da equação da dinâmica do sistema válida e
@@ -569,14 +569,14 @@ FALCON.m é um é uma biblioteca de \textit{software}, proprietária de uso grat
 desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e 
 análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização.\cite{manual:Falcon, phd:Rieck} 
 
-Ela segue o paradigma de programação orientada a objetos, um resumo de suass principais classes de objetos é apresentado na Figura \ref{fig:objetosFalcon}. 
-A classe \lstinline[style=Matlab-editor]{Problem} é a principal, nela são configurados as fases (\lstinline[style=Matlab-editor]{Phases}) do OPC, os parâmetros otimizáveis, o custo de Mayer e
+Ela segue o paradigma de programação orientada a objetos, um resumo de suas principais classes de objetos é apresentado na Figura \ref{fig:objetosFalcon}. 
+A classe \lstinline[style=Matlab-editor]{Problem} é a principal, nela são configurados as fases (\lstinline[style=Matlab-editor]{Phases}) do OCP, os parâmetros otimizáveis, o custo de Mayer e
 o método de discretização a ser utilizado . Os métodos de discretização disponíveis na biblioteca são: 
 trapezoidal (padrão) ou \textit{backward Euler}.  Na classe \lstinline[style=Matlab-editor]{Phases}, são adicionados o modelo da dinâmica do sistema, os estados, as variáveis 
 de controle, as restrições de caminho, o custo de Lagrange e os instantes de tempos inicial e final.\cite{phd:Matthias}
 
-A biblioteca utiliza otimizadores para NLP externos, Como cada otimizador tem uma interface única, no momento, é possivel utilizar interfaces para três otmizadores: IPOPT, SNOPT e WORHP. 
-O otimizador utilizado neste trabalho é o IPOPT, configuração pré-definida da biblioteca FALCON.m. Mais informações sobre a utilização do FALCON.m pode ser constuldas em seu manual \citeauthor{manual:Falcon}.
+A biblioteca utiliza otimizadores para NLP externos, como cada optimizador  tem uma interface única, no momento, é possível  utilizar interfaces para três otmizadores: IPOPT, SNOPT e WORHP. 
+O optimizador  utilizado neste trabalho é o IPOPT, configuração pré-definida da biblioteca FALCON.m. Mais informações sobre a utilização do FALCON.m pode ser consultadas em seu manual \citeauthor{manual:Falcon}.
 \begin{figure}[h]
 	\centering
 	\caption{Resumo com principais objetos da biblioteca FALCON.m}
@@ -620,6 +620,6 @@ O projeto COIN-OR, do inglês \textit{COmputational INfrastructure for Operation
  é uma iniciativa que visa promover \textit{software} de código aberto para a comunidade de pesquisa operacional \cite{article:CoinOr}. 
  Dentre as bibliotecas disponibilizadas no projeto COIN-OR está a IPOPT, do inglês \textit{Interior Point OPTimizer}.
  Escrita em C++ e Fortran para solução de problemas de otimização não linear (NLP) utilizando o
- método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao codigo. Mais detalhes sobre esta biblioteca podem ser obtidos na pagina do seu repositório no GitHub\textsuperscript{\textregistered} \url{https://github.com/coin-or/Ipopt}.
+ método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao código. Mais detalhes sobre está biblioteca podem ser obtidos na pagina do seu repositório no GitHub\textsuperscript{\textregistered} \url{https://github.com/coin-or/Ipopt}.
 
 \clearpage

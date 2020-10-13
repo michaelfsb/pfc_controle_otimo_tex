@@ -19,7 +19,7 @@ modeloutput = [...
     falcon.Output('theta')];
 
 %% Construção do modelo, da restrição de caminho e o custo de Lagrange
-% modelo do veiculo e pista
+% modelo do veículo e pista
 mdl = falcon.SimulationModelBuilder('DT1', x_vec, u_vec, rm);
 mdl.addSubsystem(@mdl_dt1_pista, {'x', 'v', 'i', 'raioM'}, {'mdl_out'});               
 mdl.SplitVariable('mdl_out', {'x_dot','v_dot', 'Ft', 'Fa', 'Fr', 'Fg', 'theta'}.')
@@ -45,7 +45,7 @@ phase.Model.setModelParameters(rm);
 phase.addNewControlGrid(u_vec, tau); 
 % variaveis de saida do modelo
 phase.Model.setModelOutputs(modeloutput);
-% condições inciais e finais dos estados
+% condições iniciaise finais dos estados
 phase.setInitialBoundaries([0;0]);
 phase.setFinalBoundaries([10080;0],[10080;12.5]);
 % restrição de corrente
@@ -59,6 +59,3 @@ lagc.setParameters(rm);
 %% Calculo da solução
 problem.setMajorIterLimit(10000)
 problem.Solve();
-
-%% Plots 
-mostar_resultados(problem,rm)
