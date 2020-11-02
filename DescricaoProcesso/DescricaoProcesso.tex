@@ -17,7 +17,7 @@ A modelagem caixa branca, também conhecida como modelagem conceitual, consiste 
 da natureza do sistema.
 A modelagem caixa preta, ou modelagem empírica, é baseada na aplicação de técnicas de identificação de sistemas que exigem pouco ou
 nenhum conhecimento do sistema.
-Já na modelagem caixa cinza são utilizadas técnicas que estão entre a modelagem caixa branca e a modelagem caixa preta\cite{book:Aguirre}.
+Já na modelagem caixa cinza são utilizadas técnicas que estão entre a modelagem caixa branca e a modelagem caixa preta. \cite[Seç.~1.1]{book:Aguirre}
 
 Nessa seção o método de modelagem aplicado é de modelagem caixa branca. A partir da aplicação da segunda lei de Newton no
 veículo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obtém-se a equação que descreve a dinâmica longitudinal do mesmo
@@ -59,7 +59,7 @@ Para essa representação é considerado que não há deslizamento do pneu no as
 
 em que $m_{r,r}$ é a massa equivalente a inércia das rodas e $m_{r,m}$ é a massa equivalente a inércia do motor, $Nr$ é a quantidade de rodas, 
 $J_r$ e $r_r$ são o momento de inércia e o raio da roda, $J_m$ é o momento de inércia do motor e 
-$\varphi$ é a relação de transmissão.\cite{book:guzzella2012vehicle}
+$\varphi$ é a relação de transmissão. \hbox{\cite[Seç.~2.1.1]{book:guzzella2012vehicle}}
 
 \subsection{Arrasto aerodinâmico}
 \label{subsec:arrasto_aerodinamico}
@@ -79,7 +79,7 @@ em que $v$ é a velocidade do veículo em relação ao vento, $\rho$ a densidade
 veículo e $c_{d}$ o coeficiente de arrasto aerodinâmico.
 O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veículo, é determinado por meio de simulações em \textit{software} de fluido
 dinâmica
-computacional (CFD, do inglês \textit{computational fluid dynamics}) e/ou experimentos em túnel de vento\cite{book:guzzella2012vehicle}. Alguns
+computacional (CFD, do inglês \textit{computational fluid dynamics}) e/ou experimentos em túnel de vento. \cite[Seç.~2.1.1]{book:guzzella2012vehicle} Alguns
 valores típicos de $C_{d}$ para diferentes tipos de
 veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
@@ -97,7 +97,7 @@ veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 		Moto             & 0,5 - 1,0            \\
 		\bottomrule
 	\end{tabular}
-	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:GroundVehicleDynamics}.}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthoronline{book:GroundVehicleDynamics}. \cite[Seç.~8.3]{book:GroundVehicleDynamics}}
 	\label{tab:ComparacaoCD}
 \end{table}
 
@@ -120,7 +120,7 @@ que, pra pequenas inclinações, pode ser aproximado pela equação
 
 
 em que $m$ é a massa total do veículo, $g$ é a aceleração da gravidade e $\theta$ é a inclinação da pista expressa em
-radianos\cite{book:guzzella2012vehicle}.
+radianos. \cite[Seç.~2.1.1]{book:guzzella2012vehicle}
 
 \subsection{Resistência ao rolamento}
 \label{subsec:resistencia_rolamento}
@@ -147,8 +147,8 @@ em que $c_{r}$ é o coeficiente de resistência ao rolamento, $N$ é a força no
 gerada pela resistência ao rolamento.
 Estão apesentados na Tabela \ref{tab:ComparacaoCr}
 o valor do coeficiente $c_{r}$ para pneus de uso típico em carros de passeio, bicicletas e de dois pneus específicos para a competição SEM,
-Michelin\textsuperscript{\textregistered}
-45-406 \textit{Prototype} (Figura \ref{fig:pneu}) e Michelin\textsuperscript{\textregistered} Radial 45-75 R16.
+Michelin
+45-406 \textit{Prototype} e Michelin  Radial 45-75 R16.
 
 % Escrever que nao vou conciderar pq nao da pra medir a variacao no cenario atual.
 % Colocar como perpestivas de trabalho futuro.
@@ -166,17 +166,17 @@ Michelin\textsuperscript{\textregistered}
 		\\
 		Usado em bicicleta                                                  & 0,006
 		\\
-		Michelin\textsuperscript{\textregistered} 45-406 \textit{Prototype} & 0,0024  \\
-		Michelin\textsuperscript{\textregistered} Radial 45-75 R16          & 0,00081 \\
+		Michelin  45-406 \textit{Prototype} & 0,0024  \\
+		Michelin  Radial 45-75 R16          & 0,00081 \\
 		\bottomrule
 	\end{tabular}
-	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:PacCarII}.}
+	\caption*{\footnotesize Fonte: Adaptado de  \citeauthoronline{book:PacCarII} \cite[Seç.~2.2.1]{book:PacCarII}.}
 	\label{tab:ComparacaoCr}
 \end{table}
 
 % \begin{figure}[h]
 % 	\centering
-% 	\caption{Pneu Michelin\textsuperscript{\textregistered} 44-406 \textit{Prototype}}
+% 	\caption{Pneu Michelin  44-406 \textit{Prototype}}
 % 	\label{fig:pneu}
 % 	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/pneu_Michelin.png}
 % 	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG.}
@@ -201,16 +201,16 @@ bateria, conversor de potência, motor elétrico e transmissão.
 Bateria eletroquímica, ou apenas bateria, é um dispositivo em que durante a descarga ocorre a conversão de energia potêncial química em energia
 elétrica e na carga ocorre a conversão inversa. Ou seja, uma bateria armazena energia elétrica na forma de energia potêncial química. Uma bateria é
 composta por varais células ligadas entre se. Uma célula de bateria é basicamente composta por dois elétrodos-- positivo e
-negativo -- imersos em um eletrólito\cite{book:Modern_Electric_Vehicles}.
+negativo -- imersos em um eletrólito. \cite[Seç.~13.1]{book:Modern_Electric_Vehicles}
 
 
 
 Conversor eletrônico de potência, ou conversor de potência, é o circuito cujo a finalidade é extrair energia elétrica de um sistema de energia e
-transformá-la em uma forma adequada e necessária para um motor\cite{book:Electric_Motor_Control}.
+transformá-la em uma forma adequada e necessária para um motor. \cite{book:Electric_Motor_Control}.
 
 
 O motor elétrico converte a potência elétrica -- tensão e corrente -- em potência mecânica rotativa -- torque e rotação -- para impulsionar o
-veículo.\cite{book:Modern_Electric_Vehicles} Podem ser classificados em relação a sua alimentação: corrente continua
+veículo. \cite[Cap.~7]{book:Modern_Electric_Vehicles} Podem ser classificados em relação a sua alimentação: corrente continua
 (CA) ou corrente alternada (CC), conforme apresentado na Figura \ref{classif_motor}.
 No entanto o motor de corrente continua sem escovas, ou BLDC do inglês \textit{brushless direct current}, é difícil de ser classificado desse forma
 pois sua configuração é semelhante à de um motor CA, enquanto suas características elétricas são semelhantes às de um motor
@@ -244,7 +244,7 @@ CC.\cite{book:Electric_Motor_Control} Nesse trabalho estudara-se o modelo dos mo
 		\draw[dashed] (6,2) -- (6,-2);
 		\draw[dashed] (6,0) -- (6.55,0);
 	\end{tikzpicture}
-	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:Electric_Motor_Control}}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthoronline{book:Electric_Motor_Control}. \cite[Cap.~1]{book:Electric_Motor_Control}}
 \end{figure}
 
 O motor BLDC foi desenvolvido em 1962 e possui um sistema de comutação eletrônica ao inves de comutação mecânica como os motores CC. Para não utilizar
@@ -565,7 +565,7 @@ correspondente à variável de controle. As duas variações mais comuns da abor
 
 \subsection{O \textit{software} FALCON.m}
 
-FALCON.m é um é uma biblioteca de \textit{software}, proprietária de uso gratuito, para MATLAB\textsuperscript{\textregistered}, 
+FALCON.m é um é uma biblioteca de \textit{software}, proprietária de uso gratuito, para MATLAB , 
 desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e 
 análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização.\cite{manual:Falcon, phd:Rieck} 
 
@@ -620,6 +620,6 @@ O projeto COIN-OR, do inglês \textit{COmputational INfrastructure for Operation
  é uma iniciativa que visa promover \textit{software} de código aberto para a comunidade de pesquisa operacional \cite{article:CoinOr}. 
  Dentre as bibliotecas disponibilizadas no projeto COIN-OR está a IPOPT, do inglês \textit{Interior Point OPTimizer}.
  Escrita em C++ e Fortran para solução de problemas de otimização não linear (NLP) utilizando o
- método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao código. Mais detalhes sobre está biblioteca podem ser obtidos na pagina do seu repositório no GitHub\textsuperscript{\textregistered} \url{https://github.com/coin-or/Ipopt}.
+ método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao código. Mais detalhes sobre está biblioteca podem ser obtidos na pagina do seu repositório no GitHub  \url{https://github.com/coin-or/Ipopt}.
 
 \clearpage

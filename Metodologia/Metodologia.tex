@@ -26,7 +26,7 @@ seguinte equação para descrever o comportamento do veículo
 \begin{subequations}
 	\label{eq:modelo_1}
     \begin{align}
-        (m_v + m_p + N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m}{r_m^2}) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\   
+        \left( m_v + m_p + N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m}{r_m^2} \right) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\   
         F_{t} =  \frac{K_t \cdot i_a \cdot \eta}{r_m} \enspace,\\
 		R_{a} \cdot i_{a} = u - \frac{K_{v} \cdot v}{r_m} \enspace, \\
         F_{a} = \frac{\rho \cdot a_f \cdot c_d \cdot v^2}{2} \enspace,\\
@@ -66,7 +66,7 @@ e por dados fornecidos pela equipe Milhagem UFMG.
         Momento de inercia do motor         & $J_m$  & [$kg.m^2$]        & $0,0625 \times 10^{-3}$\\
         Raio da roda                        & $r_r$  & [$m$]               & 0,254   \\
         Const. de torque                    & $K_t$  & [$Nm/A$]            & 0,119   \\
-        Eficiencia da roda de atrito        & $\eta$ & [ ]                & 0,95    \\
+        Eficiência da roda de atrito        & $\eta$ & [ ]                & 0,95    \\
         Densidade do ar                     & $\rho$ & [$kg/m^3$]        & 1,22    \\
         Areá fronta do veículo              & $a_f$  & [$m^2$]           & 0,26    \\
         Coef. de arrasto aerodinâmico       & $c_d$  & [ ]                & 0,164   \\
@@ -95,22 +95,63 @@ o perfil de altitude da pista com estes dados.
 
 Uma forma de representar esses dados no código para solução o OCP é por meio de uma \textit{lookup table} porem ao implementar os dados dessa foram
 a solução não convergiu. Uma possível explicação para essa não convergência é que os dados eram derivados duas vezes, uma para determinar a inclinação e outra pelo 
-realizada algorítimo de otimização e ao analisar esses dados derivados usando o comando \lstinline[style=Matlab-editor]{diff} do MATLAB\textsuperscript{\textregistered} foram observadas curvas
+realizada algorítimo de otimização e ao analisar esses dados derivados usando o comando \lstinline[style=Matlab-editor]{diff} do MATLAB  foram observadas curvas
 com grande variação de inclinação e ruido. Alem disso seria preciso repetir sete vezes os dois vetores de dados para emular as repetidas voltas realiza pelo carro durante a tentativa.
-A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB\textsuperscript{\textregistered} 
+A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB  
 e então realizar a derivada para obter a seguinte equação inclinação:
 
-\begin{multline}
-    \label{eq:modeloTheta}
-        \theta(x) = arctg(0.012293 cos(0.004363 x - 0.228758) 
-        +0.003041 cos(0.000236 x + 0.399758) \\
-        +0.005818 cos(0.008726 x - 2.193381) 
-        +0.002926 cos(0.000246 x + 3.490690) \\
-        +0.003958 cos(0.017449 x - 3.058604) 
-        +0.005365 cos(0.026184 x + 0.579933) \\
-        +0.004361 cos(0.021814 x + 1.627015) 
-        +0.005539 cos(0.030552 x - 1.400496)).
-\end{multline}
+\begin{equation}
+	\label{eq:modeloTheta}
+	\theta(x) = arctg \left( \sum_{n = 1}^{8} + a_n \cdot cos(b_n \cdot x + c_n) \right)
+	\enspace,
+\end{equation}
+
+% \begin{table}[H]
+% 	\centering
+% 	\caption{Ceficientes da Equação (\ref{eq:modeloTheta})}
+% 	\rowcolors{1}{}{lightgray}
+% 	\begin{tabular}{crcr}
+% 		\toprule
+% 		\textbf{Coef.} & \textbf{Valor} & \textbf{Coef.} & \textbf{Valor}\\
+% 		\hline
+% 		$a_1$   & 0,012293 & $a_5$   & 0,003958  \\
+%         $b_1$   & 0,004363 & $b_5$   & 0,017449  \\
+%         $c_1$   &-0,228758 & $c_5$   &-3,058604  \\  
+%         $a_2$   & 0,003041 & $a_6$   & 0,005365  \\
+%         $b_2$   & 0,000236 & $b_6$   & 0,026184  \\
+%         $c_2$   & 0,399758 & $c_6$   & 0,579933  \\
+%         $a_3$   & 0,005818 & $a_7$   & 0,004361  \\
+%         $b_3$   & 0,008726 & $b_7$   & 0,021814  \\
+%         $c_3$   &-2,193381 & $c_7$   & 1,627015  \\
+%         $a_4$   & 0,002926 & $a_8$   & 0,005539  \\
+%         $b_4$   & 0,000246 & $b_8$   & 0,030552  \\
+%         $c_4$   & 3,490690 & $c_8$   &-1,400496  \\
+% 		\bottomrule
+% 	\end{tabular}
+% 	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
+% 	\label{tab:coeficientes}
+% \end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Coeficientes da Equação (\ref{eq:modeloTheta})}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{crcrcrcr}
+		\toprule
+		\textbf{Coef.} & \textbf{Valor} & \textbf{Coef.} & \textbf{Valor} & \textbf{Coef.} & \textbf{Valor} & \textbf{Coef.} & \textbf{Valor}\\
+		\hline
+        $a_1$   & 0,012293 & $a_3$   & 0,005818 & $a_5$   & 0,003958 & $a_7$   & 0,004361  \\
+        $b_1$   & 0,004363 & $b_3$   & 0,008726 & $b_5$   & 0,017449 & $b_7$   & 0,021814  \\
+        $c_1$   &-0,228758 & $c_3$   &-2,193381 & $c_5$   &-3,058604 & $c_7$   & 1,627015  \\
+        $a_2$   & 0,003041 & $a_4$   & 0,002926 & $a_6$   & 0,005365 & $a_8$   & 0,005539  \\
+        $b_2$   & 0,000236 & $b_4$   & 0,000246 & $b_6$   & 0,026184 & $b_8$   & 0,030552  \\
+        $c_2$   & 0,399758 & $c_4$   & 3,490690 & $c_6$   & 0,579933 & $c_8$   &-1,400496  \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
+	\label{tab:coeficientes}
+\end{table}
+
 
 \section{Problema de controle ótimo (OCP)}
 \label{sec:OCPporposto}
@@ -145,12 +186,33 @@ a Equação (\ref{eq:C9_OCP_final}) é uma restrição para o valor máximo do t
 e a Equação (\ref{eq:C10_OCP_final}) é o intervalo possível para o raio do eixo do motor.
 
 
+\begin{table}[H]
+	\centering
+	\caption{Constantes utilizadas no OCP}
+	\rowcolors{1}{}{lightgray}
+	\begin{tabular}{llll}
+		\toprule
+		\textbf{Constante} & \textbf{Simbolo} & \textbf{Unidade} & \textbf{Valor}\\
+		\hline
+		Tensão da bateria   & $u_{bat}$     & [$V$]    & 42    \\
+        Corrente máxima     & $I_{max}$     & [$A$]    & 30    \\
+        Velocidade máxima   & $v_{max}$     & [$m/s$]  & 12,5  \\  
+        Distância total     & $x_f$         & [$m$]    & 10080 \\
+        Tempo final         & $t_f$         & [$s$]    & 1400  \\
+        Raio minimo         & $r_{m,min}$   & [$m$]    & 0,02  \\
+        Raio máxima         & $r_{m,max}$   & [$m$]    & 0,05  \\
+		\bottomrule
+	\end{tabular}
+	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
+	\label{tab:constantes_OCP}
+\end{table}
+
 \section{Código para solução do OCP}
 \label{sec:metodologia_codigos}
 
-Nesta etapa do trabalho a versão do MATLAB\textsuperscript{\textregistered} utilizada foi a R2019b Update 7 e a versão do FALCON.m utilizada foi a v1.26.
-O compilador MinGW-w64 C/C++, pré-requisito da biblioteca FALCON, foi instalado gratuitamente na versão 19.2.0 pela loja de aplicativos do MATLAB\textsuperscript{\textregistered}. 
-A licença do MATLAB\textsuperscript{\textregistered} utilizada foi a licença acadêmica fornecida pela UFMG à seus alunos. Já a licença do FALCON.m, de uso individual e intransferível,
+Nesta etapa do trabalho a versão do MATLAB  utilizada foi a R2019b Update 7 e a versão do FALCON.m utilizada foi a v1.26.
+O compilador MinGW-w64 C/C++, pré-requisito da biblioteca FALCON, foi instalado gratuitamente na versão 19.2.0 pela loja de aplicativos do MATLAB . 
+A licença do MATLAB  utilizada foi a licença acadêmica fornecida pela UFMG à seus alunos. Já a licença do FALCON.m, de uso individual e intransferível,
 foi obtida por meio de solicitação feita ao \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} pelo site \url{https://www.fsd.lrg.tum.de/software/falcon-m/license-and-download/}.
 
 A implementação do código para solução do problema de controle ótimo proposto segui os seguintes passos:
@@ -171,7 +233,7 @@ a restrição de caminho corrente da Equação(\ref{eq:C5_OCP_final}), o custo d
 
 \begin{figure}[h]
     \centering
-    \caption{Arquivos MATLAB\textsuperscript{\textregistered} do projeto}
+    \caption{Arquivos MATLAB  do projeto}
     \includegraphics[]{Metodologia/Figuras/matlab_files.png}
     \label{fig:matlab_files}
     \caption*{\footnotesize{Fonte: Elaborada pelo autor.}}
@@ -205,10 +267,10 @@ rm = falcon.Parameter('raioM', 0.026, 0.020, 0.050, 1e2);
     \caption*{\footnotesize{Fonte: Elaborado pelo autor.}}
 \end{figure}
 
-Além disso, foi verificado que, a biblioteca FALCON.m versão v1.26 não funcionou no MATLAB\textsuperscript{\textregistered} R2020a quando o optimizador  IPOPT era utilizado.
-Isto ocorreu pois não há garantia de compatibilidade, no Windows, por parte do MATLAB\textsuperscript{\textregistered} em sua evolução, a arquivos MEX (interface com programas escritos em C, C++ ou Fortran) gerados em versões 
-anteriores e a biblioteca IPOPT é chamada por meio de um arquivo MEX não compatível apos a versão R2019b do MATLAB\textsuperscript{\textregistered}. Novas versões da FALCON.m
-devem possibilitar o uso e versões mais novas do MATLAB\textsuperscript{\textregistered} pois os arquivos MEX serão compilados novamente.
+Além disso, foi verificado que, a biblioteca FALCON.m versão v1.26 não funcionou no MATLAB  R2020a quando o optimizador  IPOPT era utilizado.
+Isto ocorreu pois não há garantia de compatibilidade, no Windows, por parte do MATLAB  em sua evolução, a arquivos MEX (interface com programas escritos em C, C++ ou Fortran) gerados em versões 
+anteriores e a biblioteca IPOPT é chamada por meio de um arquivo MEX não compatível apos a versão R2019b do MATLAB . Novas versões da FALCON.m
+devem possibilitar o uso e versões mais novas do MATLAB  pois os arquivos MEX serão compilados novamente.
 
 
 
