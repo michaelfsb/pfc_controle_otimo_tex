@@ -23,7 +23,10 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Inclinação [\textdegree]},
 axis background/.style={fill=white},
 xmajorgrids,
-ymajorgrids
+ymajorgrids,
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt, forget plot]
   table[row sep=crcr]{%
@@ -1044,7 +1047,10 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Tensão [V]},
 axis background/.style={fill=white},
 xmajorgrids,
-ymajorgrids
+ymajorgrids,
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt, forget plot]
   table[row sep=crcr]{%
@@ -2052,19 +2058,4 @@ ymajorgrids
 };
 \end{axis}
 
-\begin{axis}[%
-width=5.833in,
-height=4.375in,
-at={(0in,0in)},
-scale only axis,
-xmin=0,
-xmax=1,
-ymin=0,
-ymax=1,
-axis line style={draw=none},
-ticks=none,
-axis x line*=bottom,
-axis y line*=left
-]
-\end{axis}
 \end{tikzpicture}%

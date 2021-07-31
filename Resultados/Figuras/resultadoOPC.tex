@@ -21,7 +21,10 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Corrente [A]},
 axis background/.style={fill=white},
 xmajorgrids,
-ymajorgrids
+ymajorgrids,
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt, forget plot]
   table[row sep=crcr]{%
@@ -1027,6 +1030,13 @@ ymajorgrids
 1398.6	0\\
 1400	0\\
 };
+\addplot [dashed] coordinates {(203,    0) (203,    30)} node[rotate = -90, left, sloped, pos = .8] {1\textordfeminine{}};
+\addplot [dashed] coordinates {(397.6,  0) (397.6,  30)} node[rotate = -90, left, sloped, pos = .8] {2\textordfeminine{}};
+\addplot [dashed] coordinates {(592.2,  0) (592.2,  30)} node[rotate = -90, left, sloped, pos = .8] {3\textordfeminine{}};
+\addplot [dashed] coordinates {(788.2,  0) (788.2,  30)} node[rotate = -90, left, sloped, pos = .8] {4\textordfeminine{}};
+\addplot [dashed] coordinates {(982.8,  0) (982.8,  30)} node[rotate = -90, left, sloped, pos = .8] {5\textordfeminine{}};
+\addplot [dashed] coordinates {(1177.4, 0) (1177.4, 30)} node[rotate = -90, left, sloped, pos = .8] {6\textordfeminine{}};
+\addplot [dashed] coordinates {(1400,   0) (1400,   30)} node[rotate = -90, left, sloped, pos = .8] {7\textordfeminine{}};
 \end{axis}
 
 \begin{axis}[%
@@ -1044,7 +1054,10 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Velocidade [km/h]},
 axis background/.style={fill=white},
 xmajorgrids,
-ymajorgrids
+ymajorgrids,
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt, forget plot]
   table[row sep=crcr]{%
@@ -2050,6 +2063,13 @@ ymajorgrids
 1398.6	17.7373078659138\\
 1400	17.0945383924802\\
 };
+\addplot [dashed] coordinates {(203,    0) (203,    40)};
+\addplot [dashed] coordinates {(397.6,  0) (397.6,  40)};
+\addplot [dashed] coordinates {(592.2,  0) (592.2,  40)};
+\addplot [dashed] coordinates {(788.2,  0) (788.2,  40)};
+\addplot [dashed] coordinates {(982.8,  0) (982.8,  40)};
+\addplot [dashed] coordinates {(1177.4, 0) (1177.4, 40)};
+\addplot [dashed] coordinates {(1400,   0) (1400,   40)};
 \end{axis}
 
 \begin{axis}[%
@@ -2066,7 +2086,10 @@ ylabel style={font=\color{white!15!black}},
 ylabel={Posição [m]},
 axis background/.style={fill=white},
 xmajorgrids,
-ymajorgrids
+ymajorgrids,
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt, forget plot]
   table[row sep=crcr]{%
@@ -3072,21 +3095,13 @@ ymajorgrids
 1398.6	10073.2271409376\\
 1400	10080\\
 };
+\addplot [dashed] coordinates {(203,    0) (203,    10000)};
+\addplot [dashed] coordinates {(397.6,  0) (397.6,  10000)};
+\addplot [dashed] coordinates {(592.2,  0) (592.2,  10000)};
+\addplot [dashed] coordinates {(788.2,  0) (788.2,  10000)};
+\addplot [dashed] coordinates {(982.8,  0) (982.8,  10000)};
+\addplot [dashed] coordinates {(1177.4, 0) (1177.4, 10000)};
+\addplot [dashed] coordinates {(1400,   0) (1400,   10000)};
 \end{axis}
 
-\begin{axis}[%
-width=5.833in,
-height=4.375in,
-at={(0in,0in)},
-scale only axis,
-xmin=0,
-xmax=1,
-ymin=0,
-ymax=1,
-axis line style={draw=none},
-ticks=none,
-axis x line*=bottom,
-axis y line*=left
-]
-\end{axis}
 \end{tikzpicture}%

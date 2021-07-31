@@ -12,14 +12,17 @@
 % \end{sloppypar}
 
 O veículo elétrico da UFMG, o DT1, é um protótipo utilizado em competições de eficiência energética.
-Sua mais recente medição de autonomia é uma marca de $226,9$ [km/kWh] realizada na competição estudantil Shell EcoMarathon Americas de 2019.
-Este projeto de fim de curso tem como objetivo determinar, a partir da aplicação da teoria de controle ótimo, a sequencia e de acionamento do motor 
-elétrico (estrátegia de pista) para que a autonomia do DT1 seja a máxima possível na atual pista da competição Shell EcoMarathon Americas no kartódromo de Sonoma.
+A atual medição de seu consumo é de $226,9$~[km/kWh] realizada na competição estudantil Shell EcoMarathon Americas de 2019.
+Este projeto de fim de curso tem como objetivo determinar, a partir da aplicação da teoria de controle ótimo, o sinal de controle em malha aberta para acionamento do motor 
+elétrico (estrátegia de pista) e a relação de transmissão para que o consumo do DT1 seja o minimo possível na atual pista da competição Shell EcoMarathon Americas no kartódromo de Sonoma.
 
 Para realizar este objetivo, primeiramente foi determinado um modelo matemático da dinâmica longitudinal do veículo protótipo. Com base neste modelo
 e nas determinações da organização Shell EcoMarathon para a medição da autonomia foi formulado um problema de controle ótimo que foi resolvido utilizando o
-\textit{software} FALCON.m. Contudo o modelo do veiculo não foi validado experimentalmente, em razão da realização deste projeto durante o regime de Ensino
-Remeto Emergencial e isto não permite afirmar que a estrategia de pista encontrada é ótima para o caso real.
+\textit{software} FALCON.m. 
+
+A estrategia de pista e a relação de transmissão encontradas levariam o consumo do protótipo para $905,7$~[km/kWh]. Uma vez que o modelo do protótipo 
+não foi validado experimentalmente não foi possível afirmar que está estrategia e esta relação de transmissão são ótimas para o caso real. Contudo foi possível
+obter as seguintes conclusões: o motor deve ser ligado no trechos de maior aclive da pista e o tempo total gasto deve ser o máximo permitido. 
  
 \textbf{Palavras-chave} -- Veículo Elétrico, Eficiência Energética, Competição Shell EcoMarathon, Modelo Veícular, Problema de Controle Ótimo, FALCON.m.
 

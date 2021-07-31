@@ -24,7 +24,10 @@ ylabel={Força [N]},
 axis background/.style={fill=white},
 xmajorgrids,
 ymajorgrids,
-legend style={legend cell align=left, align=left, draw=white!15!black}
+legend style={legend cell align=left, align=left, draw=white!15!black},
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt]
   table[row sep=crcr]{%
@@ -3062,7 +3065,10 @@ ylabel={Força [N]},
 axis background/.style={fill=white},
 xmajorgrids,
 ymajorgrids,
-legend style={legend cell align=left, align=left, draw=white!15!black}
+legend style={legend cell align=left, align=left, draw=white!15!black},
+/pgf/number format/.cd,
+        use comma,
+        1000 sep={}
 ]
 \addplot [color=mycolor1, line width=1.5pt]
   table[row sep=crcr]{%

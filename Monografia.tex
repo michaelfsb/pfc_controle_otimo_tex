@@ -4,7 +4,7 @@
 
 %---------------Inicialização de pacotes--------------------
 
-\documentclass[12pt,a4paper,notitlepage,twoside]{book}
+\documentclass[12pt,a4paper,notitlepage,oneside]{book}
 
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
@@ -47,7 +47,9 @@
 
 \makeindex
 
-\setstretch{1.10} %%um pouco melhor que espaçamento simples
+\usepackage{multicol}
+
+\setstretch{1.05} %%um pouco melhor que espaçamento simples
 
 \renewcommand{\lstlistingname}{Código}
 \renewcommand{\lstlistlistingname}{Lista de Códigos}
@@ -114,6 +116,7 @@
 
 \bibliographystyle{abntex2-num}
 \begin{small}
+\thispagestyle{empty}
 \bibliography{ListadeReferencias}
 \end{small}
 

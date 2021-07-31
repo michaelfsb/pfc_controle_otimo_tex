@@ -12,23 +12,23 @@ O modelo da dinâmica do veículo protótipo DT1 foi definido com base na revis�
 Para isto as seguintes simplificações e considerações foram feita:
 
 \begin{itemize}
-    \item \textbf{Dinâmica lateral:} não foi levando em conta a dinâmica lateral do veículo considerando que ele se move apenas em linha reta; 
-    \item \textbf{Vento:} a velocidade do vento foi desconsiderada na Equação (\ref{eq:Fa});
+    \item \textbf{Dinâmica lateral:} não foi levado em conta a dinâmica lateral do veículo considerando que ele se move apenas em linha reta; 
+    \item \textbf{Arrasto aerodinâmico:} as condições atmosféricas foram desconsideradas na Equação (\ref{eq:Fa});
     \item \textbf{Pneus:} a variação do coeficiente de rolamento em função da temperatura, da pressão e a velocidade não foi considerada na Equação (\ref{eq:Fr});
-    \item \textbf{Rolamentos:} o atrito viscos dos rolamentos foi considerado nulo;
-    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potência foram tratados como componentes ideias não modificações na dinâmica das grandezas elétricas;
+    \item \textbf{Rolamentos:} o atrito visco dos rolamentos foi considerado nulo;
+    \item \textbf{Perdas elétricas:} a bateria e o conversor eletrônico de potência foram tratados como componentes ideais não modificações na dinâmica das grandezas elétricas;
     \item \textbf{Indutância do motor:} como a dinâmica da velocidade é pelo menos dez vez mais lenta que a dinâmica da corrente elétrica, a contribuição do  indutor foi removida da Equação (\ref{eq:propulsao_1}).  
 \end{itemize}
 
-A partir das Equações (\ref{eq:SomaForcas}) à (\ref{eq:Fr}) e (\ref{eq:propulsao}) e destas simplificações e considerações foi definido a 
+A partir das Equações (\ref{eq:SomaForcas}) à (\ref{eq:Fr}) e (\ref{eq:propulsao}) e destas simplificações e considerações foi definida a 
 seguinte equação para descrever o comportamento do veículo
 
 \begin{subequations}
 	\label{eq:modelo_1}
     \begin{align}
-        \left( m_v + m_p + N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m}{r_m^2} \right) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\   
+        \left( m_v + m_p + N_r \cdot \frac{J_r}{r_r^2}  + \frac{J_m\cdot \varphi^2}{r_r^2} \right) \dot v = F_t - (F_a + F_g + F_r) \enspace,\\   
         F_{t} =  \frac{K_t \cdot i_a \cdot \eta}{r_m} \enspace,\\
-		R_{a} \cdot i_{a} = u - \frac{K_{v} \cdot v}{r_m} \enspace, \\
+		R_{a} \cdot i_{a} = u - \frac{K_{v} \cdot v \cdot \varphi}{r_r} \enspace, \\
         F_{a} = \frac{\rho \cdot a_f \cdot c_d \cdot v^2}{2} \enspace,\\
         F_{g} = (m_v + m_p) \cdot g \cdot \sin(\theta(x)) \enspace,\\
         F_{r}  = c_{r} \cdot (m_v + m_p) \cdot g \cdot \cos(\theta(x)) \enspace,
@@ -37,9 +37,8 @@ seguinte equação para descrever o comportamento do veículo
 
 em que as variáveis são $\dot v$ a aceleração 
 do carro em [$m/s^2$], $v$ a velocidade do carro em [$m/s^2$], $x$ a distância  percorrida pelo carro na pista em [$m$], 
-$u$ a tensão aplicada no motor em [$V$], $r_m$ o raio do cilindro de transmissão no eixo do motor elétrico em [$m$] e $\theta$ é a inclinação da pista em [$rad$] 
-e as constantes estão apresentadas na Tabela \ref{tab:constantes}. Não foi realizado ensaio para determinar ou verificar essas constantes e este modelo
-pois o projeto foi realizado, em sua maior parte, durante o Ensino Remoto Emergencial de 2020. As constantes foram definidas através da bibliografia apresentada
+$u$ a tensão aplicada no motor em [$V$], $\varphi$ a relação de transmissão e $\theta$ é a inclinação da pista em [$rad$] 
+e as constantes estão apresentadas na Tabela \ref{tab:constantes}. Não foi realizado ensaio para determinar ou verificar essas constantes e este modelo. As constantes foram definidas através da bibliografia apresentada
 e por dados fornecidos pela equipe Milhagem UFMG. 
 
 % em que as variáveis são $u$ a tensão aplicada no motor em [$V$], 
@@ -82,13 +81,21 @@ e por dados fornecidos pela equipe Milhagem UFMG.
 \section{Modelo da pista}
 
 Para obter os dados de altitude da pista da Shell Eco-marathon Americas de 2019 no Kartódromo de Sonoma foi feito uma requisição a equipe
-\textit{Duke Electric Vehicles} da \textit{Duke University} que disponibilizou os dados coletados e tratos por ela. A Figura apresentada \ref{fig:altitude_pista} 
-o perfil de altitude da pista com estes dados.
+\textit{Duke Electric Vehicles} da \textit{Duke University} que disponibilizou os dados coletados e tratos por ela. A Figura \ref{fig:altitude_pista} apresenta  
+o perfil de altitude e a vista superior da pista a partir destes dados.
+
+% \begin{figure}[h]
+%     \centering
+%     \caption{Perfil de altitude da pista da Shell Eco-marathon Americas de 2019}
+%     \input{Metodologia/Figuras/altitude_pista.tex}
+%     \label{fig:altitude_pista}
+%     \caption*{\footnotesize{Fonte: Dados da equipe de competição \textit{Duke Electric Vehicles}.}}
+% \end{figure}
 
 \begin{figure}[h]
     \centering
-    \caption{Perfil de altitude da pista da Shell Eco-marathon Americas de 2019}
-    \input{Metodologia/Figuras/altitude_pista.tex}
+    \caption{Perfil de altitude (esquerda) e vista superior (direita) da pista da Shell Eco-marathon Americas de 2019}
+    \input{Metodologia/Figuras/altitude_pista2.tex}
     \label{fig:altitude_pista}
     \caption*{\footnotesize{Fonte: Dados da equipe de competição \textit{Duke Electric Vehicles}.}}
 \end{figure}
@@ -97,14 +104,18 @@ Uma forma de representar esses dados no código para solução o OCP é por meio
 a solução não convergiu. Uma possível explicação para essa não convergência é que os dados eram derivados duas vezes, uma para determinar a inclinação e outra pelo 
 realizada algorítimo de otimização e ao analisar esses dados derivados usando o comando \lstinline[style=Matlab-editor]{diff} do MATLAB  foram observadas curvas
 com grande variação de inclinação e ruido. Alem disso seria preciso repetir sete vezes os dois vetores de dados para emular as repetidas voltas realiza pelo carro durante a tentativa.
-A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB  
-e então realizar a derivada para obter a seguinte equação inclinação:
+A solução para esses problemas foi aproximar a curva de altitude da pista por uma sona de senos com o comando \lstinline[style=Matlab-editor]{fit(x, h, 'sin8')} do MATLAB.  
+A partir deste modelo de altitude relativa da pista $h(x)$ o modelo de inclinação $\theta(x)$ foi obtido:
+
+\[ \theta(x) = arctg\left( \frac{\mathrm{d}h(x)}{\mathrm{d}x}  \right)  \]
 
 \begin{equation}
 	\label{eq:modeloTheta}
 	\theta(x) = arctg \left( \sum_{n = 1}^{8} + a_n \cdot cos(b_n \cdot x + c_n) \right)
 	\enspace,
 \end{equation}
+
+em que os coeficientes $a_n$, $b_n$ e $c_n$ estão apresentados na Tabela \ref{tab:coeficientes}.
 
 % \begin{table}[H]
 % 	\centering
@@ -134,7 +145,7 @@ e então realizar a derivada para obter a seguinte equação inclinação:
 
 \begin{table}[H]
 	\centering
-	\caption{Coeficientes da Equação (\ref{eq:modeloTheta})}
+	\caption{Coeficientes do modelo de inclinação da pista}
 	\rowcolors{1}{}{lightgray}
 	\begin{tabular}{crcrcrcr}
 		\toprule
@@ -161,18 +172,18 @@ e o manual de regras de competição da Shell EcoMarathon Américas de 2019
 foi definida a seguinte formulação para o problema de controle ótimo de encontrar a estratégia de pista que minimiza o consumo de energia
 
 \begin{mini!}
-	{i(t), r_m, T}{\int_{0}^{T} i(t) \cdot [i(t) \cdot Ra + Kv \cdot (v(t)/r_m)] \,\mathrm{d}t \label{eq:ObjOCP_final}}
+	{i(t), \varphi, T}{\int_{0}^{T} i(t) \cdot \left(i(t) \cdot R_a + \frac{Kv \cdot v(t) \cdot \varphi}{r_r} \right) \,\mathrm{d}t \label{eq:ObjOCP_final}}
 	{\label{eq:formulacaoOCP_final}}{}
     \addConstraint{x(0)}{=0 \label{eq:C1_OCP_final}}{}
     \addConstraint{v(0)}{=0 \label{eq:C2_OCP_final}}{}
     \addConstraint{\dot x(t) - v(t)}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C3_OCP_final}}
     \addConstraint{\dot v(t) - \frac{F_t - (F_a + F_g + F_r)}{M}}{=0, \quad}{t \in \left[0,T\right]  \label{eq:C4_OCP_final}}
-	\addConstraint{i(t)-\frac{42-Kv\cdot(v/r_m)}{R_a}}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C5_OCP_final}}
-    \addConstraint{0 \leq i(t)}{\leq 30, \quad}{t \in \left[0,T\right]  \label{eq:C6_OCP_final}}
-    \addConstraint{0 \leq v(t)}{\leq 12.5, \quad}{t \in \left[0,T\right]  \label{eq:C7_OCP_final}}
-    \addConstraint{x(T)}{= 10080 \label{eq:C8_OCP_final}}{}
-	\addConstraint{T}{\leq 1400 \label{eq:C9_OCP_final}}{}
-	\addConstraint{0.020\leq r_m}{ \leq 0.050, \label{eq:C10_OCP_final}}{}
+	\addConstraint{i(t)-\frac{u_{bat}-Kv\cdot(v(t) \cdot \varphi/r_r)}{R_a}}{\leq 0, \quad}{t \in \left[0,T\right]  \label{eq:C5_OCP_final}}
+    \addConstraint{0 \leq i(t)}{\leq i_{max}, \quad}{t \in \left[0,T\right]  \label{eq:C6_OCP_final}}
+    \addConstraint{0 \leq v(t)}{\leq v_{max}, \quad}{t \in \left[0,T\right]  \label{eq:C7_OCP_final}}
+    \addConstraint{x(T)}{= x_f \label{eq:C8_OCP_final}}{}
+	\addConstraint{T}{\leq t_{max} \label{eq:C9_OCP_final}}{}
+	\addConstraint{\varphi_{min}\leq \varphi}{ \leq \varphi_{max}, \label{eq:C10_OCP_final}}{}
 \end{mini!}
 
 em que a Equação (\ref{eq:ObjOCP_final}) define a energia elétrica consumida como custo a ser minimizado, 
@@ -181,26 +192,27 @@ as Equações (\ref{eq:C3_OCP_final}) e (\ref{eq:C4_OCP_final}) são as restriç
 a Equação (\ref{eq:C5_OCP_final}) é uma restrição de caminho para corrente em razão da tensão máxima da bateria, 
 a Equação (\ref{eq:C6_OCP_final}) é uma restrição para o valor máximo de corrente em função do limite de corrente entregue pelo conversor de potência do veículo,
 a Equação (\ref{eq:C7_OCP_final}) é uma restrição para o valor máximo da velocidade do carro definida pela organização da competição,
-a Equação (\ref{eq:C8_OCP_final}) é um restrições de valor final fixo para a distância  percorrida equivalente a sete voltas na pista,
+a Equação (\ref{eq:C8_OCP_final}) é uma restrição de valor final fixo para a distância  percorrida equivalente a sete voltas na pista,
 a Equação (\ref{eq:C9_OCP_final}) é uma restrição para o valor máximo do tempo final em decorrência do limite de velocidade media mínima determinado pela organização da competição,
-e a Equação (\ref{eq:C10_OCP_final}) é o intervalo possível para o raio do eixo do motor.
+a Equação (\ref{eq:C10_OCP_final}) é o intervalo possível para a relação de transmissão
+e as constantes são apresentadas na Tabela \ref*{tab:constantes_OCP}.
 
 
 \begin{table}[H]
 	\centering
-	\caption{Constantes utilizadas no OCP}
+	\caption{Constantes do OCP proposto}
 	\rowcolors{1}{}{lightgray}
 	\begin{tabular}{llll}
 		\toprule
 		\textbf{Constante} & \textbf{Simbolo} & \textbf{Unidade} & \textbf{Valor}\\
 		\hline
 		Tensão da bateria   & $u_{bat}$     & [$V$]    & 42    \\
-        Corrente máxima     & $I_{max}$     & [$A$]    & 30    \\
+        Corrente máxima     & $i_{max}$     & [$A$]    & 30    \\
         Velocidade máxima   & $v_{max}$     & [$m/s$]  & 12,5  \\  
         Distância total     & $x_f$         & [$m$]    & 10080 \\
-        Tempo final         & $t_f$         & [$s$]    & 1400  \\
-        Raio minimo         & $r_{m,min}$   & [$m$]    & 0,02  \\
-        Raio máxima         & $r_{m,max}$   & [$m$]    & 0,05  \\
+        Tempo máximo        & $t_{max}$         & [$s$]    & 1400  \\
+        Relação de transmissão minima         & $\varphi_{min}$   & [ ]    & 5,08  \\
+        Relação de transmissão máxima         & $\varphi_{m,max}$   & [ ]    & 12,7 \\
 		\bottomrule
 	\end{tabular}
 	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
@@ -245,27 +257,27 @@ Durante a escrita do arquivo \lstinline[style=Matlab-editor]{main.m} uma dificul
 Inicialmente os valores definidos foram a ordem de grandeza da cada variável o que gerou matrizes mau condicionadas no NLP e consequente um alto tempo de solução o problema. 
 Os valores corretos, conforme sugerido no manual do FALCON.m\cite{manual:Falcon}, dever ser definidos de tal forma que a ordem de grandeza da variável seja um. Por exemplo: uma variávelque
 representa a correte elétrica de um circuito em [mA] deve ter o parâmero \lstinline[style=Matlab-editor]{scale} igual a $10^{-3}$. 
-A definição dos estados, variável de controle e parâmetros com o parâmetro \lstinline[style=Matlab-editor]{scale} adequado é apresentado no Código \ref{lst:scale}. 
+% A definição dos estados, variável de controle e parâmetros com o parâmetro \lstinline[style=Matlab-editor]{scale} adequado é apresentado no Código \ref{lst:scale}. 
 
-\begin{figure}[h]
-    \begin{lstlisting}[
-        caption={[Trecho do arquivo main.m]Trecho do arquivo \lstinline[style=Matlab-editor]{main.m} com definição dos estados, variável de controle e parâmetros do OCP proposto}, 
-        label={lst:scale},
-        style      = Matlab-editor,
-        basicstyle = \mlttfamily,
-        firstnumber=4]
-% vetor de estados
-x_vec = [ falcon.State('x',   0,  11000, 1e-4);...
-          falcon.State('v',   0,  12.5, 1e-1) ];
-% variavel de controle
-u_vec = falcon.Control('i', 0,  63, 1);
-% tempo final
-tf = falcon.Parameter('FinalTime', 1400, 0, 1400, 1e-3);
-% raio do cilindro no motor
-rm = falcon.Parameter('raioM', 0.026, 0.020, 0.050, 1e2);
-    \end{lstlisting}
-    \caption*{\footnotesize{Fonte: Elaborado pelo autor.}}
-\end{figure}
+% \begin{figure}[h]
+%     \begin{lstlisting}[
+%         caption={[Trecho do arquivo main.m]Trecho do arquivo \lstinline[style=Matlab-editor]{main.m} com definição dos estados, variável de controle e parâmetros do OCP proposto}, 
+%         label={lst:scale},
+%         style      = Matlab-editor,
+%         basicstyle = \mlttfamily,
+%         firstnumber=4]
+% % vetor de estados
+% x_vec = [ falcon.State('x',   0,  11000, 1e-4);...
+%           falcon.State('v',   0,  12.5, 1e-1) ];
+% % variavel de controle
+% u_vec = falcon.Control('i', 0,  63, 1);
+% % tempo final
+% tf = falcon.Parameter('FinalTime', 1400, 0, 1400, 1e-3);
+% % raio do cilindro no motor
+% rm = falcon.Parameter('raioM', 0.026, 0.020, 0.050, 1e2);
+%     \end{lstlisting}
+%     \caption*{\footnotesize{Fonte: Elaborado pelo autor.}}
+% \end{figure}
 
 Além disso, foi verificado que, a biblioteca FALCON.m versão v1.26 não funcionou no MATLAB  R2020a quando o optimizador  IPOPT era utilizado.
 Isto ocorreu pois não há garantia de compatibilidade, no Windows, por parte do MATLAB  em sua evolução, a arquivos MEX (interface com programas escritos em C, C++ ou Fortran) gerados em versões 

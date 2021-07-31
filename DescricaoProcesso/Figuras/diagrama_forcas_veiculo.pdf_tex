@@ -60,7 +60,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=3]{diagrama_forcas_veiculo.pdf}}%
     \put(0.41568938,0.22299488){\color[rgb]{0.98431373,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$F_{g}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{diagrama_forcas_veiculo.pdf}}%
-    \put(0.48700646,0.05178049){\color[rgb]{1,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$Mg$\end{tabular}}}}%
+    \put(0.48700646,0.05178049){\color[rgb]{1,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$(m_v+m_p)\cdot g$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{diagrama_forcas_veiculo.pdf}}%
     \put(0.22535559,0.00861274){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\theta$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{diagrama_forcas_veiculo.pdf}}%

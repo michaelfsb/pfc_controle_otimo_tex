@@ -1,5 +1,6 @@
 \chapter{Conclusões}
 \label{chap:conclusao}
+\thispagestyle{empty}
 
 O capítulo de conclusão deste projeto de fim de curso está divido em duas seções.
 Na Seção \ref{sec:5_1} são feitas as considerações finais sobre os resultados alcançados e uma avaliação do cumprimento dos objetivos definidos inicialmente no Capítulo \ref{chap:intro}.
@@ -9,9 +10,18 @@ As propostas de continuidade para o projeto estão na Seção \ref{sec:5_2}.
 \label{sec:5_1}
 
 Os objetivos (a) e (d) de definir o modelo matemático para a dinâmica do protótipo DT1 e de definir a estratégia ótima para a pista da Shell EcoMarathon Américas de 2019 
-foram atingidos de forma parcial uma vez que, como discutido na Seção \ref{sec:resultados_modelo}, não foi realizado uma validação experimental do modelo em razão da 
-realização remota deste projeto. Desta forma não é possível afirmar que o modelo determinado representa fidedignamente o comportamento do veículo
-e por consequência que a estratégia de pista encontra é ótima para o caso real.
+foram atingidos de forma parcial uma vez que, como discutido na Seção \ref{sec:resultados_modelo}, não foi realizado uma validação experimental do modelo e, desta forma, não é possível afirmar que o modelo determinado representa fidedignamente o comportamento do veículo
+e por consequência que a estratégia de pista e a relação de transmissão encontradas são ótimas para o caso real. Contudo foi possível obter as seguintes conclusões a partir da estrategia encontrada que 
+podem ser utilizadas como orientações na realização da tentativa: 
+
+\begin{itemize}
+    \item O motor deve ser ligado no trecho de maior aclive da pista;
+    \item O tempo total gasto deve ser o máximo permitido;
+    \item O tempo da ultima volta é maior que o tempo das demais;
+    \item A velocidade final é maior que zero.
+\end{itemize}
+
+
 
 Formular o problema de controle ótimo pra obter a estratégia ótima e implementar o algoritmo para solução desse OCP,
 que são objetos (b) e (c), foram cumpridos integralmente pois a formulação contempla todas as restrições para o comportamento do veículo durante uma tentativa e o solução cumpriu todas estas

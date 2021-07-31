@@ -1,5 +1,6 @@
 \chapter{Resultados}
 \label{chap:resultados}
+\thispagestyle{empty}
 
 Os resultados obtidos com o desenvolvimento desse projeto são apresentados e discutidos nesse capítulo de forma divida em três seções.  
 A primeira e a segunda sobre os modelos do DT1 e da pista do Kartódromo de Sonoma. E a última  sobre os resultados da solução do OCP proposto.
@@ -8,8 +9,7 @@ A primeira e a segunda sobre os modelos do DT1 e da pista do Kartódromo de Sono
 \label{sec:resultados_modelo}
 
 O modelo obtido para o veículo para o veículo DT1 foi a Equação (\ref{eq:modelo_1}) e o conjunto de constates da Tabela \ref{tab:constantes}.
-Entretanto esse modelo não foi validado experimentalmente pois esse projeto foi realizado, em sua maior parte, durante o regime de ensino remoto
-emergência causado pela pandemia de Covid-19 em 2020. Na solução do OCP proposto a marca de consumo calculado para a estratégia ótima
+Entretanto esse modelo não foi validado experimentalmente. Na solução do OCP proposto a marca de consumo calculado para a estratégia ótima
 foi de $905,7$ [km/kWh] que é um valor muito distante das marcas realmente realizas pelo DT1 de $266,5$ [km/kWh] em 2018 e de $226,9$ [km/kWh] em 2019  no Kartódromo de Sonoma na Shell Eco-marathon Americas. 
 Apesar de que uma melhora na marca era esperada, esta grande diferença entre os valores das marcas deve ser analisada com ceticismo, ela indica que as constantes do modelo podem precisar ser ajustadas e/ou as simplificações revistas.
 
@@ -53,9 +53,9 @@ e o comportamento periódico desejado na curva ajustada para descrever a repeti�
  
 O código desenvolvido, conforme descrito na Seção \ref{sec:OCPporposto}, para solução o problema de controle ótimo proposto na Equação 
 (\ref{eq:ObjOCP_final}) gerou um problema de programação não linear com 3005 variáveis de otimização.
-Foram gastos para a execução de todo o programa $\sim 14.4$ segundos onde $\sim 7,2$ segundos deste foram utilizados na otimização do NLP em $636$ iterações da biblioteca IPOP e reposta não violou nenhuma das restrições. 
+Foram gastos para a execução de todo o programa $\sim 8,7$ segundos onde $\sim 2,2$ segundos foram utilizados na otimização do NLP em $205$ iterações da biblioteca IPOPT e reposta não violou nenhuma das restrições. 
 A sequência de controle ótima de $i$ e os estados gerados por ela $x$ e $v$ estão apresentados nos gráficos da Figura \ref{graf:resultadoOCP}. 
-Os parâmetros otimizados tempo final $T$ e raio do eixo do motor $r_m$ são exibidos na Tabela \ref{tab:resultadoOCP} junto das métricas marca, velocidade media e velocidade final. 
+Os parâmetros otimizados tempo final $T$ e relação de transmissão $\varphi$ são exibidos na Tabela \ref{tab:resultadoOCP} junto das métricas marca, velocidade media e velocidade final. 
 
 \begin{table}[h]
 	\centering
@@ -63,13 +63,13 @@ Os parâmetros otimizados tempo final $T$ e raio do eixo do motor $r_m$ são exi
 	\rowcolors{1}{}{lightgray}
 	\begin{tabular}{lll}
 		\toprule
-		\textbf{Constante} & \textbf{Unidade} & \textbf{Valor}\\
+		\textbf{Descrição} & \textbf{Unidade} & \textbf{Valor}\\
 		\hline
-		Marca                               & [$km/kWh$]   & 905.68  \\
-        Raio do eixo do motor               & [$mm$]       & 27.56   \\
-        Tempo total de prova                & [$s$]        & 1400.0  \\  
-        Velocidade média                    & [$km/h$]     & 25.92   \\
-        Velocidade final                    & [$km/h$ ]    & 17.09   \\
+		Marca                               & [$km/kWh$]   & 905,68  \\
+        Relação de transmissão              & [ ]          & 9,2156   \\
+        Tempo total de prova                & [$s$]        & 1400,0  \\  
+        Velocidade média                    & [$km/h$]     & 25,92   \\
+        Velocidade final                    & [$km/h$ ]    & 17,09   \\
 		\bottomrule
 	\end{tabular}
 	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
@@ -86,10 +86,11 @@ Os parâmetros otimizados tempo final $T$ e raio do eixo do motor $r_m$ são exi
 
 A estratégia de pista ótima encontrada se assemelha muito a estratégia estratégia \textit{start-stop}, na qual o motor é desligado quando a velocidade é máxima
 km/h e religado apenas quando é minima. Entretanto, no caso ótimo estes valores diferem na primeira, na última e nas demais voltas. Para a primeira volta a máxima e a mínima são
-$26,8$ e $17,3$ [km/h]. Na última  os valores máximo e a mínimo são $33,2$ e $11,9$ [km/h]. Enquanto nas demais voltas os valores máximo e mínimo são $35,0$ e $17,3$ [km/h]
+$26,8$ e $17,3$ [km/h]. Na última  os valores máximo e a mínimo são $33,2$ e $11,9$ [km/h]. Enquanto nas demais voltas os valores máximo e mínimo são $35,0$ e $17,3$ [km/h]. Já o tempo 
+gasto para em cada volta foi de $194,6$ [s] para a primeira, segunda, quarta e quinta volta, $196,0$ [s] para a terceira e $222,6$ [s] para a ultima volta.
 
-Nos gráficos da Figura \ref{graf:resultadotensao} estão retratos a tensão que deve ser aplicada no motor para produzir a corrente elétrica da sequência de controle ótima e a inclinação da pista em cada instante de tempo.
-A partir desta pode-se observar que o motor é ligado somente no maior pico positivo de inclinação, ou seja, o motor só é ligado na maior subida pista.
+Nos gráficos da Figura \ref{graf:resultadotensao} são apresentados a tensão que deve ser aplicada no motor para produzir a corrente elétrica da sequência de controle ótima e a inclinação da pista em cada instante de tempo.
+A partir desta pode-se observar que o motor é ligado somente no maior pico positivo de inclinação, ou seja, o motor só é ligado no trecho de aclive da pista.
 
 Como apresentado nos gráficos da Figura \ref{graf:resultadoForcas} a maior força resistiva que atuou no veículo foi a componente do peso paralela a pista $F_g$, variando entre $-18,45$ [N] a $25,84$ [N]. Apesar de $F_g$ ser conservativa
 e realizar um trabalho nulo em um circuito fechado, ela influencia fortemente, dado sua magnitude comparada as outras forças resistivas, as acelerações do protótipo e consequentemente a região de trabalho do motor.

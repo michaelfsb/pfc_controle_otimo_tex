@@ -28,8 +28,8 @@ veículo representado no diagrama da Figura \ref{fig:diag_forcas_veiculo}, obté
 	\enspace,
 \end{equation}
 
-em que $m_v$ é a massa do veículo, $m_v$ é a massa do piloto,  $m_r$ é massa equivalente ao memento de inercia das partes rotativas (rodas e eixo do motor),  $x$ é a posição, $F_{t}$ é a propulsão feita pelo motor, $F_{a}$ é o
-arrasto aerodinâmico, $F_g$ é a componente do peso que está direção da velocidade e $F_{r}$ é a resistência ao rolamento dos pneus no pista.
+em que $m_v$ é a massa do veículo, $m_v$ é a massa do piloto,  $m_r$ é massa equivalente ao momento de inercia das partes rotativas (rodas e eixo do motor),  $v$ é a velocidade, $F_{t}$ é a propulsão feita pelo motor, $F_{a}$ é o
+arrasto aerodinâmico, $F_g$ é a componente do peso que está direção da velocidade e $F_{r}$ é a resistência ao rolamento dos pneus na pista.
 Os modelos que descrevem a massa equivalente $m_r$ e forças $F_{a}$, $F_g$, $F_{r}$ e $F_{t}$ estão apresentados nas subseções a seguir.
 
 \begin{figure}[h]
@@ -45,8 +45,8 @@ Os modelos que descrevem a massa equivalente $m_r$ e forças $F_{a}$, $F_g$, $F_
 \subsection{Inércia rotacional}
 
 A inércia de todas as peças giratórias dentro do veículo causa forças fictícias. 
-está inércia pode ser representada nos modelos dinâmicos do motor e da transmissão, ou ser representada com uma massa equivalente $m_r$.
-Para essa representação é considerado que não há deslizamento do pneu no asfalto e não a escorregamento na transmissão. O cálculo de $m_r$ é 
+Está inércia pode ser representada nos modelos dinâmicos do motor e da transmissão, ou ser representada com uma massa equivalente $m_r$.
+Para essa representação é considerado que não há deslizamento do pneu no asfalto e não há escorregamento na transmissão. O cálculo de $m_r$ é 
 
 \begin{subequations}
 	\label{eq:mr}
@@ -65,7 +65,7 @@ $\varphi$ é a relação de transmissão. \hbox{\cite[Seç.~2.1.1]{book:guzzella
 \label{subsec:arrasto_aerodinamico}
 
 O movimento de um objeto imerso em um fluido sofre uma resistência causada por esse fluido. No
-caso de veículos que se deslocando no ar, essa
+caso de veículos que se deslocam no ar, essa
 resistência é chamada de arrasto aerodinâmico.
 Pode-se aproximar o cálculo dessa força $F_{a}$ com a equação
 
@@ -75,17 +75,17 @@ Pode-se aproximar o cálculo dessa força $F_{a}$ com a equação
 	\enspace,
 \end{equation}
 
-em que $v$ é a velocidade do veículo em relação ao vento, $\rho$ a densidade do ar, $a_{f}$ a área frontal do
+em que $v$ é a velocidade do veículo em relação à atmosfera, $\rho$ a densidade do ar, $a_{f}$ a área frontal do
 veículo e $c_{d}$ o coeficiente de arrasto aerodinâmico.
 O coeficiente $c_{d}$ é um numero adimensional e depende da geometria veículo, é determinado por meio de simulações em \textit{software} de fluido
 dinâmica
 computacional (CFD, do inglês \textit{computational fluid dynamics}) e/ou experimentos em túnel de vento. \cite[Seç.~2.1.1]{book:guzzella2012vehicle} Alguns
-valores típicos de $C_{d}$ para diferentes tipos de
+valores típicos de $c_{d}$ para diferentes tipos de
 veículos são apresentados na Tabela \ref{tab:ComparacaoCD}.
 
 \begin{table}[h]
 	\centering
-	\caption{Comparação do $c_{d}$ de diferentes tipos veículos}
+	\caption{Comparação do $c_{d}$ para diferentes tipos de veículos}
 	\rowcolors{1}{}{lightgray}
 	\begin{tabular}{ll}
 		\toprule
@@ -200,21 +200,21 @@ bateria, conversor de potência, motor elétrico e transmissão.
 
 Bateria eletroquímica, ou apenas bateria, é um dispositivo em que durante a descarga ocorre a conversão de energia potêncial química em energia
 elétrica e na carga ocorre a conversão inversa. Ou seja, uma bateria armazena energia elétrica na forma de energia potêncial química. Uma bateria é
-composta por varais células ligadas entre se. Uma célula de bateria é basicamente composta por dois elétrodos-- positivo e
-negativo -- imersos em um eletrólito. \cite[Seç.~13.1]{book:Modern_Electric_Vehicles}
+composta por varais células ligadas entre si. Uma célula de bateria é composta por dois elétrodos --- positivo e
+negativo --- imersos em um eletrólito. \cite[Seç.~13.1]{book:Modern_Electric_Vehicles}
 
 
 
 Conversor eletrônico de potência, ou conversor de potência, é o circuito cujo a finalidade é extrair energia elétrica de um sistema de energia e
-transformá-la em uma forma adequada e necessária para um motor. \cite{book:Electric_Motor_Control}.
+transformá-la em uma forma adequada e necessária para um motor. \cite[Cap.~1]{book:Electric_Motor_Control}
 
 
-O motor elétrico converte a potência elétrica -- tensão e corrente -- em potência mecânica rotativa -- torque e rotação -- para impulsionar o
+O motor elétrico converte a potência elétrica --- tensão e corrente --- em potência mecânica rotativa --- torque e rotação --- para impulsionar o
 veículo. \cite[Cap.~7]{book:Modern_Electric_Vehicles} Podem ser classificados em relação a sua alimentação: corrente continua
 (CA) ou corrente alternada (CC), conforme apresentado na Figura \ref{classif_motor}.
 No entanto o motor de corrente continua sem escovas, ou BLDC do inglês \textit{brushless direct current}, é difícil de ser classificado desse forma
 pois sua configuração é semelhante à de um motor CA, enquanto suas características elétricas são semelhantes às de um motor
-CC.\cite{book:Electric_Motor_Control} Nesse trabalho estudara-se o modelo dos motores BLDC pois é o tipo de motor utilizado no protótipo DT1.
+CC. \cite[Cap.~10]{book:Electric_Motor_Control} Nesse trabalho estudara-se o modelo dos motores BLDC pois é o tipo de motor utilizado no protótipo DT1.
 
 \begin{figure}[h]
 	\centering
@@ -251,7 +251,7 @@ O motor BLDC foi desenvolvido em 1962 e possui um sistema de comutação eletrô
 as escovas da comutação mecânica, os enrolamentos da armadura são colocados no estator (parte estacionaria) e os ímãs são colocados no rotor (parte
 rotativa).
 A comutação eletrônica baseia-se em sensores para identificar a posição do rotor e acionar o enrolamento necessário para manter o movimento de
-rotação.\cite{book:Electric_Motor_Control} O conjunto de equações que descreve a corrente de armadura $i_a$ e o torque gerado $T$ para um motor BLDC
+rotação. \cite[Cap.~10]{book:Electric_Motor_Control} O conjunto de equações que descreve a corrente de armadura $i_a$ e o torque gerado $T$ para um motor BLDC
 de enrolamentos ligados em
 Y com neutro acessível e operando em meia onda (a tensão é aplicada entre o terminal de um enrolamento e o neutro) é
 
@@ -266,7 +266,7 @@ Y com neutro acessível e operando em meia onda (a tensão é aplicada entre o t
 
 em que $u$ é a tensão aplicada, $u_{ind}$ é a tensão induzida, $L_{a}$ e $R_{a}$ são, respectivamente a indutância e a resistência da armadura,
 $K_{v}$ é a constante de tensão induzida,
-$\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque. A Figura \ref{diag:motoBLDC} apresenta o modelo o circuito de um enrolamento do motor BLDC.\cite{book:Permanent_Magnet_Motor}
+$\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque. A Figura \ref{diag:motoBLDC} apresenta o modelo o circuito de um enrolamento do motor BLDC. \cite[Cap.~6]{book:Permanent_Magnet_Motor}
 
 \begin{figure}[h]
 	\centering
@@ -306,64 +306,91 @@ $\omega_{m}$ é a rotação do motor e $K_{t}$ é a constante de torque. A Figur
 \end{figure}
 
 O protótipo DT1 é equipado com um motor Dunkermotoren BG75x75 40V (Figura \ref{fig:motor_bg75}). O motor que possui 3 enrolamentos, imã de neodímio
-com 8 polos e sensor hall integrado para medir a posição do rotor (24 pulsos por volta), suas características elétricas e mecânicas estão
-apresentadas na Tabela \ref{tab:dadosBg75}.
+com 8 polos e sensor hall integrado para medir a posição do rotor (24 pulsos por volta).
+% , suas características elétricas e mecânicas estão
+% apresentadas na Tabela \ref{tab:dadosBg75}.
 
-\begin{figure}[h]
-	\centering
-	\caption{Motor Dunkermotoren BG75x75 40V}
-	\label{fig:motor_bg75}
-	\includegraphics[scale=0.20]{DescricaoProcesso/Figuras/bg75.png}
-	\caption*{\footnotesize Fonte: Equipe Milhagem UFMG}
-\end{figure}
 
-\begin{table}[H]
-	\centering
-	\caption{Dados do motor BG75x75 40V}
-	\label{tab:dadosBg75}
-	\rowcolors{1}{}{lightgray}
-	\begin{tabular}{lcc}
-		\toprule
-		Tensão nominal            & {[}V{]}        & 40     \\
-		Corrente nominal          & {[}A{]}        & 15,6   \\
-		Torque nominal            & {[}N.m{]}      & 1,50    \\
-		Velocidade nominal        & {[}rpm{]}      & 3370   \\
-		Troque de atrito          & {[}N.m{]}      & 0,13   \\
-		Torque de parada          & {[}N.m{]}      & 12     \\
-		Velocidade sem carga      & {[}rpm{]}      & 4100   \\
-		potência de saída nominal & {[}W{]}        & 530    \\
-		potência de saída máxima  & {[}W{]}        & 1150   \\
-		Constante de torque       & {[}N.m/A{]}    & 0,119  \\
-		Resistência               & {[}$\Omega${]} & 0,07   \\
-		Indutância                & {[}mH{]}       & 0,45   \\
-		Corrente de pico          & {[}A{]}        & 63     \\
-		Inercia do rotor          & {[}g.m²{]}     & 0,0625 \\
-		Massa                     & {[}kg{]}       & 2,8    \\
-		\bottomrule
-	\end{tabular}
-	\caption*{\footnotesize Fonte: Adaptado de \cite{manual:BG75}}
-\end{table}
+	\begin{figure}[H]
+		\centering
+		\caption{Motor Dunkermotoren BG75x75 40V}
+		\label{fig:motor_bg75}
+		\includegraphics[scale=0.15]{DescricaoProcesso/Figuras/bg75.png}
+		\caption*{\footnotesize Fonte: Equipe Milhagem UFMG}
+	\end{figure}
+
+	% \begin{table}[H]
+	% 		\centering
+	% 		\caption{Dados do motor BG75x75 40V}
+	% 		\label{tab:dadosBg75}
+	% 		\rowcolors{1}{}{lightgray}
+	% 		\begin{tabular}{lcc}
+	% 			\toprule
+	% 			Tensão nominal            & {[}V{]}        & 40     \\
+	% 			Corrente nominal          & {[}A{]}        & 15,6   \\
+	% 			Torque nominal            & {[}N.m{]}      & 1,50    \\
+	% 			Velocidade nominal        & {[}rpm{]}      & 3370   \\
+	% 			Troque de atrito          & {[}N.m{]}      & 0,13   \\
+	% 			Torque de parada          & {[}N.m{]}      & 12     \\
+	% 			Velocidade sem carga      & {[}rpm{]}      & 4100   \\
+	% 			potência de saída nominal & {[}W{]}        & 530    \\
+	% 			potência de saída máxima  & {[}W{]}        & 1150   \\
+	% 			Constante de torque       & {[}N.m/A{]}    & 0,119  \\
+	% 			Resistência               & {[}$\Omega${]} & 0,07   \\
+	% 			Indutância                & {[}mH{]}       & 0,45   \\
+	% 			Corrente de pico          & {[}A{]}        & 63     \\
+	% 			Inercia do rotor          & {[}g.m²{]}     & 0,0625 \\
+	% 			Massa                     & {[}kg{]}       & 2,8    \\
+	% 			\bottomrule
+	% 		\end{tabular}
+	% 		\caption*{\footnotesize Fonte: Adaptado de  \citeauthoronline{manual:BG75}. \cite{manual:BG75}}
+	% \end{table}
+
+% \begin{multicols*}{2}
+% 	\begin{figure}[H]
+% 		\centering
+% 		\caption{Motor Dunkermotoren BG75x75 40V}
+% 		\label{fig:motor_bg75}
+% 		\includegraphics[scale=0.15]{DescricaoProcesso/Figuras/bg75.png}
+% 		\caption*{\footnotesize Fonte: Equipe Milhagem UFMG}
+% 	\end{figure}
+
+% 	%\vfill\null
+% 	\columnbreak
+
+% 	\begin{table}[H]
+% 		\centering
+% 		\caption{Dados do motor BG75x75 40V}
+% 		\label{tab:dadosBg75}
+% 		\rowcolors{1}{}{lightgray}
+% 		\begin{tabular}{lcc}
+% 			\toprule
+% 			Tensão nominal            & {[}V{]}        & 40     \\
+% 			Corrente nominal          & {[}A{]}        & 15,6   \\
+% 			Torque nominal            & {[}N.m{]}      & 1,50    \\
+% 			Velocidade nominal        & {[}rpm{]}      & 3370   \\
+% 			Troque de atrito          & {[}N.m{]}      & 0,13   \\
+% 			Torque de parada          & {[}N.m{]}      & 12     \\
+% 			Velocidade sem carga      & {[}rpm{]}      & 4100   \\
+% 			potência de saída nominal & {[}W{]}        & 530    \\
+% 			potência de saída máxima  & {[}W{]}        & 1150   \\
+% 			Constante de torque       & {[}N.m/A{]}    & 0,119  \\
+% 			Resistência               & {[}$\Omega${]} & 0,07   \\
+% 			Indutância                & {[}mH{]}       & 0,45   \\
+% 			Corrente de pico          & {[}A{]}        & 63     \\
+% 			Inercia do rotor          & {[}g.m²{]}     & 0,0625 \\
+% 			Massa                     & {[}kg{]}       & 2,8    \\
+% 			\bottomrule
+% 		\end{tabular}
+% 		\caption*{\footnotesize Fonte: Adaptado de  \citeauthoronline{manual:BG75}. \cite{manual:BG75}}
+% 	\end{table}
+% \end{multicols*}
 
 A transmissão do veículo regula a transferência de potência do motor para as rodas. É basicamente composta por mecanismo de
-redução -- ex. caixa de câmbio -- e por um mecanismo de interrupção -- ex. embreagem\cite{book:Modern_Electric_Vehicles}.
+redução --- ex. caixa de câmbio --- e por um mecanismo de interrupção --- ex. embreagem. \cite[Cap.~4]{book:Modern_Electric_Vehicles}
 No DT1, o mecanismo de redução utilizado é do tipo roda de atrito e o mecanismo de interrupção é o pivotamento entre os componentes da roda de atrito, apresentado na Figura \ref{dig:Trasmissao}.
 
-Rodas de atrito são uma das maneiras mais simples para se transmitir potência mecânica entre eixos e sua eficiência é tipicamente de $95$ a $98$ {\%}. São compostas por dois ou mais cilindros em contato direto.  
-Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. Os torque e rotações são descritos pelas equações 
-
-\begin{subequations}
-	\label{eq:Transmissao}
-	\begin{align}
-		\varphi = \frac{r_{r}}{r_{m}}\enspace, \label{eq:Transmissao_1} \\
-		\omega_{r} = -\frac{\omega_{m}}{\varphi}\enspace, \label{eq:Transmissao_2}  \\
-		T_{r} =\varphi \cdot T_{m} \cdot \eta\enspace, \label{eq:Transmissao_3}
-	\end{align}
-\end{subequations}
-
-onde $\varphi$ é a relação de transmissão, $R_{r}$ e $\omega_{r}$ são o diâmetro e a velocidade angular da roda, 
-$R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor e $\eta$ é a eficiência da roda de atrito.\cite{book:Niemann1971,book:Norton2010}
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\caption{Representação da transmissão do DT1}
 	\label{dig:Trasmissao}
@@ -385,11 +412,28 @@ $R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor
 
 		\draw[dashed] (0, 0) arc (225:180:3cm); 
 		\draw (4,-1.3) node[minimum width=3cm,text width=3cm,align=center]{roda tracionada};
-		\draw (-0.2,-1.35) node[minimum width=3cm,text width=3cm,align=center]{eixo do motor (acoplado)};
-		\draw (-1,3.2) node[minimum width=3cm,text width=3cm,align=center]{(desacoplado)};
+		\draw (-0.2,-1.35) node[minimum width=3cm,text width=3cm,align=center]{roda de tração (acoplada)};
+		\draw (-1,3.2) node[minimum width=3cm,text width=3cm,align=center]{(desacoplada)};
 	\end{tikzpicture}
 	\caption*{\footnotesize Fonte: Elaborada pelo autor.}
 \end{figure}
+
+Rodas de atrito são uma das maneiras mais simples para se transmitir potência mecânica entre eixos e sua eficiência é tipicamente de $95$ a $98$ {\%}. São compostas por dois ou mais cilindros em contato direto.  
+Para não ocorrer deslizamento em uma roda de atrito o torque transmitido não deve exceder a força de atrito entre os cilindros. Os torque e rotações são descritos pelas equações 
+
+\begin{subequations}
+	\label{eq:Transmissao}
+	\begin{align}
+		\varphi = \frac{r_{r}}{r_{m}}\enspace, \label{eq:Transmissao_1} \\
+		\omega_{r} = -\frac{\omega_{m}}{\varphi}\enspace, \label{eq:Transmissao_2}  \\
+		T_{r} =\varphi \cdot T_{m} \cdot \eta\enspace, \label{eq:Transmissao_3}
+	\end{align}
+\end{subequations}
+
+onde $\varphi$ é a relação de transmissão, $R_{r}$ e $\omega_{r}$ são o diâmetro e a velocidade angular da roda, 
+$R_{m}$ e $\omega_{m}$ são o diâmetro e a velocidade angular do cilindro motor e $\eta$ é a eficiência da roda de atrito. \cite[Seç.~20.4]{book:Niemann1971}\cite[Seç.~9.1]{book:Norton2010}
+
+
 
 A partir das Equações (\ref{eq:MotorCC}) e (\ref{eq:Transmissao}), desconsiderando as perdas por atrito visco nos rolamentos, as perdas causada pela resistência interna na bateira e
 a perda no conversor de potência, o conjunto que descreve o a força do sistema de propulsão $F_t$ de um veiculo elétrico é
@@ -398,7 +442,7 @@ a perda no conversor de potência, o conjunto que descreve o a força do sistema
 	\label{eq:propulsao}
 	\begin{align}
 		\dot i_{a} = \frac{u - K_{v} \cdot \omega_{m} - R_{a} \cdot i_{a}}{L_{a}}\enspace, \label{eq:propulsao_1} \\
-		F_{t} =  \frac{K_t \cdot i_a \cdot \eta}{r_m}\enspace. \label{eq:propulsao_2}
+		F_{t} =  \frac{K_t \cdot i_a \cdot \varphi \cdot \eta}{r_r}\enspace. \label{eq:propulsao_2}
 	\end{align}
 \end{subequations}
 
@@ -406,7 +450,7 @@ a perda no conversor de potência, o conjunto que descreve o a força do sistema
 
 "O objetivo da teoria de controle ótimo é determinar os sinais de controle que farão com que um processo satisfaça as restrições físicas e ao mesmo
 tempo minimize
-(ou maximize) alguns critérios de desempenho."\cite{book:Kirk}
+(ou maximize) alguns critérios de desempenho."~\cite[Cap.~1]{book:Kirk}
 
 \subsection{Introdução teórica}
 
@@ -430,23 +474,12 @@ que representa a dinâmica
 do sistema, Equação (\ref{eq:C3_OCP}) são restrições de caminho sobre os estados do sistema e sobre as variáveis de controle, Equação (\ref{eq:C4_OCP})
 é uma restrição de espaço para os estados finais, Equação (\ref{eq:C5_OCP}) é a restrição para o tempo final e Equação (\ref{eq:C6_OCP}) são restrições de intervalo para parâmetros otimizáveis.
 O função objetivo, também conhecido como objetivo de Bolza, é composto por uma integral de $L(x,u)$ conhecida como termo de Lagrange
-e uma função $E(x)$ conhecida como termo de Meyer\cite{book:Numerical_Optimal_Control}.
+e uma função $E(x)$ conhecida como termo de Meyer. \cite[Cap.~9]{book:Numerical_Optimal_Control}
 
 A soluçai de um problema de controle ótimo é uma sequência de sinais de controle em malha aberta e um conjunto de paramentos, o comportamento esperado é
 exemplificado na Figura \ref{fig:simpleOCP}.
 
-Segundo \citeauthor{article:Diehl}, de forma geral, há três abordagens básicas para solução computacional de um OCP, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
-conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
-
-\begin{enumerate}[(a)]
-	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequência de controle ótimo. 
-	\item Métodos indiretos: utiliza a filosofia "primeiro otimizar e então discretizar", que é escrever as condições de otimalidade contínuas primeiro,
-		resultando em um problemas de valor de contorno (sistema de equações diferenciais acrecido de um conjunto adicional de restrições chamadas condições de contorno) e depois discretizá-lo para resolver numericamente.
-	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OCP e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
-	não linear resultante (NPL do inglês \textit{Nonlinear Programming Problem}) resultante.
-\end{enumerate}
-
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\caption{Exemplo do comportamento desejado das variáveis em um OCP}
 	\label{fig:simpleOCP}
@@ -508,10 +541,40 @@ conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}.
 			\end{tabular}
 		};
 	\end{tikzpicture}
-	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{book:Numerical_Optimal_Control}.}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthoronline{book:Numerical_Optimal_Control}. \cite{book:Numerical_Optimal_Control}}
 \end{figure}
 
+Segundo \citeauthoronline{article:Diehl}, de forma geral, há três abordagens básicas para solução computacional de um OCP, (a) programação dinâmica, (b) métodos indiretos e (c) métodos diretos, 
+conforme apresentado na Figura \ref{fig:diagrama_metodos_numericos}. \cite{article:Diehl}
+
+\begin{enumerate}[(a)]
+	\item Programação dinâmica: utiliza o princípio de otimalidade de Bellman (em um caminho ótimo A-B-C os caminhos A-B e B-C também são ótimos) para calcular recursivamente a sequência de controle ótimo. 
+	\item Métodos indiretos: utiliza a filosofia "primeiro otimizar e então discretizar", que é escrever as condições de otimalidade contínuas primeiro,
+		resultando em um problemas de valor de contorno (sistema de equações diferenciais acrecido de um conjunto adicional de restrições chamadas condições de contorno) e depois discretizá-lo para resolver numericamente.
+	\item Métodos diretos: utiliza a filosofia "primeiro discretizar e então otimizar", isto é primeiro discretize as equações do OCP e, em seguida, aplique um algoritmo de otimização para resolver o problema de programação 
+	não linear resultante ( NLP do inglês \textit{Nonlinear Programming Problem}) resultante.
+\end{enumerate}
+
 Para a solução de OCP em aplicações no mundo real, os métodos diretos são atualmente as técnicas mais difundidas e usadas com sucesso. \cite{article:Diehl,book:betts2010}
+
+Métodos diretos reformulam o OCP da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
+
+\begin{mini!}
+	{w}{a(w) \label{eq: NLP1}}
+	{\label{eq: NLP}}{}
+	\addConstraint{b(w)}{= 0 \label{eq: NLP2}}{}
+	\addConstraint{c(w)}{\geq 0, \label{eq: NLP3}}{}
+\end{mini!}
+
+com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
+Todos os métodos diretos começam por uma parametrização da variável de controle, mas diferem na forma como os estados são tratados. Podem ser classificados em duas abordagems, sequnciais e simultâneos. \cite{article:Diehl} 
+
+Nas abordagens sequênciais, os estado $x(t)$ são uma função implícita dos controles $u(t)$ e do valor inicial $x_0$. Dessa forma, a simulação
+e as iterações de otimização procedem sequêncialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequêncial é o \textit{Direct Single Shooting}. \cite{article:Diehl}
+
+As abordagens simultâneas fazem uma parametrização dos estado como variáveis de otimização dentro do NLP e adicionam restrições de igualdade que representam a dinâmica do sistema. 
+Com isso, a simulação e a otimização ocorrem simultaneamente, e somente na solução do NLP os estados representam uma solução da equação da dinâmica do sistema válida e
+correspondente à variável de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}. \cite{article:Diehl}
 
 \begin{figure}[h]
 	\centering
@@ -541,42 +604,23 @@ Para a solução de OCP em aplicações no mundo real, os métodos diretos são 
 				}
 			};
 	\end{tikzpicture}
-	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{article:Diehl}}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthoronline{article:Diehl}. \cite{article:Diehl}}
 \end{figure}
-
-Métodos diretos reformulam o OCP da Equação (\ref{eq:formulacaoOCP}) em um problema de programação não linear de dimensão finita (NLP) da forma:
-
-\begin{mini!}
-	{w}{a(w) \label{eq:NPL1}}
-	{\label{eq:NPL}}{}
-	\addConstraint{b(w)}{= 0 \label{eq:NPL2}}{}
-	\addConstraint{c(w)}{\geq 0, \label{eq:NPL3}}{}
-\end{mini!}
-
-com um vetor de dimensão finita $w$ representando os graus de liberdade de otimização e com funções diferenciáveis $a$ (escalar), $b$ e $c$ (vetores). 
-Todos os métodos diretos começam por uma parametrização da variável de controle, mas diferem na forma como os estados são tratados. Podem ser classificados em duas abordagems, sequnciais e simultâneos.\cite{article:Diehl} 
-
-Nas abordagens sequênciais, os estado $x(t)$ são uma função implícita dos controles $u(t)$ e do valor inicial $x_0$. Dessa forma, a simulação
-e as iterações de otimização procedem sequêncialmente e o NLP possui apenas o controle discretizado como graus de liberdade de otimização. O método mais usado de abordagem sequêncial é o \textit{Direct Single Shooting}.\cite{article:Diehl}
-
-As abordagens simultâneas fazem uma parametrização dos estado como variáveis de otimização dentro do NLP e adicionam restrições de igualdade que representam a dinâmica do sistema. 
-Com isso, a simulação e a otimização ocorrem simultaneamente, e somente na solução do NLP os estados representam uma solução da equação da dinâmica do sistema válida e
-correspondente à variável de controle. As duas variações mais comuns da abordagem simultânea são \textit{Direct Multiple Shooting} e \textit{Direct Collocation}.\cite{article:Diehl}
 
 \subsection{O \textit{software} FALCON.m}
 
 FALCON.m é um é uma biblioteca de \textit{software}, proprietária de uso gratuito, para MATLAB , 
 desenvolvida no \textit{Institute of Flight System Dynamics} da \textit{Technische Universit{\"a}t M{\"u}nchen} para resolução e 
-análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização.\cite{manual:Falcon, phd:Rieck} 
+análise de problemas de controle ótimo e estimação de parâmetros utilizando o método \textit{Direct Collocation}. Capaz de resolver grandes problemas de controle ótimo com de até 600 mil variáveis de otimização. \cite{manual:Falcon} \cite[Cap.~4]{phd:Rieck}
 
 Ela segue o paradigma de programação orientada a objetos, um resumo de suas principais classes de objetos é apresentado na Figura \ref{fig:objetosFalcon}. 
 A classe \lstinline[style=Matlab-editor]{Problem} é a principal, nela são configurados as fases (\lstinline[style=Matlab-editor]{Phases}) do OCP, os parâmetros otimizáveis, o custo de Mayer e
 o método de discretização a ser utilizado . Os métodos de discretização disponíveis na biblioteca são: 
 trapezoidal (padrão) ou \textit{backward Euler}.  Na classe \lstinline[style=Matlab-editor]{Phases}, são adicionados o modelo da dinâmica do sistema, os estados, as variáveis 
-de controle, as restrições de caminho, o custo de Lagrange e os instantes de tempos inicial e final.\cite{phd:Matthias}
+de controle, as restrições de caminho, o custo de Lagrange e os instantes de tempos inicial e final. \cite[Cap.~4]{phd:Matthias}
 
 A biblioteca utiliza otimizadores para NLP externos, como cada optimizador  tem uma interface única, no momento, é possível  utilizar interfaces para três otmizadores: IPOPT, SNOPT e WORHP. 
-O optimizador  utilizado neste trabalho é o IPOPT, configuração pré-definida da biblioteca FALCON.m. Mais informações sobre a utilização do FALCON.m pode ser consultadas em seu manual \citeauthor{manual:Falcon}.
+O optimizador  utilizado neste trabalho é o IPOPT, configuração pré-definida da biblioteca FALCON.m. Mais informações sobre a utilização do FALCON.m pode ser consultadas em seu manual. \cite{manual:Falcon}
 \begin{figure}[h]
 	\centering
 	\caption{Resumo com principais objetos da biblioteca FALCON.m}
@@ -611,15 +655,15 @@ O optimizador  utilizado neste trabalho é o IPOPT, configuração pré-definida
 		  child { node {MayerCosts}}
 		  child { node {DiscretizationMethod}};
 	\end{tikzpicture}
-	\caption*{\footnotesize Fonte: Adaptado de \citeauthor{phd:Matthias}}
+	\caption*{\footnotesize Fonte: Adaptado de \citeauthoronline{phd:Matthias}. \cite{phd:Matthias}}
 \end{figure}
 
 \subsubsection{IPOPT}
 
 O projeto COIN-OR, do inglês \textit{COmputational INfrastructure for Operations Research},
- é uma iniciativa que visa promover \textit{software} de código aberto para a comunidade de pesquisa operacional \cite{article:CoinOr}. 
+ é uma iniciativa que visa promover \textit{software} de código aberto para a comunidade de pesquisa operacional. \cite{article:CoinOr} 
  Dentre as bibliotecas disponibilizadas no projeto COIN-OR está a IPOPT, do inglês \textit{Interior Point OPTimizer}.
  Escrita em C++ e Fortran para solução de problemas de otimização não linear (NLP) utilizando o
- método de pontos interiores com filtro apresentado por \citeauthor{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao código. Mais detalhes sobre está biblioteca podem ser obtidos na pagina do seu repositório no GitHub  \url{https://github.com/coin-or/Ipopt}.
+ método de pontos interiores com filtro apresentado por \citeauthoronline{article:Ipopt}. Sua licença é a EPL que permite uso gratuito e acesso ao código. Mais detalhes sobre está biblioteca podem ser obtidos na pagina do seu repositório no GitHub  \url{https://github.com/coin-or/Ipopt}.
 
 \clearpage
